@@ -11,7 +11,7 @@ find_source2 = function (creep) {
         creep.moveTo(sources[1], { visualizePathStyle: { stroke: '#ffaa00' } });
     }
 }
-find_storage= function (creep) {
+find_storage = function (creep) {
     var sources = Game.getObjectById('5ec4620eb6a35c398e9783cb')
     if (creep.harvest(sources) == ERR_NOT_IN_RANGE) {
         creep.moveTo(sources, { visualizePathStyle: { stroke: '#ffaa00' } });
@@ -19,10 +19,10 @@ find_storage= function (creep) {
 }
 to_storage = function (creep) {
     var targets = Game.getObjectById('5ec4620eb6a35c398e9783cb')
-   
-        if (creep.transfer(targets, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(targets, { visualizePathStyle: { stroke: '#ffffff' } });
-        }
+
+    if (creep.transfer(targets, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+        creep.moveTo(targets, { visualizePathStyle: { stroke: '#ffffff' } });
+    }
 }
 find_storage1 = function (creep) {
     var storage = creep.room.find(FIND_STRUCTURES, {
@@ -97,12 +97,15 @@ find_building = function (creep) {
         if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
             creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
         }
+    } else {
+        return 0;
     }
 }
 var roleBuilder = {
 
     /** @param {Creep} creep **/
     run: function (creep) {
+
         if (creep.memory.building && creep.carry.energy == 0) {
             creep.memory.building = false;
             creep.say('🔄 B: Hrv');
@@ -117,12 +120,15 @@ var roleBuilder = {
         }
 
         if (creep.memory.building) {
-            find_building(creep);
+            let status = find_building(creep);
+            if (status == 0)
+                console.log(Memory.number.builders = 0)
         }
         else {
             //find_source2(creep);
             //find_storage1_or_source1(creep)
             find_storage2_or_source2(creep)
+
         }
     }
 };

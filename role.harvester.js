@@ -2,19 +2,18 @@ moveto_Target = function (creep) {
     var targets = creep.room.find(FIND_STRUCTURES, {
         filter: (structure) => {
             return (structure.structureType == STRUCTURE_EXTENSION ||
-                structure.structureType == STRUCTURE_SPAWN ) &&
+                structure.structureType == STRUCTURE_SPAWN) &&
                 structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
         }
     });
     var tower = Game.getObjectById('5ec293036612cd7d2564f3c3')
-    var storage =Game.getObjectById('5ec4620eb6a35c398e9783cb')
-    if(tower&&tower.store.getFreeCapacity(RESOURCE_ENERGY) > 0)
-    {
-    targets.push(tower)}
-    if(storage&&storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0)
-    {
-    targets.push(storage)}
-  console.log(targets)
+    var storage = Game.getObjectById('5ec4620eb6a35c398e9783cb')
+    if (tower && tower.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        targets.push(tower)
+    }
+    if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        targets.push(storage)
+    }
     if (targets.length > 0) {
 
         if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {

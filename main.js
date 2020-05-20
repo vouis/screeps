@@ -6,9 +6,9 @@ var roleTranfer2 = require('role.tranfer2');
 var roleRepairer = require('role.repairer');
 var body = {
     little: [WORK, CARRY, MOVE],
-    work: [WORK, WORK, WORK, WORK,WORK,CARRY, MOVE, MOVE, MOVE, MOVE, MOVE],
-    movee: [WORK, CARRY, CARRY, CARRY, CARRY, CARRY,CARRY,MOVE,MOVE,MOVE, MOVE, MOVE, MOVE, MOVE],
-    average:[WORK, WORK, WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE, MOVE, MOVE,MOVE]
+    work: [WORK, WORK, WORK, WORK, WORK, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE],
+    movee: [WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE],
+    average: [WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE]
 }
 
 var creatbig = function (newName, role) {
@@ -32,12 +32,27 @@ var numbers = {
     harvesters: 3,
     tranfers: 2,
     tranfer2s: 2,
-    repairers:0,
+    repairers: 0,
     builders: 0,
     upgraders: 7
 
 }
+
 module.exports.loop = function () {
+
+    // Memory = JSON.parse(RawMemory.get());
+    // Memory.number = {
+    //     harvesters: 3,
+    //     tranfers: 2,
+    //     tranfer2s: 2,
+    //     repairers: 0,
+    //     builders: 0,
+    //     upgraders: 7
+    // }
+    // RawMemory.set(JSON.stringify(Memory));
+    // console.log(Memory.number)
+
+
     var role = {
         total: _.filter(Game.creeps),
         harvesters: _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester'),
@@ -128,6 +143,7 @@ module.exports.loop = function () {
             roleUpgrader.run(creep);
         }
         if (creep.memory.role == 'builder') {
+            if (Memory.number.builders == 0) { creep.memory.role = "upgrader" }
             roleBuilder.run(creep);
         }
         if (creep.memory.role == 'tranfer') {
