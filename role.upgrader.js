@@ -5,7 +5,7 @@ var roleUpgrader = {
     run: function (creep) {
 
         if (creep.memory.upgrading && creep.carry.energy == 0) {
-            creep.memory.harvesting = false;
+            creep.memory.upgrading= false;
             creep.say('🔄 U: Hrv');
         }
         else if (!creep.memory.upgrading && creep.carry.energy < creep.carryCapacity) {
@@ -23,7 +23,7 @@ var roleUpgrader = {
             }
         }
         else {
-            //find_source1(creep)
+            //find_source2(creep)
             find_storage2_or_source2(creep)
         }
     }

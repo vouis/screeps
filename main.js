@@ -4,39 +4,40 @@ var roleBuilder = require('role.builder');
 var roleTranfer = require('role.tranfer');
 var roleTranfer2 = require('role.tranfer2');
 var roleRepairer = require('role.repairer');
+var body = {
+    little: [WORK, CARRY, MOVE],
+    work: [WORK, WORK, WORK, WORK,WORK,CARRY, MOVE, MOVE, MOVE, MOVE, MOVE],
+    movee: [WORK, CARRY, CARRY, CARRY, CARRY, CARRY,CARRY,MOVE,MOVE,MOVE, MOVE, MOVE, MOVE, MOVE],
+    average:[WORK, WORK, WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE, MOVE, MOVE,MOVE]
+}
 
 var creatbig = function (newName, role) {
     Game.spawns['Spawn1'].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], newName,
         { memory: { role: role } });
 }
 var hcreep = function (newName, role) {
-    Game.spawns['Spawn1'].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], newName,
+    Game.spawns['Spawn1'].spawnCreep(body.movee, newName,
         { memory: { role: role } });
 }
 var tranfercreep = function (newName, role) {
-    Game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, CARRY, CARRY, MOVE], newName,
+    Game.spawns['Spawn1'].spawnCreep(body.work, newName,
         { memory: { role: role } });
 }
-var buildercreep = function (newName, role) {
-    Game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, CARRY, CARRY, MOVE], newName,
+var avercreep = function (newName, role) {
+    Game.spawns['Spawn1'].spawnCreep(body.average, newName,
         { memory: { role: role } });
 }
-var body = {
-    little: [WORK, CARRY, MOVE],
-    work: [WORK, WORK, WORK, CARRY, CARRY, MOVE],
-    move: [WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE]
-}
+
 var numbers = {
-    harvesters: 2,
+    harvesters: 3,
     tranfers: 2,
     tranfer2s: 2,
-    repairers: 1,
+    repairers:0,
     builders: 0,
-    upgraders: 4
+    upgraders: 7
 
 }
 module.exports.loop = function () {
-    console.log(numbers.harvesters)
     var role = {
         total: _.filter(Game.creeps),
         harvesters: _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester'),
@@ -55,7 +56,7 @@ module.exports.loop = function () {
     if (role.total.length < 2) {
         var newName = 'Harvester' + Game.time;
         console.log('Spawning new harvester: ' + newName);
-        Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], newName,
+        Game.spawns['Spawn1'].spawnCreep(body.little, newName,
             { memory: { role: 'harvester' } });
 
     }
@@ -86,12 +87,12 @@ module.exports.loop = function () {
         console.log(role.builders.length, 'Spawning new builder: ' + newName);
         // Game.spawns['Spawn1'].spawnCreep([WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE], newName, 
         //     {memory: {role: 'builder'}});
-        buildercreep(newName, 'builder');
+        avercreep(newName, 'builder');
     }
     else if (role.upgraders.length < numbers.upgraders) {
         var newName = 'upgrader' + Game.time;
         console.log(role.upgraders.length, 'Spawning new upgrader: ' + newName);
-        creatbig(newName, 'upgrader');
+        avercreep(newName, 'upgrader');
     }
 
     if (Game.spawns['Spawn1'].spawning) {
