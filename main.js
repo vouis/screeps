@@ -1,9 +1,3 @@
-// construct
-const spawnName = 'Spawn1'
-var tower = Game.getObjectById('5ec293036612cd7d2564f3c3')||null;
-
-const mode ='base';
-
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
@@ -93,7 +87,7 @@ module.exports.loop = function () {
 
         else if( role.total.length < 4){
             console.log(role.tranfers.length, 'Spawning new Tranfer: ' );
-            createBaseCreeps('tranfer');
+            createBaseCreeps('tranfer2');
         }else if(role.total.length < 6){
             console.log(role.builders.length, 'Spawning new builder: ' );
             createBaseCreeps('builder');

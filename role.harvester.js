@@ -6,8 +6,6 @@ moveto_Target = function (creep) {
                 structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
         }
     });
-    var tower = Game.getObjectById('5ec293036612cd7d2564f3c3')
-    var storage = Game.getObjectById('5ec4620eb6a35c398e9783cb')
     if (tower && tower.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
         targets.push(tower)
     }
