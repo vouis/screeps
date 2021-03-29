@@ -20,30 +20,6 @@ var createCreeps = function (role,type) {
         { memory: { role: role } });
 }
 
-var createBaseCreeps = function (role) {
-    Game.spawns[spawnName].spawnCreep(body.base, getName(role),
-        { memory: { role: role } });
-}
-
-
-var creatbig = function (role) {
-    Game.spawns[spawnName].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], getName(role),
-        { memory: { role: role } });
-}
-var hcreep = function (role) {
-    Game.spawns[spawnName].spawnCreep(body.movee, getName(role),
-        { memory: { role: role } });
-}
-
-var tranfercreep = function (role) {
-    Game.spawns[spawnName].spawnCreep(body.work, getName(role),
-        { memory: { role: role } });
-}
-var avercreep = function (role) {
-    Game.spawns[spawnName].spawnCreep(body.average, getName(role),
-        { memory: { role: role } });
-}
-
 var roles = {
     harvesters: {number:2,type:'base'},
     tranfers: {number:0,type:'base'},
@@ -148,7 +124,7 @@ module.exports.loop = function () {
             roleUpgrader.run(creep);
         }
         if (creep.memory.role == 'builder') {
-            if (Memory.roles.builders.number == 0) { creep.memory.role = "upgrader" }
+            if (roles.builders.number == 0) { creep.memory.role = "upgrader" }
             roleBuilder.run(creep);
         }
         if (creep.memory.role == 'tranfer') {
