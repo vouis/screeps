@@ -34,7 +34,7 @@ const getName = (role) =>{
 }
 
 var createCreeps = function (role,type) {
-    Game.spawns[spawnName].spawnCreep(type, getName(role),
+    Game.spawns[spawnName].spawnCreep(body[type], getName(role),
         { memory: { role: role } });
 }
 
@@ -72,7 +72,6 @@ module.exports.loop = function () {
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
             delete Memory.creeps[name];
-
             console.log('Clearing non-existing creep memory:', name);
         }
     }
