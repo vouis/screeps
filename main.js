@@ -9,15 +9,15 @@ var global = require('global');
 const getBody = (body) =>{
     const newBody = []
     while(body.WORK){
-        newBody.push[WORK]
+        newBody.push(WORK)
         body.WORK--;
     }
     while(body.CARRY){
-        newBody.push[CARRY]
+        newBody.push(CARRY)
         body.CARRY--;
     }
     while(body.MOVE){
-        newBody.push[MOVE]
+        newBody.push(MOVE)
         body.MOVE--;
     }
     return newBody
