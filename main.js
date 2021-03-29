@@ -87,7 +87,7 @@ module.exports.loop = function () {
 
         else if( role.total.length < 4){
             console.log(role.tranfers.length, 'Spawning new Tranfer: ' );
-            createBaseCreeps('tranfer2');
+            createBaseCreeps('upgrader');
         }else if(role.total.length < 6){
             console.log(role.builders.length, 'Spawning new builder: ' );
             createBaseCreeps('builder');
