@@ -101,16 +101,14 @@ find_building = function (creep) {
         return 0;
     }
 }
+// construct
+spawnName = 'Spawn1'
+tower =Game.getObjectById('5ec293036612cd7d2564f3c3') || null
+storage =Game.getObjectById('5ec4620eb6a35c398e9783cb') || null
+mode = 'base'
 
 let globals = {
-// construct
-    spawnName: 'Spawn1',
-    tower :Game.getObjectById('5ec293036612cd7d2564f3c3') || null,
-    storage : Game.getObjectById('5ec4620eb6a35c398e9783cb') || null,
 
-// develop mode
-
-    mode: 'base',
 }
 
 module.exports =globals ;
