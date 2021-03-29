@@ -75,35 +75,16 @@ module.exports.loop = function () {
             console.log('Clearing non-existing creep memory:', name);
         }
     }
+
         if (role.total.length < 2) {
             console.log('Spawning new harvester: ');
             createCreeps('harvester',roles.harvesters.type)
         }
-        else if (role.harvesters.length < roles.harvesters.number) {
-            console.log(role.harvesters.length, 'Spawning new harvester: ' );
-            createCreeps('harvester',roles.harvesters.type)
-        }
-        else if (role.tranfers.length < roles.tranfers.number) {
-            console.log(role.tranfers.length, 'Spawning new Tranfer: ');
-            createCreeps('tranfer',roles.tranfers.type)
-        }
-        else if (role.tranfer2s.length < roles.tranfer2s.number) {
-            console.log(role.tranfer2s.length, 'Spawning new Tranfer2: ');
-            createCreeps('tranfer2',roles.tranfer2s.type)
-        }
-
-        else if (role.repairers.length < roles.repairers.number) {
-            console.log(role.repairers.length, 'Spawning new repairer: ');
-            createCreeps('repairer',roles.repairers.type)
-        }
-
-        else if (role.builders.length < roles.builders.number) {
-            console.log(role.builders.length, 'Spawning new builder: ' );
-            createCreeps('builder',roles.builders.type)
-        }
-        else if (role.upgraders.length < roles.upgraders.number) {
-            console.log(role.upgraders.length, 'Spawning new upgrader: ');
-            createCreeps('upgrader',roles.upgraders.type)
+        for(let i in roles){
+            if(role[i].length<roles[i].number){
+                console.log(role[i].length, 'Spawning new ',i);
+                createCreeps(i,roles[i].type)
+            }
         }
 
 
