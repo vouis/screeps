@@ -24,7 +24,7 @@ var roleUpgrader = {
         }
         else {
             //find_source2(creep)
-            find_storage2_or_source2(creep)
+            find_storage1_or_source1(creep)
         }
     }
 };

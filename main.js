@@ -22,9 +22,19 @@ const getBody = (body) =>{
     }
     return newBody
 }
-
+// BODYPART_COST: {
+//     "move": 50,
+//         "work": 100,
+//         "attack": 80,
+//         "carry": 50,
+//         "heal": 250,
+//         "ranged_attack": 150,
+//         "tough": 10,
+//         "claim": 600
+// },
 var body = {
-    base:getBody({WORK:1,CARRY:1,MOVE:1}),
+    base:getBody({WORK:1,CARRY:1,MOVE:1}), //200
+    base300:getBody({WORK:2,CARRY:1,MOVE:1}), //300
     work: getBody({WORK:5,CARRY:1,MOVE:5}),
     move: getBody({WORK:1,CARRY:6,MOVE:7}),
     average: getBody({WORK:3,CARRY:4,MOVE:6})
@@ -41,22 +51,11 @@ var createCreeps = function (role,type) {
 var roles = {
     harvester: {number:2,type:'base'},
     tranfer: {number:0,type:'base'},
-    tranfer2: {number:2,type:'base'},
+    tranfer2: {number:0,type:'base'},
     repairer: {number:0,type:'base'},
-    builder: {number:2,type:'base'},
-    upgrader: {number:0,type:'base'}
+    builder: {number:4,type:'base300'},
+    upgrader: {number:1,type:'base300'}
 
-}
-
-if(mode === 'base'){
-    roles = {
-        harvester: {number:2,type:'base'},
-        tranfer: {number:0,type:'base'},
-        tranfer2: {number:0,type:'base'},
-        repairer: {number:0,type:'base'},
-        builder: {number:2,type:'base'},
-        upgrader: {number:2,type:'base'}
-    }
 }
 
 module.exports.loop = function () {
