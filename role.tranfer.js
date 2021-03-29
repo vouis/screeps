@@ -1,6 +1,4 @@
 var roleTranfer = {
-
-    /** @param {Creep} creep **/
     run: function (creep) {
         if (creep.store.getFreeCapacity() > 0) {
             find_source1(creep)

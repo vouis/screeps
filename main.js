@@ -1,3 +1,9 @@
+// construct
+const spawnName = 'Spawn1'
+var tower = Game.getObjectById('5ec293036612cd7d2564f3c3')||null;
+
+const mode ='base';
+
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
@@ -10,31 +16,41 @@ var body = {
     movee: [WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE],
     average: [WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE]
 }
+const getName = (role) =>{
+    return role + Game.time;
+}
 
-var creatbig = function (newName, role) {
-    Game.spawns['Spawn1'].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], newName,
+var createBaseCreeps = function (role) {
+    Game.spawns[spawnName].spawnCreep(body.little, getName(role),
         { memory: { role: role } });
 }
-var hcreep = function (newName, role) {
-    Game.spawns['Spawn1'].spawnCreep(body.movee, newName,
+
+
+var creatbig = function (role) {
+    Game.spawns[spawnName].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], getName(role),
         { memory: { role: role } });
 }
-var tranfercreep = function (newName, role) {
-    Game.spawns['Spawn1'].spawnCreep(body.work, newName,
+var hcreep = function (role) {
+    Game.spawns[spawnName].spawnCreep(body.movee, getName(role),
         { memory: { role: role } });
 }
-var avercreep = function (newName, role) {
-    Game.spawns['Spawn1'].spawnCreep(body.average, newName,
+
+var tranfercreep = function (role) {
+    Game.spawns[spawnName].spawnCreep(body.work, getName(role),
+        { memory: { role: role } });
+}
+var avercreep = function (role) {
+    Game.spawns[spawnName].spawnCreep(body.average, getName(role),
         { memory: { role: role } });
 }
 
 var numbers = {
     harvesters: 3,
     tranfers: 2,
-    tranfer2s: 2,
+    tranfer2s: 0,
     repairers: 0,
     builders: 0,
-    upgraders: 7
+    upgraders: 0
 
 }
 
@@ -65,60 +81,68 @@ module.exports.loop = function () {
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
             delete Memory.creeps[name];
+
             console.log('Clearing non-existing creep memory:', name);
         }
     }
-    if (role.total.length < 2) {
-        var newName = 'Harvester' + Game.time;
-        console.log('Spawning new harvester: ' + newName);
-        Game.spawns['Spawn1'].spawnCreep(body.little, newName,
-            { memory: { role: 'harvester' } });
+    if(mode==='base'){
+        if (role.total.length < 2) {
+            console.log('Spawning new harvester: ');
+            createBaseCreeps('harvester')
+        }
 
-    }
+        else if( role.total.length < 4){
+            console.log(role.tranfers.length, 'Spawning new Tranfer: ' );
+            createBaseCreeps('tranfer');
+        }else if(role.total.length < 6){
+            console.log(role.builders.length, 'Spawning new builder: ' );
+            createBaseCreeps('builder');
+        }
+    }else{
+        if (role.total.length < 2) {
+            console.log('Spawning new harvester: ');
+            createBaseCreeps('harvester')
+        }
     else if (role.harvesters.length < numbers.harvesters) {
-        var newName = 'Harvester' + Game.time;
-        console.log(role.harvesters.length, 'Spawning new harvester: ' + newName);
-        hcreep(newName, 'harvester');
-    }
-    else if (role.tranfers.length < numbers.tranfers) {
-        var newName = 'Tranfer' + Game.time;
-        console.log(role.tranfers.length, 'Spawning new Tranfer: ' + newName);
-        tranfercreep(newName, 'tranfer');
-    }
-    else if (role.tranfer2s.length < numbers.tranfer2s) {
-        var newName = 'Tranfer2' + Game.time;
-        console.log(role.tranfer2s.length, 'Spawning new Tranfer2: ' + newName);
-        tranfercreep(newName, 'tranfer2');
+            console.log(role.harvesters.length, 'Spawning new harvester: ' );
+            hcreep('harvester');
+        }
+        else if (role.tranfers.length < numbers.tranfers) {
+            console.log(role.tranfers.length, 'Spawning new Tranfer: ');
+            tranfercreep('tranfer');
+        }
+        else if (role.tranfer2s.length < numbers.tranfer2s) {
+            console.log(role.tranfer2s.length, 'Spawning new Tranfer2: ');
+            tranfercreep( 'tranfer2');
+        }
+
+        else if (role.repairers.length < numbers.repairers) {
+            console.log(role.repairers.length, 'Spawning new repairer: ');
+            creatbig( 'repairer');
+        }
+
+        else if (role.builders.length < numbers.builders) {
+            console.log(role.builders.length, 'Spawning new builder: ' );
+            // Game.spawns[spawnName].spawnCreep([WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE], newName,
+            //     {memory: {role: 'builder'}});
+            avercreep('builder');
+        }
+        else if (role.upgraders.length < numbers.upgraders) {
+            console.log(role.upgraders.length, 'Spawning new upgrader: ');
+            avercreep( 'upgrader');
+        }
     }
 
-    else if (role.repairers.length < numbers.repairers) {
-        var newName = 'repairer' + Game.time;
-        console.log(role.repairers.length, 'Spawning new repairer: ' + newName);
-        creatbig(newName, 'repairer');
-    }
 
-    else if (role.builders.length < numbers.builders) {
-        var newName = 'builders' + Game.time;
-        console.log(role.builders.length, 'Spawning new builder: ' + newName);
-        // Game.spawns['Spawn1'].spawnCreep([WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE], newName, 
-        //     {memory: {role: 'builder'}});
-        avercreep(newName, 'builder');
-    }
-    else if (role.upgraders.length < numbers.upgraders) {
-        var newName = 'upgrader' + Game.time;
-        console.log(role.upgraders.length, 'Spawning new upgrader: ' + newName);
-        avercreep(newName, 'upgrader');
-    }
-
-    if (Game.spawns['Spawn1'].spawning) {
-        var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];
-        Game.spawns['Spawn1'].room.visual.text(
+    if (Game.spawns[spawnName].spawning) {
+        var spawningCreep = Game.creeps[Game.spawns[spawnName].spawning.name];
+        Game.spawns[spawnName].room.visual.text(
             '🛠️' + spawningCreep.memory.role,
-            Game.spawns['Spawn1'].pos.x + 1,
-            Game.spawns['Spawn1'].pos.y,
+            Game.spawns[spawnName].pos.x + 1,
+            Game.spawns[spawnName].pos.y,
             { align: 'left', opacity: 0.8 });
     }
-    var tower = Game.getObjectById('5ec293036612cd7d2564f3c3');
+
     if (tower) {
         var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: (structure) => structure.hits < structure.hitsMax
