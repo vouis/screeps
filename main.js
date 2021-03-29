@@ -122,7 +122,7 @@ module.exports.loop = function () {
             roleUpgrader.run(creep);
         }
         if (creep.memory.role == 'builder') {
-            if (roles.builders.number == 0) { creep.memory.role = "upgrader" }
+            if (roles.builder.number == 0) { creep.memory.role = "upgrader" }
             roleBuilder.run(creep);
         }
         if (creep.memory.role == 'tranfer') {
