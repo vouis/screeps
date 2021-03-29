@@ -5,11 +5,29 @@ var roleTranfer = require('role.tranfer');
 var roleTranfer2 = require('role.tranfer2');
 var roleRepairer = require('role.repairer');
 var global = require('global');
+
+const getBody = (body) =>{
+    const newBody = []
+    while(body.WORK){
+        newBody.push[WORK]
+        body.WORK--;
+    }
+    while(body.CARRY){
+        newBody.push[CARRY]
+        body.CARRY--;
+    }
+    while(body.MOVE){
+        newBody.push[MOVE]
+        body.MOVE--;
+    }
+    return newBody
+}
+
 var body = {
-    base: [WORK, CARRY, MOVE],
-    work: [WORK, WORK, WORK, WORK, WORK, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE],
-    movee: [WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE],
-    average: [WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE]
+    base:getBody({WORK:1,CARRY:1,MOVE:1}),
+    work: getBody({WORK:5,CARRY:1,MOVE:5}),
+    move: getBody({WORK:1,CARRY:6,MOVE:7}),
+    average: getBody({WORK:3,CARRY:4,MOVE:6})
 }
 const getName = (role) =>{
     return role + Game.time;
@@ -34,10 +52,10 @@ if(mode === 'base'){
     roles = {
         harvesters: {number:2,type:'base'},
         tranfers: {number:0,type:'base'},
-        tranfer2s: {number:2,type:'base'},
+        tranfer2s: {number:0,type:'base'},
         repairers: {number:0,type:'base'},
         builders: {number:2,type:'base'},
-        upgraders: {number:0,type:'base'}
+        upgraders: {number:2,type:'base'}
     }
 }
 
