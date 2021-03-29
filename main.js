@@ -4,6 +4,7 @@ var roleBuilder = require('role.builder');
 var roleTranfer = require('role.tranfer');
 var roleTranfer2 = require('role.tranfer2');
 var roleRepairer = require('role.repairer');
+var global = require('global');
 var body = {
     little: [WORK, CARRY, MOVE],
     work: [WORK, WORK, WORK, WORK, WORK, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE],
@@ -15,26 +16,26 @@ const getName = (role) =>{
 }
 
 var createBaseCreeps = function (role) {
-    Game.spawns[spawnName].spawnCreep(body.little, getName(role),
+    Game.spawns[global.spawnName].spawnCreep(body.little, getName(role),
         { memory: { role: role } });
 }
 
 
 var creatbig = function (role) {
-    Game.spawns[spawnName].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], getName(role),
+    Game.spawns[global.spawnName].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], getName(role),
         { memory: { role: role } });
 }
 var hcreep = function (role) {
-    Game.spawns[spawnName].spawnCreep(body.movee, getName(role),
+    Game.spawns[global.spawnName].spawnCreep(body.movee, getName(role),
         { memory: { role: role } });
 }
 
 var tranfercreep = function (role) {
-    Game.spawns[spawnName].spawnCreep(body.work, getName(role),
+    Game.spawns[global.spawnName].spawnCreep(body.work, getName(role),
         { memory: { role: role } });
 }
 var avercreep = function (role) {
-    Game.spawns[spawnName].spawnCreep(body.average, getName(role),
+    Game.spawns[global.spawnName].spawnCreep(body.average, getName(role),
         { memory: { role: role } });
 }
 
@@ -79,7 +80,7 @@ module.exports.loop = function () {
             console.log('Clearing non-existing creep memory:', name);
         }
     }
-    if(mode==='base'){
+    if(global.mode==='base'){
         if (role.total.length < 2) {
             console.log('Spawning new harvester: ');
             createBaseCreeps('harvester')
@@ -128,26 +129,26 @@ module.exports.loop = function () {
     }
 
 
-    if (Game.spawns[spawnName].spawning) {
-        var spawningCreep = Game.creeps[Game.spawns[spawnName].spawning.name];
-        Game.spawns[spawnName].room.visual.text(
+    if (Game.spawns[global.spawnName].spawning) {
+        var spawningCreep = Game.creeps[Game.spawns[global.spawnName].spawning.name];
+        Game.spawns[global.spawnName].room.visual.text(
             '🛠️' + spawningCreep.memory.role,
-            Game.spawns[spawnName].pos.x + 1,
-            Game.spawns[spawnName].pos.y,
+            Game.spawns[global.spawnName].pos.x + 1,
+            Game.spawns[global.spawnName].pos.y,
             { align: 'left', opacity: 0.8 });
     }
 
-    if (tower) {
-        var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
+    if (global.tower) {
+        var closestDamagedStructure = global.tower.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: (structure) => structure.hits < structure.hitsMax
         });
         if (closestDamagedStructure) {
-            tower.repair(closestDamagedStructure);
+            global.tower.repair(closestDamagedStructure);
         }
 
-        var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+        var closestHostile = global.tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
         if (closestHostile) {
-            tower.attack(closestHostile);
+            global.tower.attack(closestHostile);
         }
     }
 
