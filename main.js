@@ -39,35 +39,35 @@ var createCreeps = function (role,type) {
 }
 
 var roles = {
-    harvesters: {number:2,type:'base'},
-    tranfers: {number:0,type:'base'},
-    tranfer2s: {number:2,type:'base'},
-    repairers: {number:0,type:'base'},
-    builders: {number:2,type:'base'},
-    upgraders: {number:0,type:'base'}
+    harvester: {number:2,type:'base'},
+    tranfer: {number:0,type:'base'},
+    tranfer2: {number:2,type:'base'},
+    repairer: {number:0,type:'base'},
+    builder: {number:2,type:'base'},
+    upgrader: {number:0,type:'base'}
 
 }
 
 if(mode === 'base'){
     roles = {
-        harvesters: {number:2,type:'base'},
-        tranfers: {number:0,type:'base'},
-        tranfer2s: {number:0,type:'base'},
-        repairers: {number:0,type:'base'},
-        builders: {number:2,type:'base'},
-        upgraders: {number:2,type:'base'}
+        harvester: {number:2,type:'base'},
+        tranfer: {number:0,type:'base'},
+        tranfer2: {number:0,type:'base'},
+        repairer: {number:0,type:'base'},
+        builder: {number:2,type:'base'},
+        upgrader: {number:2,type:'base'}
     }
 }
 
 module.exports.loop = function () {
     var role = {
         total: _.filter(Game.creeps),
-        harvesters: _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester'),
-        builders: _.filter(Game.creeps, (creep) => creep.memory.role == 'builder'),
-        upgraders: _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader'),
-        tranfers: _.filter(Game.creeps, (creep) => creep.memory.role == 'tranfer'),
-        tranfer2s: _.filter(Game.creeps, (creep) => creep.memory.role == 'tranfer2'),
-        repairers: _.filter(Game.creeps, (creep) => creep.memory.role == 'repairer')
+        harvester: _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester'),
+        builder: _.filter(Game.creeps, (creep) => creep.memory.role == 'builder'),
+        upgrader: _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader'),
+        tranfer: _.filter(Game.creeps, (creep) => creep.memory.role == 'tranfer'),
+        tranfer2: _.filter(Game.creeps, (creep) => creep.memory.role == 'tranfer2'),
+        repairer: _.filter(Game.creeps, (creep) => creep.memory.role == 'repairer')
     }
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
@@ -78,7 +78,7 @@ module.exports.loop = function () {
 
         if (role.total.length < 2) {
             console.log('Spawning new harvester: ');
-            createCreeps('harvester',roles.harvesters.type)
+            createCreeps('harvester',roles.harvester.type)
         }
         for(let i in roles){
             if(role[i].length<roles[i].number){
