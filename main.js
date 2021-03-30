@@ -4,8 +4,8 @@ var roleBuilder = require('role.builder');
 var roleTranfer = require('role.tranfer');
 var roleTranfer2 = require('role.tranfer2');
 var roleRepairer = require('role.repairer');
-var global = require('global');
-require('creep')
+require('global');
+require('creep');
 
 const getBody = (body) =>{
     const newBody = []
@@ -119,7 +119,6 @@ module.exports.loop = function () {
 
     for (var name in Game.creeps) {
         var creep = Game.creeps[name];
-        creep.describe_self();
         if (creep.memory.role == 'harvester') {
             roleHarvester.run(creep);
         }
