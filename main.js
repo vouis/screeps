@@ -52,7 +52,7 @@ var createCreeps = function (role,type) {
 
 var roles = {
     harvester: {number:2,type:'move550'},
-    tranfer: {number:3,type:'work550'},
+    tranfer: {number:2,type:'work550'},
     tranfer2: {number:2,type:'work550'},
     repairer: {number:0,type:'base'},
     builder: {number:3,type:'base300'},
@@ -77,7 +77,7 @@ module.exports.loop = function () {
         }
     }
 
-        if (role.total.length < 2) {
+        if (role.harvester.length < 1) {
             console.log('Spawning new harvester: ');
             createCreeps('harvester',roles.harvester.type)
         }
