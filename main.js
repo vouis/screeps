@@ -86,6 +86,7 @@ module.exports.loop = function () {
             if(role[i].length<roles[i].number){
                 console.log(role[i].length, 'Spawning new ',i);
                 createCreeps(i,roles[i].type)
+                break;
             }
         }
 
