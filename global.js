@@ -27,7 +27,7 @@ find_structure_or_source = function (creep,source,structure) {
 
         creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
     } else {
-        find_source(creep,source_1)
+        find_source(creep,source)
     }
 }
 
