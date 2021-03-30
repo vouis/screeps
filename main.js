@@ -35,7 +35,8 @@ const getBody = (body) =>{
 var body = {
     base:getBody({WORK:1,CARRY:1,MOVE:1}), //200
     base300:getBody({WORK:2,CARRY:1,MOVE:1}), //300
-    tranfer550:getBody({WORK:4,CARRY:1,MOVE:1}), //550
+    work550:getBody({WORK:4,CARRY:1,MOVE:1}), //550
+    move550:getBody({WORK:1,CARRY:4,MOVE:5}), //550
     work: getBody({WORK:5,CARRY:1,MOVE:5}),
     move: getBody({WORK:1,CARRY:6,MOVE:7}),
     average: getBody({WORK:3,CARRY:4,MOVE:6})
@@ -50,12 +51,12 @@ var createCreeps = function (role,type) {
 }
 
 var roles = {
-    harvester: {number:2,type:'base'},
-    tranfer: {number:1,type:'tranfer550'},
-    tranfer2: {number:1,type:'tranfer550'},
+    harvester: {number:2,type:'move550'},
+    tranfer: {number:3,type:'work550'},
+    tranfer2: {number:2,type:'work550'},
     repairer: {number:0,type:'base'},
     builder: {number:3,type:'base300'},
-    upgrader: {number:1,type:'base300'}
+    upgrader: {number:1,type:'move550'}
 
 }
 

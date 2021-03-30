@@ -40,8 +40,7 @@ var roleHarvester = {
             moveto_Target(creep);
         }
         else {
-            find_storage1_or_source1(creep);
-            //find_source1(creep);
+            find_structure_or_source(creep,source_1,container_1)
         }
     }
 };

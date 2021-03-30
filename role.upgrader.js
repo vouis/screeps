@@ -23,8 +23,7 @@ var roleUpgrader = {
             }
         }
         else {
-            //find_source2(creep)
-            find_storage1_or_source1(creep)
+            find_structure_or_source(creep,source_1,container_1)
         }
     }
 };

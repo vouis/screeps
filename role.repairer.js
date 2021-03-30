@@ -30,7 +30,7 @@ var roleRepairer = {
             to_destroy_building(creep)
         }
         else {
-            find_storage2_or_source2(creep)
+            find_structure_or_source(creep,source_2,container_2)
         }
 
     }

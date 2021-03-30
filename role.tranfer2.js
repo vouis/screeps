@@ -6,7 +6,7 @@ var roleTranfer2 = {
             find_source(creep,source_2)
         }
         else {
-            to_storage2(creep)
+            to_structure(creep,container_2)
         }
     }
 };
