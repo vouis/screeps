@@ -28,4 +28,4 @@ var roleUpgrader = {
     }
 };
 
-module.exports = roleUpgrader;
+export default roleUpgrader;

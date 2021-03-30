@@ -1,11 +1,11 @@
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
-var roleBuilder = require('role.builder');
-var roleTranfer = require('role.tranfer');
-var roleTranfer2 = require('role.tranfer2');
-var roleRepairer = require('role.repairer');
-require('global');
-require('creep');
+import roleHarvester  from './role.harvester'
+import roleUpgrader  from './role.upgrader'
+import roleBuilder  from './role.builder'
+import roleTranfer  from './role.tranfer'
+import roleTranfer2  from './role.tranfer2'
+import roleRepairer  from './role.repairer'
+import './global'
+import './creep'
 
 const getBody = (body) =>{
     const newBody = []

@@ -1,13 +1,227 @@
 'use strict';
 
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
-var roleBuilder = require('role.builder');
-var roleTranfer = require('role.tranfer');
-var roleTranfer2 = require('role.tranfer2');
-var roleRepairer = require('role.repairer');
-require('global');
-require('creep');
+moveto_Target = function (creep) {
+    var targets = creep.room.find(FIND_STRUCTURES, {
+        filter: (structure) => {
+            return (structure.structureType == STRUCTURE_EXTENSION ||
+                structure.structureType == STRUCTURE_SPAWN) &&
+                structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
+        }
+    });
+    if (tower && tower.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        targets.push(tower);
+    }
+    if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        targets.push(storage);
+    }
+    if (targets.length > 0) {
+
+        if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+
+            creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
+        }
+    }
+};
+const roleHarvester = {
+    /** @param {Creep} creep **/
+    run: function (creep) {
+        if (creep.memory.harvesting && creep.carry.energy == 0) {
+            creep.memory.harvesting = false;
+            creep.say('🔄 H: Hrv');
+        } else if (!creep.memory.harvesting && creep.carry.energy < creep.carryCapacity) {
+            creep.memory.harvesting = false;
+            creep.say('🔄 H: Hrv');
+        } else if (!creep.memory.harvesting && creep.carry.energy == creep.carryCapacity) {
+            creep.memory.harvesting = true;
+            creep.say('🚧 harvest');
+        }
+
+        if (creep.memory.harvesting) {
+            moveto_Target(creep);
+        } else {
+            find_structure_or_source(creep, source_1, container_1);
+        }
+    }
+};
+
+var roleUpgrader = {
+
+    /** @param {Creep} creep **/
+    run: function (creep) {
+
+        if (creep.memory.upgrading && creep.carry.energy == 0) {
+            creep.memory.upgrading= false;
+            creep.say('🔄 U: Hrv');
+        }
+        else if (!creep.memory.upgrading && creep.carry.energy < creep.carryCapacity) {
+            creep.memory.upgrading = false;
+            creep.say('🔄 U: Hrv');
+        }
+        else if (!creep.memory.upgrading && creep.carry.energy == creep.carryCapacity) {
+            creep.memory.upgrading = true;
+            creep.say('🚧 upgrade');
+        }
+
+        if (creep.memory.upgrading) {
+            if (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(creep.room.controller, { visualizePathStyle: { stroke: '#ffffff' } });
+            }
+        }
+        else {
+            find_structure_or_source(creep,source_2,container_2);
+        }
+    }
+};
+
+var roleBuilder = {
+    run: function (creep) {
+
+        if (creep.memory.building && creep.carry.energy == 0) {
+            creep.memory.building = false;
+            creep.say('🔄 B: Hrv');
+        }
+        else if (!creep.memory.building && creep.carry.energy < creep.carryCapacity) {
+            creep.memory.building = false;
+            creep.say('🔄 B: Hrv');
+        }
+        else if (!creep.memory.building && creep.carry.energy == creep.carryCapacity) {
+            creep.memory.building = true;
+            creep.say('🚧 build');
+        }
+
+        if (creep.memory.building) {
+            let status = find_building(creep);
+            if (status == 0)
+                console.log(Memory.number.builders = 0);
+        }
+        else {
+            find_structure_or_source(creep,source_2,container_2);
+
+        }
+    }
+};
+
+var roleTranfer = {
+    run: function (creep) {
+        if (creep.store.getFreeCapacity() > 0) {
+            find_source(creep,source_1);
+        }
+        else {
+            to_structure(creep,container_1);
+        }
+    }
+};
+
+var roleTranfer2 = {
+
+    /** @param {Creep} creep **/
+    run: function (creep) {
+        if (creep.store.getFreeCapacity() > 0) {
+            find_source(creep,source_2);
+        }
+        else {
+            to_structure(creep,container_2);
+        }
+    }
+};
+
+to_destroy_building = function (creep) {
+    var targets = creep.room.find(FIND_STRUCTURES, {
+        filter: (targets) => targets.hits < targets.hitsMax
+    });
+    targets.sort((a, b) => a.hits - b.hits);
+    if (targets.length) {
+        if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
+            creep.say('repair');
+        }
+    }
+};
+
+var roleRepairer = {
+    run: function (creep) {
+        if (creep.memory.repairing && creep.carry.energy == 0) {
+            creep.memory.repairing = false;
+            creep.say('🔄 R: Hrv');
+        }
+        else if (!creep.memory.repairing && creep.carry.energy < creep.carryCapacity) {
+            creep.memory.repairing = false;
+            creep.say('🔄 R: Hrv');
+        }
+        else if (!creep.memory.repairing && creep.carry.energy == creep.carryCapacity) {
+            creep.memory.repairing = true;
+            creep.say('🚧 repair');
+        }
+
+        if (creep.memory.repairing) {
+            to_destroy_building(creep);
+        }
+        else {
+            find_structure_or_source(creep,source_1,container_1);
+        }
+
+    }
+};
+
+// construct
+spawnName = 'Spawn1';
+tower =Game.getObjectById('5ec293036612cd7d2564f3c3') || null;
+storage =Game.getObjectById('5ec4620eb6a35c398e9783cb') || null;
+mode = 'base';
+
+container_spawn=Game.getObjectById('60619e848532e078ac6919d2');
+container_1 = Game.getObjectById('6061fc9bc5078b66d847289b');
+container_2 = Game.getObjectById('6061f1ee5e99e45a74b56875');
+
+source_1 = Game.getObjectById('5bbcad0e9099fc012e6368bf');
+source_2 = Game.getObjectById('5bbcad0e9099fc012e6368c0');
+
+find_source = function (creep,source) {
+    if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
+        creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+    }
+};
+find_structure= function (creep,structure) {
+    if (creep.withdraw(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+    }
+};
+
+find_structure_or_source = function (creep,source,structure) {
+    if (creep.withdraw(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure.store[RESOURCE_ENERGY] != 0) {
+
+        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+    } else {
+        find_source(creep,source);
+    }
+};
+
+to_structure = function (creep,structure) {
+        if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+            creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
+        }
+};
+
+find_building = function (creep) {
+    var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+    if (targets.length) {
+        if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
+        }
+    } else {
+        return 0;
+    }
+};
+let globals = {
+
+};
+
+module.exports =globals ;
+
+Creep.prototype.describe_self = function()
+{
+    this.say('I\'m '+this.name);
+};
 
 const getBody = (body) =>{
     const newBody = [];

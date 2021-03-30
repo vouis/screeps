@@ -9,4 +9,4 @@ var roleTranfer = {
     }
 };
 
-module.exports = roleTranfer;
+export default roleTranfer;

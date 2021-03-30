@@ -11,4 +11,4 @@ var roleTranfer2 = {
     }
 };
 
-module.exports = roleTranfer2;
+export default roleTranfer2;

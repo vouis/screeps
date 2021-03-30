@@ -20,29 +20,26 @@ moveto_Target = function (creep) {
         }
     }
 }
-var roleHarvester = {
+const roleHarvester = {
     /** @param {Creep} creep **/
     run: function (creep) {
         if (creep.memory.harvesting && creep.carry.energy == 0) {
             creep.memory.harvesting = false;
             creep.say('🔄 H: Hrv');
-        }
-        else if (!creep.memory.harvesting && creep.carry.energy < creep.carryCapacity) {
+        } else if (!creep.memory.harvesting && creep.carry.energy < creep.carryCapacity) {
             creep.memory.harvesting = false;
             creep.say('🔄 H: Hrv');
-        }
-        else if (!creep.memory.harvesting && creep.carry.energy == creep.carryCapacity) {
+        } else if (!creep.memory.harvesting && creep.carry.energy == creep.carryCapacity) {
             creep.memory.harvesting = true;
             creep.say('🚧 harvest');
         }
 
         if (creep.memory.harvesting) {
             moveto_Target(creep);
-        }
-        else {
-            find_structure_or_source(creep,source_1,container_1)
+        } else {
+            find_structure_or_source(creep, source_1, container_1)
         }
     }
 };
 
-module.exports = roleHarvester;
+export default roleHarvester;
