@@ -1,4 +1,4 @@
-to_destroy_building = function (creep) {
+const to_destroy_building = function (creep) {
     var targets = creep.room.find(FIND_STRUCTURES, {
         filter: (targets) => targets.hits < targets.hitsMax
     });

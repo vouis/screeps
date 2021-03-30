@@ -1,4 +1,4 @@
-moveto_Target = function (creep) {
+const moveto_Target = function (creep) {
     var targets = creep.room.find(FIND_STRUCTURES, {
         filter: (structure) => {
             return (structure.structureType == STRUCTURE_EXTENSION ||

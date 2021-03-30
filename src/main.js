@@ -1,11 +1,12 @@
+import './global'
+import './creep'
 import roleHarvester  from './role.harvester'
 import roleUpgrader  from './role.upgrader'
 import roleBuilder  from './role.builder'
 import roleTranfer  from './role.tranfer'
 import roleTranfer2  from './role.tranfer2'
 import roleRepairer  from './role.repairer'
-import './global'
-import './creep'
+
 
 const getBody = (body) =>{
     const newBody = []
