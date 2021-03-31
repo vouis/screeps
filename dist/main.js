@@ -181,6 +181,9 @@ Spawn.prototype.work = function() {
 // 将生成任务推入队列
 Spawn.prototype.addTask = function(taskName) {
     // 任务加入队列
+    if(this.memory.spawnList===undefined){
+        this.memory.spawnList = [];
+    }
     this.memory.spawnList.push(taskName);
     return this.memory.spawnList.length
 };
