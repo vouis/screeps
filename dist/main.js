@@ -383,6 +383,7 @@ module.exports.loop = function () {
                 // 重生
                 console.log(name);
                 const spawnLength = Game.spawns[spawnName].addTask(name);
+                delete Memory.creeps[name];
                 console.log('当前队列',spawnLength);
                 return;
             }
