@@ -375,10 +375,12 @@ module.exports.loop = function () {
     };
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
-            if(name==='firstroleTest1'){
+            console.log(name);
+            if(name==='roleTest1'){
                 // 重生
-                console.log('firstroleTest1');
-                Game.spawns[spawnName].addTask(name);
+                console.log(name);
+                const spawnLength = Game.spawns[spawnName].addTask(name);
+                console.log('当前队列',spawnLength);
                 return;
             }
             delete Memory.creeps[name];
