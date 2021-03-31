@@ -1,3 +1,4 @@
+import {find_structure_or_source,source_1, container_1} from './global'
 const to_destroy_building = function (creep) {
     var targets = creep.room.find(FIND_STRUCTURES, {
         filter: (targets) => targets.hits < targets.hitsMax

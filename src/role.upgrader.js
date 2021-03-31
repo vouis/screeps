@@ -1,6 +1,5 @@
-
+import {find_structure_or_source,source_2, container_2} from './global'
 var roleUpgrader = {
-
     /** @param {Creep} creep **/
     run: function (creep) {
 

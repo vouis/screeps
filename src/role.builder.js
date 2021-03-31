@@ -1,3 +1,4 @@
+import {find_building,find_structure_or_source} from './global'
 var roleBuilder = {
     run: function (creep) {
 

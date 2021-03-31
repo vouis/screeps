@@ -81,7 +81,7 @@ module.exports.loop = function () {
 
         if (role.harvester.length < 1) {
             console.log('Spawning new harvester: ');
-            createCreeps('harvester',roles.harvester.type)
+            createCreeps('harvester','base')
         }
         for(let i in roles){
             if(role[i].length<roles[i].number){

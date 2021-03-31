@@ -1,3 +1,4 @@
+import {find_source,to_structure,source_1, container_1} from './global'
 var roleTranfer = {
     run: function (creep) {
         if (creep.store.getFreeCapacity() > 0) {

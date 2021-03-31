@@ -1,4 +1,4 @@
-import './global'
+import {spawnName,tower} from './global'
 import './creep'
 import roleHarvester  from './role.harvester'
 import roleUpgrader  from './role.upgrader'
@@ -24,16 +24,7 @@ const getBody = (body) =>{
     }
     return newBody
 }
-// BODYPART_COST: {
-//     "move": 50,
-//         "work": 100,
-//         "attack": 80,
-//         "carry": 50,
-//         "heal": 250,
-//         "ranged_attack": 150,
-//         "tough": 10,
-//         "claim": 600
-// },
+
 var body = {
     base:getBody({WORK:1,CARRY:1,MOVE:1}), //200
     base300:getBody({WORK:2,CARRY:1,MOVE:1}), //300
@@ -82,7 +73,7 @@ module.exports.loop = function () {
 
     if (role.harvester.length < 1) {
         console.log('Spawning new harvester: ');
-        createCreeps('harvester',roles.harvester.type)
+        createCreeps('harvester','base')
     }
     for(let i in roles){
         if(role[i].length<roles[i].number){

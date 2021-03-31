@@ -1,15 +1,48 @@
 'use strict';
 
 // construct
-Game.getObjectById('5ec293036612cd7d2564f3c3') || null;
-Game.getObjectById('5ec4620eb6a35c398e9783cb') || null;
+const spawnName = 'Spawn1';
+const tower =Game.getObjectById('5ec293036612cd7d2564f3c3') || null;
+const storage =Game.getObjectById('5ec4620eb6a35c398e9783cb') || null;
 
 Game.getObjectById('60619e848532e078ac6919d2');
-Game.getObjectById('6061fc9bc5078b66d847289b');
-Game.getObjectById('6061f1ee5e99e45a74b56875');
+const container_1 = Game.getObjectById('6061fc9bc5078b66d847289b');
+const container_2$1 = Game.getObjectById('6061f1ee5e99e45a74b56875');
 
-Game.getObjectById('5bbcad0e9099fc012e6368bf');
-Game.getObjectById('5bbcad0e9099fc012e6368c0');
+const source_1 = Game.getObjectById('5bbcad0e9099fc012e6368bf');
+const source_2$1 = Game.getObjectById('5bbcad0e9099fc012e6368c0');
+
+const find_source = function (creep,source) {
+    if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
+        creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+    }
+};
+
+const find_structure_or_source = function (creep,source,structure) {
+    if (creep.withdraw(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure.store[RESOURCE_ENERGY] != 0) {
+
+        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+    } else {
+        find_source(creep,source);
+    }
+};
+
+const to_structure = function (creep,structure) {
+        if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+            creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
+        }
+};
+
+const find_building = function (creep) {
+    var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+    if (targets.length) {
+        if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
+        }
+    } else {
+        return 0;
+    }
+};
 
 Creep.prototype.describe_self = function()
 {
@@ -61,7 +94,6 @@ const roleHarvester = {
 };
 
 var roleUpgrader = {
-
     /** @param {Creep} creep **/
     run: function (creep) {
 
@@ -84,7 +116,7 @@ var roleUpgrader = {
             }
         }
         else {
-            find_structure_or_source(creep,source_2,container_2);
+            find_structure_or_source(creep,source_2$1,container_2$1);
         }
     }
 };
@@ -129,14 +161,13 @@ var roleTranfer = {
 };
 
 var roleTranfer2 = {
-
     /** @param {Creep} creep **/
     run: function (creep) {
         if (creep.store.getFreeCapacity() > 0) {
-            find_source(creep,source_2);
+            find_source(creep,source_2$1);
         }
         else {
-            to_structure(creep,container_2);
+            to_structure(creep,container_2$1);
         }
     }
 };
@@ -195,16 +226,7 @@ const getBody = (body) =>{
     }
     return newBody
 };
-// BODYPART_COST: {
-//     "move": 50,
-//         "work": 100,
-//         "attack": 80,
-//         "carry": 50,
-//         "heal": 250,
-//         "ranged_attack": 150,
-//         "tough": 10,
-//         "claim": 600
-// },
+
 var body = {
     base:getBody({WORK:1,CARRY:1,MOVE:1}), //200
     base300:getBody({WORK:2,CARRY:1,MOVE:1}), //300
@@ -253,7 +275,7 @@ module.exports.loop = function () {
 
     if (role.harvester.length < 1) {
         console.log('Spawning new harvester: ');
-        createCreeps('harvester',roles.harvester.type);
+        createCreeps('harvester','base');
     }
     for(let i in roles){
         if(role[i].length<roles[i].number){
