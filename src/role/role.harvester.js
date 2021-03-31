@@ -33,4 +33,4 @@ const harvester= () => ({
     switch: creep => creep.updateState()
 })
 
-export default roleTest;
+export default harvester;

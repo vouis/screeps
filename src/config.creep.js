@@ -1,4 +1,3 @@
-import roleTest from './role/role.taskTest';
 import harvester from './role/role.harvester'
 export default {
     // roleTest1: roleTest('5bbcad0e9099fc012e6368bf')
