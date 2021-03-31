@@ -1,11 +1,5 @@
 'use strict';
 
-var creepConfigs = require('config.creep.js');
-
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-
-var creepConfigs__default = /*#__PURE__*/_interopDefaultLegacy(creepConfigs);
-
 const getBody = (body) =>{
     const newBody = [];
     while(body.WORK){
@@ -100,6 +94,35 @@ const find_building = function (creep) {
     }
 };
 
+/**
+ * 升级者配置生成器
+ * source: 从指定矿中挖矿
+ * target: 将其转移到指定的 roomController 中
+ *
+ * @param sourceId 要挖的矿 id
+ */
+const roleTest= sourceId => ({
+    // 采集能量矿
+    source: creep => {
+        const source = Game.getObjectById(sourceId);
+        if (creep.harvest(source) == ERR_NOT_IN_RANGE) creep.moveTo(source);
+    },
+    // 升级控制器
+    target: creep => {
+        const controller = creep.room.controller;
+        if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) creep.moveTo(controller);
+    },
+    // 状态切换条件，稍后会给出具体实现
+    switch: creep => creep.updateState()
+});
+
+var creepConfigs = {
+    roleTest1: roleTest('5bbcad0e9099fc012e6368bf')
+};
+
+// 注意修改其中的 spawn 名称
+// Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], 'firstroleTest1', { memory: { role: 'roleTest1' }})
+
 // 引入 creep 配置项
 
 Creep.prototype.describe_self = function()
@@ -110,12 +133,12 @@ Creep.prototype.describe_self = function()
 Creep.prototype.work = function()
 {
     // 检查 creep 内存中的角色是否存在
-    if (!(this.memory.role in creepConfigs__default['default'])) {
+    if (!(this.memory.role in creepConfigs)) {
         console.log(`creep ${this.name} 内存属性 role 不属于任何已存在的 creepConfigs 名称`);
         return
     }
     // 获取对应配置项
-    const creepConfig = creepConfigs__default['default'][this.memory.role];
+    const creepConfig = creepConfigs[this.memory.role];
 
     // 获取是否工作
     const working = creepConfig.switch ? creepConfig.switch(this) : true;

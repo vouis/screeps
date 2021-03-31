@@ -1,4 +1,4 @@
-import roleTest from 'role.taskTest';
+import roleTest from './role.taskTest';
 export default {
     roleTest1: roleTest('5bbcad0e9099fc012e6368bf')
 }

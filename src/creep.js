@@ -1,5 +1,5 @@
 // 引入 creep 配置项
-import creepConfigs from 'config.creep.js'
+import creepConfigs from './config.creep.js'
 
 Creep.prototype.describe_self = function()
 {
