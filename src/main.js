@@ -46,11 +46,11 @@ var createCreeps = function (role,type) {
 
 var roles = {
     harvester: {number:2,type:'move550'},
-    tranfer: {number:2,type:'work550'},
-    tranfer2: {number:2,type:'work550'},
+    tranfer: {number:0,type:'work550'},
+    tranfer2: {number:0,type:'work550'},
     repairer: {number:1,type:'base550'},
-    upgrader: {number:6,type:'move550'},
-    builder: {number:3,type:'base300'},
+    upgrader: {number:3,type:'move550'},
+    builder: {number:0,type:'base300'},
 
 }
 
