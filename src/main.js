@@ -1,5 +1,6 @@
 import {spawnName,tower,roles,body} from './global'
 import './creep'
+import './proto/spawn'
 import roleHarvester  from './role.harvester'
 import roleUpgrader  from './role.upgrader'
 import roleBuilder  from './role.builder'
