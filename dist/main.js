@@ -202,7 +202,7 @@ Spawn.prototype.addTask = function(taskName) {
 };
 
 Spawn.prototype.mainSpawn = function(taskName) {
-    const value = Game.spawns.Spawn1.spawnCreep(body.base550, taskName, { memory: { role: 'taskName' }});
+    const value = Game.spawns.Spawn1.spawnCreep(body.base550, taskName, { memory: { role: taskName }});
     if(value===0) return true
     return false
 };
@@ -381,7 +381,7 @@ var createCreeps = function (role,type) {
 module.exports.loop = function () {
     var role = {
         total: _.filter(Game.creeps),
-        harvester: _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester'),
+        harvester: _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester'||creep.memory.role == 'harvester1'||creep.memory.role == 'harvester2'),
         builder: _.filter(Game.creeps, (creep) => creep.memory.role == 'builder'),
         upgrader: _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader'),
         tranfer: _.filter(Game.creeps, (creep) => creep.memory.role == 'tranfer'),
@@ -390,20 +390,15 @@ module.exports.loop = function () {
     };
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
-            console.log(name);
             if(name==='harvester1'||name==='harvester2'){
-                // 重生
-                console.log(name);
-                const spawnLength = Game.spawns[spawnName].addTask(name);
+                Game.spawns[spawnName].addTask(name);
                 delete Memory.creeps[name];
-                console.log('当前队列',spawnLength);
                 return;
             }
             delete Memory.creeps[name];
-            console.log('Clearing non-existing creep memory:', name);
         }
     }
-    console.log(Game.spawns[spawnName]);
+    
     Game.spawns[spawnName].work();
 
     if (role.harvester.length < 1) {
