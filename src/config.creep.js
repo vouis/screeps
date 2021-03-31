@@ -1,7 +1,8 @@
 import harvester from './role/role.harvester'
 export default {
     // roleTest1: roleTest('5bbcad0e9099fc012e6368bf')
-    harvester1: harvester()
+    harvester1: harvester(),
+    harvester2: harvester()
 }
 
 // 注意修改其中的 spawn 名称

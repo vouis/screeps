@@ -32,7 +32,7 @@ module.exports.loop = function () {
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
             console.log(name);
-            if(name==='harvester1'){
+            if(name==='harvester1'||name==='harvester2'){
                 // 重生
                 console.log(name);
                 const spawnLength = Game.spawns[spawnName].addTask(name);
@@ -87,7 +87,7 @@ module.exports.loop = function () {
 
     for (var name in Game.creeps) {
         var creep = Game.creeps[name];
-        if(creep.memory.role == 'harvester1'){
+        if(creep.memory.role == 'harvester1'||creep.memory.role == 'harvester2'){
             creep.work()
         }
         if (creep.memory.role == 'harvester') {

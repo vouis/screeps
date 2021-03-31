@@ -22,7 +22,7 @@ const getBody = (body) =>{
 };
 
 const roles = {
-    harvester: {number:2,type:'move550'},
+    harvester: {number:0,type:'move550'},
     tranfer: {number:0,type:'work550'},
     tranfer2: {number:0,type:'work550'},
     repairer: {number:1,type:'base300'},
@@ -129,7 +129,8 @@ const harvester= () => ({
 
 var creepConfigs = {
     // roleTest1: roleTest('5bbcad0e9099fc012e6368bf')
-    harvester1: harvester()
+    harvester1: harvester(),
+    harvester2: harvester()
 };
 
 // 注意修改其中的 spawn 名称
@@ -390,7 +391,7 @@ module.exports.loop = function () {
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
             console.log(name);
-            if(name==='harvester1'){
+            if(name==='harvester1'||name==='harvester2'){
                 // 重生
                 console.log(name);
                 const spawnLength = Game.spawns[spawnName].addTask(name);
@@ -445,7 +446,7 @@ module.exports.loop = function () {
 
     for (var name in Game.creeps) {
         var creep = Game.creeps[name];
-        if(creep.memory.role == 'harvester1'){
+        if(creep.memory.role == 'harvester1'||creep.memory.role == 'harvester2'){
             creep.work();
         }
         if (creep.memory.role == 'harvester') {
