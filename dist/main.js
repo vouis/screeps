@@ -94,7 +94,38 @@ const find_building = function (creep) {
     }
 };
 
-var harvester = roleTest;
+const moveto_Target$1 = function (creep) {
+    var targets = creep.room.find(FIND_STRUCTURES, {
+        filter: (structure) => {
+            return (structure.structureType == STRUCTURE_EXTENSION ||
+                structure.structureType == STRUCTURE_SPAWN) &&
+                structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
+        }
+    });
+    if (tower && tower.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        targets.push(tower);
+    }
+    if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        targets.push(storage);
+    }
+    if (targets.length > 0) {
+
+        if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+
+            creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
+        }
+    }
+};
+
+const harvester= () => ({
+    source: creep => {
+        find_structure_or_source(creep, source_1, container_1);
+    },
+    target: creep => {
+        moveto_Target$1(creep);
+    },
+    switch: creep => creep.updateState()
+});
 
 var creepConfigs = {
     // roleTest1: roleTest('5bbcad0e9099fc012e6368bf')
