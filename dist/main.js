@@ -27,7 +27,7 @@ const roles = {
     tranfer2: {number:0,type:'work550'},
     repairer: {number:1,type:'base300'},
     upgrader: {number:2,type:'move550'},
-    builder: {number:4,type:'move550'},
+    builder: {number:2,type:'move550'},
 };
 // BODYPART_COST: {
 //     "move": 50,
@@ -114,6 +114,9 @@ const moveto_Target$1 = function (creep) {
 
             creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
         }
+    }else {
+        const controller = creep.room.controller;
+        if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) creep.moveTo(controller);
     }
 };
 
@@ -135,7 +138,7 @@ var creepConfigs = {
 
 // 注意修改其中的 spawn 名称
 // Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], 'roleTest1', { memory: { role: 'roleTest1' }})
-// Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], 'harvester1', { memory: { role: 'harvester1' }})
+// Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], 'harvester2', { memory: { role: 'harvester2' }})
 
 // 引入 creep 配置项
 
