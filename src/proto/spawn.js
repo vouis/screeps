@@ -20,7 +20,7 @@ Spawn.prototype.addTask = function(taskName) {
 }
 
 Spawn.prototype.mainSpawn = function(taskName) {
-    const value = Game.spawns.Spawn1.spawnCreep(body.base550, taskName, { memory: { role: 'taskName' }})
+    const value = Game.spawns.Spawn1.spawnCreep(body.base550, taskName, { memory: { role: taskName }})
     if(value===0) return true
     return false
 }
