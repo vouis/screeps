@@ -121,7 +121,7 @@ var creepConfigs = {
 };
 
 // 注意修改其中的 spawn 名称
-// Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], 'firstroleTest1', { memory: { role: 'roleTest1' }})
+// Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], 'roleTest1', { memory: { role: 'roleTest1' }})
 
 // 引入 creep 配置项
 
@@ -351,10 +351,18 @@ module.exports.loop = function () {
     };
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
+            if(name==='firstroleTest1'){
+                // 重生
+                console.log('firstroleTest1');
+                Game.spawns[spawnName].addTask(name);
+                return;
+            }
             delete Memory.creeps[name];
             console.log('Clearing non-existing creep memory:', name);
         }
     }
+    console.log(Game.spawns[spawnName]);
+    Game.spawns[spawnName].work();
 
     if (role.harvester.length < 1) {
         console.log('Spawning new harvester: ');
