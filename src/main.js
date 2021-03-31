@@ -1,4 +1,4 @@
-import {spawnName,tower} from './global'
+import {spawnName,tower,roles,body} from './global'
 import './creep'
 import roleHarvester  from './role.harvester'
 import roleUpgrader  from './role.upgrader'
@@ -8,33 +8,6 @@ import roleTranfer2  from './role.tranfer2'
 import roleRepairer  from './role.repairer'
 
 
-const getBody = (body) =>{
-    const newBody = []
-    while(body.WORK){
-        newBody.push(WORK)
-        body.WORK--;
-    }
-    while(body.CARRY){
-        newBody.push(CARRY)
-        body.CARRY--;
-    }
-    while(body.MOVE){
-        newBody.push(MOVE)
-        body.MOVE--;
-    }
-    return newBody
-}
-
-var body = {
-    base:getBody({WORK:1,CARRY:1,MOVE:1}), //200
-    base300:getBody({WORK:2,CARRY:1,MOVE:1}), //300
-    base550:getBody({WORK:3,CARRY:3,MOVE:2}), //550
-    work550:getBody({WORK:4,CARRY:1,MOVE:1}), //550
-    move550:getBody({WORK:1,CARRY:4,MOVE:5}), //550
-    work: getBody({WORK:5,CARRY:1,MOVE:5}),
-    move: getBody({WORK:1,CARRY:6,MOVE:7}),
-    average: getBody({WORK:3,CARRY:4,MOVE:6})
-}
 const getName = (role) =>{
     return role + Game.time;
 }
@@ -44,15 +17,6 @@ var createCreeps = function (role,type) {
         { memory: { role: role } });
 }
 
-var roles = {
-    harvester: {number:2,type:'move550'},
-    tranfer: {number:0,type:'work550'},
-    tranfer2: {number:0,type:'work550'},
-    repairer: {number:1,type:'base550'},
-    upgrader: {number:3,type:'move550'},
-    builder: {number:0,type:'base300'},
-
-}
 
 module.exports.loop = function () {
     var role = {

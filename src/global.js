@@ -1,3 +1,53 @@
+const getBody = (body) =>{
+    const newBody = []
+    while(body.WORK){
+        newBody.push(WORK)
+        body.WORK--;
+    }
+    while(body.CARRY){
+        newBody.push(CARRY)
+        body.CARRY--;
+    }
+    while(body.MOVE){
+        newBody.push(MOVE)
+        body.MOVE--;
+    }
+    while(body.CLAIM){
+        newBody.push(CLAIM)
+        body.CLAIM--;
+    }
+    return newBody
+}
+
+export const roles = {
+    harvester: {number:2,type:'move550'},
+    tranfer: {number:0,type:'work550'},
+    tranfer2: {number:0,type:'work550'},
+    repairer: {number:1,type:'base300'},
+    upgrader: {number:2,type:'move550'},
+    builder: {number:4,type:'move550'},
+};
+// BODYPART_COST: {
+//     "move": 50,
+//         "work": 100,
+//         "attack": 80,
+//         "carry": 50,
+//         "heal": 250,
+//         "ranged_attack": 150,
+//         "tough": 10,
+//         "claim": 600
+// },
+export const body = {
+    base:getBody({WORK:1,CARRY:1,MOVE:1}), //200
+    base300:getBody({WORK:2,CARRY:1,MOVE:1}), //300
+    base550:getBody({WORK:3,CARRY:3,MOVE:2}), //550
+    work550:getBody({WORK:4,CARRY:1,MOVE:1}), //550
+    move550:getBody({WORK:1,CARRY:4,MOVE:5}), //550
+    work: getBody({WORK:5,CARRY:1,MOVE:5}),
+    move: getBody({WORK:1,CARRY:6,MOVE:7}),
+    average: getBody({WORK:3,CARRY:4,MOVE:6}),
+}
+
 // construct
 export const spawnName = 'Spawn1'
 export const tower =Game.getObjectById('5ec293036612cd7d2564f3c3') || null
