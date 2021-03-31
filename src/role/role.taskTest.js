@@ -1,10 +1,3 @@
-/**
- * 升级者配置生成器
- * source: 从指定矿中挖矿
- * target: 将其转移到指定的 roomController 中
- *
- * @param sourceId 要挖的矿 id
- */
 const roleTest= sourceId => ({
     // 采集能量矿
     source: creep => {
