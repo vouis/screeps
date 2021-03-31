@@ -7,10 +7,10 @@ const storage =Game.getObjectById('5ec4620eb6a35c398e9783cb') || null;
 
 Game.getObjectById('60619e848532e078ac6919d2');
 const container_1 = Game.getObjectById('6061fc9bc5078b66d847289b');
-const container_2$1 = Game.getObjectById('6061f1ee5e99e45a74b56875');
+const container_2 = Game.getObjectById('6061f1ee5e99e45a74b56875');
 
 const source_1 = Game.getObjectById('5bbcad0e9099fc012e6368bf');
-const source_2$1 = Game.getObjectById('5bbcad0e9099fc012e6368c0');
+const source_2 = Game.getObjectById('5bbcad0e9099fc012e6368c0');
 
 const find_source = function (creep,source) {
     if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
@@ -116,7 +116,7 @@ var roleUpgrader = {
             }
         }
         else {
-            find_structure_or_source(creep,source_2$1,container_2$1);
+            find_structure_or_source(creep,source_2,container_2);
         }
     }
 };
@@ -164,10 +164,10 @@ var roleTranfer2 = {
     /** @param {Creep} creep **/
     run: function (creep) {
         if (creep.store.getFreeCapacity() > 0) {
-            find_source(creep,source_2$1);
+            find_source(creep,source_2);
         }
         else {
-            to_structure(creep,container_2$1);
+            to_structure(creep,container_2);
         }
     }
 };
