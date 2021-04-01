@@ -52,12 +52,12 @@ const body = {
 
 // construct
 const spawnName = 'Spawn1';
-const tower =Game.getObjectById('606496df680e4ac68b2d8ccd') || null;
-const storage =Game.getObjectById('5ec4620eb6a35c398e9783cb') || null;
+const tower =Game.getObjectById('606496df680e4ac68b2d8ccd');
+const storage =Game.getObjectById('5ec4620eb6a35c398e9783cb');
 
 Game.getObjectById('60619e848532e078ac6919d2');
-const container_1 = Game.getObjectById('6061fc9bc5078b66d847289b');
-const container_2 = Game.getObjectById('6061f1ee5e99e45a74b56875');
+const container_1 = Game.getObjectById('606534045ead6e4ed7b9afcc');
+const container_2 = Game.getObjectById('606533c65ead6e7943b9afca');
 
 const source_1 = Game.getObjectById('5bbcad0e9099fc012e6368bf');
 const source_2 = Game.getObjectById('5bbcad0e9099fc012e6368c0');
@@ -144,7 +144,7 @@ const roleUpgrader$1= () => ({
 const roleTest= () => ({
     // 采集能量矿
     source: creep => {
-        find_structure_or_source(creep,source_2,container_2);
+        find_structure_or_source(creep,source_1,container_1);
     },
     // 升级控制器
     target: creep => {
@@ -190,11 +190,6 @@ var creepConfigs = {
 
 // 引入 creep 配置项
 
-Creep.prototype.describe_self = function()
-{
-    this.say('I\'m '+this.name);
-};
-
 Creep.prototype.work = function()
 {
     // 检查 creep 内存中的角色是否存在
@@ -222,12 +217,10 @@ Creep.prototype.updateState = function()
     // creep 身上没有能量 && creep 之前的状态为“工作”
     if(this.store[RESOURCE_ENERGY] <= 0 && this.memory.working) {
         this.memory.working = false;
-        this.say('执行 source 阶段');
     }
     // creep 身上能量满了 && creep 之前的状态为“不工作”
     if(this.store[RESOURCE_ENERGY] >= this.store.getCapacity() && !this.memory.working) {
         this.memory.working = true;
-        this.say('执行 target 阶段');
     }
 
     return this.memory.working

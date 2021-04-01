@@ -50,13 +50,13 @@ export const body = {
 
 // construct
 export const spawnName = 'Spawn1'
-export const tower =Game.getObjectById('606496df680e4ac68b2d8ccd') || null
-export const storage =Game.getObjectById('5ec4620eb6a35c398e9783cb') || null
+export const tower =Game.getObjectById('606496df680e4ac68b2d8ccd')
+export const storage =Game.getObjectById('5ec4620eb6a35c398e9783cb')
 export const mode = 'base'
 
 export const container_spawn=Game.getObjectById('60619e848532e078ac6919d2')
-export const container_1 = Game.getObjectById('6061fc9bc5078b66d847289b')
-export const container_2 = Game.getObjectById('6061f1ee5e99e45a74b56875')
+export const container_1 = Game.getObjectById('606534045ead6e4ed7b9afcc')
+export const container_2 = Game.getObjectById('606533c65ead6e7943b9afca')
 
 export const source_1 = Game.getObjectById('5bbcad0e9099fc012e6368bf')
 export const source_2 = Game.getObjectById('5bbcad0e9099fc012e6368c0')

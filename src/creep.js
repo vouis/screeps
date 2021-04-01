@@ -1,11 +1,6 @@
 // 引入 creep 配置项
 import creepConfigs from './config.creep.js'
 
-Creep.prototype.describe_self = function()
-{
-    this.say('I\'m '+this.name)
-}
-
 Creep.prototype.work = function()
 {
     // 检查 creep 内存中的角色是否存在
@@ -33,12 +28,10 @@ Creep.prototype.updateState = function()
     // creep 身上没有能量 && creep 之前的状态为“工作”
     if(this.store[RESOURCE_ENERGY] <= 0 && this.memory.working) {
         this.memory.working = false
-        this.say('执行 source 阶段')
     }
     // creep 身上能量满了 && creep 之前的状态为“不工作”
     if(this.store[RESOURCE_ENERGY] >= this.store.getCapacity() && !this.memory.working) {
         this.memory.working = true
-        this.say('执行 target 阶段')
     }
 
     return this.memory.working
