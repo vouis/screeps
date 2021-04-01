@@ -208,7 +208,7 @@ const otherRoom= () => ({
     switch: creep => creep.updateState()
 });
 
-var creepConfigs = {
+var creepList = {
     harvester1: harvester(),
     harvester2: harvester(),
     upgrader1: roleUpgrader$1(),
@@ -231,12 +231,12 @@ var creepConfigs = {
 Creep.prototype.work = function()
 {
     // 检查 creep 内存中的角色是否存在
-    if (!(this.memory.role in creepConfigs)) {
+    if (!(this.memory.role in creepList)) {
         console.log(`creep ${this.name} 内存属性 role 不属于任何已存在的 creepConfigs 名称`);
         return
     }
     // 获取对应配置项
-    const creepConfig = creepConfigs[this.memory.role];
+    const creepConfig = creepList[this.memory.role];
 
     // 获取是否工作
     const working = creepConfig.switch ? creepConfig.switch(this) : true;
@@ -467,14 +467,10 @@ module.exports.loop = function () {
     };
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
-            if(name==='harvester1'||name==='harvester2'||name === 'upgrader1'
-                ||name === 'upgrader2'||name === 'builder1'||name === 'builder2'
-            ||name==='transfer1_1'||name === 'transfer1_2'
-                ||name==='transfer2_1'||name === 'transfer2_2'
-                ||name==='otherRoom1'||name === 'otherRoom2'){
-                Game.spawns[spawnName].addTask(name);
-                delete Memory.creeps[name];
-                return;
+            for(let key in creepList){
+                if(name === key){
+                    Game.spawns[spawnName].addTask(name);
+                }
             }
             delete Memory.creeps[name];
         }
@@ -522,14 +518,7 @@ module.exports.loop = function () {
 
     for (var name in Game.creeps) {
         var creep = Game.creeps[name];
-        if(creep.memory.role == 'harvester1'||creep.memory.role == 'harvester2'
-            ||creep.memory.role == 'upgrader1'||creep.memory.role == 'upgrader2'
-            ||creep.memory.role == 'builder1'||creep.memory.role == 'builder2'
-        ||creep.memory.role == 'transfer1_1'||creep.memory.role == 'transfer1_2'
-            ||creep.memory.role == 'transfer2_1'||creep.memory.role == 'transfer2_2'
-        ||creep.memory.role == 'otherRoom1'||creep.memory.role == 'otherRoom2'){
             creep.work();
-        }
         if (creep.memory.role == 'harvester') {
             roleHarvester.run(creep);
         }

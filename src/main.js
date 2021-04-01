@@ -1,5 +1,5 @@
 import {spawnName,tower,roles,body} from './global'
-import './creep'
+import './proto/creep'
 import './proto/spawn'
 import roleHarvester  from './role.harvester'
 import roleUpgrader  from './role.upgrader'
@@ -7,6 +7,8 @@ import roleBuilder  from './role.builder'
 import roleTranfer  from './role.tranfer'
 import roleTranfer2  from './role.tranfer2'
 import roleRepairer  from './role.repairer'
+
+import creepList from './config.creep'
 
 
 const getName = (role) =>{
@@ -32,14 +34,10 @@ module.exports.loop = function () {
     }
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
-            if(name==='harvester1'||name==='harvester2'||name === 'upgrader1'
-                ||name === 'upgrader2'||name === 'builder1'||name === 'builder2'
-            ||name==='transfer1_1'||name === 'transfer1_2'
-                ||name==='transfer2_1'||name === 'transfer2_2'
-                ||name==='otherRoom1'||name === 'otherRoom2'){
-                Game.spawns[spawnName].addTask(name);
-                delete Memory.creeps[name];
-                return;
+            for(let key in creepList){
+                if(name === key){
+                    Game.spawns[spawnName].addTask(name);
+                }
             }
             delete Memory.creeps[name];
         }
@@ -87,14 +85,7 @@ module.exports.loop = function () {
 
     for (var name in Game.creeps) {
         var creep = Game.creeps[name];
-        if(creep.memory.role == 'harvester1'||creep.memory.role == 'harvester2'
-            ||creep.memory.role == 'upgrader1'||creep.memory.role == 'upgrader2'
-            ||creep.memory.role == 'builder1'||creep.memory.role == 'builder2'
-        ||creep.memory.role == 'transfer1_1'||creep.memory.role == 'transfer1_2'
-            ||creep.memory.role == 'transfer2_1'||creep.memory.role == 'transfer2_2'
-        ||creep.memory.role == 'otherRoom1'||creep.memory.role == 'otherRoom2'){
-            creep.work()
-        }
+            creep.work();
         if (creep.memory.role == 'harvester') {
             roleHarvester.run(creep);
         }
