@@ -141,10 +141,10 @@ const roleUpgrader$1= () => ({
     switch: creep => creep.updateState()
 });
 
-const roleTest= () => ({
+const roleBuilder$1= () => ({
     // 采集能量矿
     source: creep => {
-        find_structure_or_source(creep,source_1,container_1);
+        find_structure_or_source(creep,source_2,container_2);
     },
     // 升级控制器
     target: creep => {
@@ -179,8 +179,8 @@ var creepConfigs = {
     harvester2: harvester(),
     upgrader1: roleUpgrader$1(),
     upgrader2:roleUpgrader$1(),
-    builder1:roleTest(),
-    builder2:roleTest(),
+    builder1:roleBuilder$1(),
+    builder2:roleBuilder$1(),
     transfer1_1:roleTransfer(),
     transfer1_2:roleTransfer(),
     transfer2_1:roleTransfer2(),
@@ -188,7 +188,7 @@ var creepConfigs = {
 };
 
 // 注意修改其中的 spawn 名称
-// Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], 'transfer2_2', { memory: { role: 'transfer2_2' }})
+// Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], 'harvester', { memory: { role: 'harvester' }})
 
 // 引入 creep 配置项
 

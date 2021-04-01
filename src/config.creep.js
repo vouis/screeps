@@ -17,4 +17,4 @@ export default {
 }
 
 // 注意修改其中的 spawn 名称
-// Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], 'transfer2_2', { memory: { role: 'transfer2_2' }})
+// Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], 'harvester', { memory: { role: 'harvester' }})
