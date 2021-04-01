@@ -112,7 +112,7 @@ export const moveto_Target = function (creep) {
 }
 
 export const to_structure = function (creep,structure) {
-        if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        if ( structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
             creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
         }
 }
