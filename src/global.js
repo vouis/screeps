@@ -50,7 +50,7 @@ export const body = {
 
 // construct
 export const spawnName = 'Spawn1'
-export const tower =Game.getObjectById('5ec293036612cd7d2564f3c3') || null
+export const tower =Game.getObjectById('606496df680e4ac68b2d8ccd') || null
 export const storage =Game.getObjectById('5ec4620eb6a35c398e9783cb') || null
 export const mode = 'base'
 

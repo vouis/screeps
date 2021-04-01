@@ -52,7 +52,7 @@ const body = {
 
 // construct
 const spawnName = 'Spawn1';
-const tower =Game.getObjectById('5ec293036612cd7d2564f3c3') || null;
+const tower =Game.getObjectById('606496df680e4ac68b2d8ccd') || null;
 const storage =Game.getObjectById('5ec4620eb6a35c398e9783cb') || null;
 
 Game.getObjectById('60619e848532e078ac6919d2');
