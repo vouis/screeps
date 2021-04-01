@@ -56,7 +56,7 @@ export const mode = 'base'
 
 export const container_spawn=Game.getObjectById('60619e848532e078ac6919d2')
 export const container_1 = Game.getObjectById('606534045ead6e4ed7b9afcc')
-export const container_2 = Game.getObjectById('606533c65ead6e7943b9afca')
+export const container_2 = Game.getObjectById('60653e74e6f7f835e1474818')
 
 export const source_1 = Game.getObjectById('5bbcad0e9099fc012e6368bf')
 export const source_2 = Game.getObjectById('5bbcad0e9099fc012e6368c0')
