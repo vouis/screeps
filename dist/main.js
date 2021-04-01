@@ -56,10 +56,12 @@ const spawnName = 'Spawn1';
 const tower =Game.getObjectById('606496df680e4ac68b2d8ccd');
 const storage =Game.getObjectById('5ec4620eb6a35c398e9783cb');
 
-Game.getObjectById('60619e848532e078ac6919d2');
+
+
 const container_1 = Game.getObjectById('606545e6a4e2a38c708728ed');
 const container_2 = Game.getObjectById('60653e74e6f7f835e1474818');
 
+const source_North = Game.getObjectById('5bbcad0e9099fc012e6368bc');
 const source_1 = Game.getObjectById('5bbcad0e9099fc012e6368bf');
 const source_2 = Game.getObjectById('5bbcad0e9099fc012e6368c0');
 
@@ -175,6 +177,23 @@ const roleTransfer2= () => ({
     switch: creep => creep.updateState()
 });
 
+const otherRoom= () => ({
+    source: creep => {
+        const room = Game.rooms['E2S34'];
+        if (!room) {
+            creep.moveTo(new RoomPosition(25, 25, 'E2S34'));
+        }
+        else {
+            find_structure_or_source(creep, source_North, null);
+        }
+    },
+    target: creep => {
+        find_building(creep);
+        //to_structure(creep,container_1)
+    },
+    switch: creep => creep.updateState()
+});
+
 var creepConfigs = {
     harvester1: harvester(),
     harvester2: harvester(),
@@ -186,10 +205,12 @@ var creepConfigs = {
     transfer1_2:roleTransfer(),
     transfer2_1:roleTransfer2(),
     transfer2_2:roleTransfer2(),
+    otherRoom1:otherRoom(),
+    otherRoom2:otherRoom(),
 };
 
 // 注意修改其中的 spawn 名称
-// Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], 'harvester', { memory: { role: 'harvester' }})
+// Game.spawns.Spawn1.spawnCreep([MOVE,MOVE,MOVE,MOVE,MOVE,WORK,WORK,CARRY,CARRY,CARRY], 'otherRoom1', { memory: { role: 'otherRoom1' }})
 
 // 引入 creep 配置项
 
@@ -448,7 +469,8 @@ module.exports.loop = function () {
             if(name==='harvester1'||name==='harvester2'||name === 'upgrader1'
                 ||name === 'upgrader2'||name === 'builder1'||name === 'builder2'
             ||name==='transfer1_1'||name === 'transfer1_2'
-                ||name==='transfer2_1'||name === 'transfer2_2'){
+                ||name==='transfer2_1'||name === 'transfer2_2'
+                ||name==='otherRoom1'||name === 'otherRoom2'){
                 Game.spawns[spawnName].addTask(name);
                 delete Memory.creeps[name];
                 return;
@@ -503,7 +525,8 @@ module.exports.loop = function () {
             ||creep.memory.role == 'upgrader1'||creep.memory.role == 'upgrader2'
             ||creep.memory.role == 'builder1'||creep.memory.role == 'builder2'
         ||creep.memory.role == 'transfer1_1'||creep.memory.role == 'transfer1_2'
-            ||creep.memory.role == 'transfer2_1'||creep.memory.role == 'transfer2_2'){
+            ||creep.memory.role == 'transfer2_1'||creep.memory.role == 'transfer2_2'
+        ||creep.memory.role == 'otherRoom1'||creep.memory.role == 'otherRoom2'){
             creep.work();
         }
         if (creep.memory.role == 'harvester') {
