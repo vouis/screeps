@@ -24,7 +24,7 @@ module.exports.loop = function () {
         total: _.filter(Game.creeps),
         harvester: _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester'||creep.memory.role == 'harvester1'||creep.memory.role == 'harvester2'),
         builder: _.filter(Game.creeps, (creep) => creep.memory.role == 'builder'),
-        upgrader: _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader'),
+        upgrader: _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader'||creep.memory.role == 'upgrader1'||creep.memory.role == 'upgrader2'),
         tranfer: _.filter(Game.creeps, (creep) => creep.memory.role == 'tranfer'),
         tranfer2: _.filter(Game.creeps, (creep) => creep.memory.role == 'tranfer2'),
         repairer: _.filter(Game.creeps, (creep) => creep.memory.role == 'repairer')
