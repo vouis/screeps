@@ -25,7 +25,8 @@ module.exports.loop = function () {
         harvester: _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester'||creep.memory.role == 'harvester1'||creep.memory.role == 'harvester2'),
         builder: _.filter(Game.creeps, (creep) => creep.memory.role == 'builder'||creep.memory.role == 'builder1'||creep.memory.role == 'builder2'),
         upgrader: _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader'||creep.memory.role == 'upgrader1'||creep.memory.role == 'upgrader2'),
-        tranfer: _.filter(Game.creeps, (creep) => creep.memory.role == 'tranfer'||creep.memory.role == 'transfer1'||creep.memory.role == 'transfer2'),
+        tranfer: _.filter(Game.creeps, (creep) => creep.memory.role == 'tranfer'||creep.memory.role == 'transfer1_1'||creep.memory.role == 'transfer1_2'
+            ||creep.memory.role == 'transfer2_1'||creep.memory.role == 'transfer2_2'),
         tranfer2: _.filter(Game.creeps, (creep) => creep.memory.role == 'tranfer2'),
         repairer: _.filter(Game.creeps, (creep) => creep.memory.role == 'repairer')
     }
@@ -33,7 +34,8 @@ module.exports.loop = function () {
         if (!Game.creeps[name]) {
             if(name==='harvester1'||name==='harvester2'||name === 'upgrader1'
                 ||name === 'upgrader2'||name === 'builder1'||name === 'builder2'
-            ||name==='transfer1'||name === 'transfer2'){
+            ||name==='transfer1_1'||name === 'transfer1_2'
+                ||name==='transfer2_1'||name === 'transfer2_2'){
                 Game.spawns[spawnName].addTask(name);
                 delete Memory.creeps[name];
                 return;
@@ -87,7 +89,8 @@ module.exports.loop = function () {
         if(creep.memory.role == 'harvester1'||creep.memory.role == 'harvester2'
             ||creep.memory.role == 'upgrader1'||creep.memory.role == 'upgrader2'
             ||creep.memory.role == 'builder1'||creep.memory.role == 'builder2'
-        ||creep.memory.role == 'transfer1'||creep.memory.role == 'transfer2'){
+        ||creep.memory.role == 'transfer1_1'||creep.memory.role == 'transfer1_2'
+            ||creep.memory.role == 'transfer2_1'||creep.memory.role == 'transfer2_2'){
             creep.work()
         }
         if (creep.memory.role == 'harvester') {

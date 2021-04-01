@@ -10,8 +10,10 @@ export default {
     upgrader2:upgrader(),
     builder1:builder(),
     builder2:builder(),
-    transfer:transfer(),
-    transfer2:transfer2(),
+    transfer1_1:transfer(),
+    transfer1_2:transfer(),
+    transfer2_1:transfer2(),
+    transfer2_2:transfer2(),
 }
 
 // 注意修改其中的 spawn 名称
