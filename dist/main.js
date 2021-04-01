@@ -109,9 +109,7 @@ const moveto_Target$1 = function (creep) {
 };
 
 const to_structure = function (creep,structure) {
-    // creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE &&
-    console.log('222',structure.pos,creep.pos);
-        if ( structure.pos!==creep.pos&&structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        if ( JSON.stringify(structure.pos)!==JSON.stringify(creep.pos)&&structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
             creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
         }
 };
