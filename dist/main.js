@@ -42,9 +42,10 @@ const roles = {
 const body = {
     base:getBody({WORK:1,CARRY:1,MOVE:1}), //200
     base300:getBody({WORK:2,CARRY:1,MOVE:1}), //300
-    base550:getBody({WORK:3,CARRY:3,MOVE:2}), //550
     work550:getBody({WORK:4,CARRY:1,MOVE:1}), //550
     move550:getBody({WORK:1,CARRY:4,MOVE:5}), //550
+    base600:getBody({WORK:2,CARRY:3,MOVE:5}),//600
+    trans600:getBody({WORK:5,CARRY:1,MOVE:1}),//600
     work: getBody({WORK:5,CARRY:1,MOVE:5}),
     move: getBody({WORK:1,CARRY:6,MOVE:7}),
     average: getBody({WORK:3,CARRY:4,MOVE:6}),
@@ -248,7 +249,14 @@ Spawn.prototype.addTask = function(taskName) {
 };
 
 Spawn.prototype.mainSpawn = function(taskName) {
-    const value = Game.spawns.Spawn1.spawnCreep(body.base550, taskName, { memory: { role: taskName }});
+   let newBody = body.base600;
+    if(taskName.includes('harvester')||taskName.includes('upgrader')){
+        newBody = body.move550;
+    }
+    else if(taskName.includes('transfer')){
+        newBody = body.trans600;
+    }
+    const value = Game.spawns.Spawn1.spawnCreep(newBody, taskName, { memory: { role: taskName }});
     if(value===0) return true
     return false
 };

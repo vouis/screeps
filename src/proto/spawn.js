@@ -20,7 +20,14 @@ Spawn.prototype.addTask = function(taskName) {
 }
 
 Spawn.prototype.mainSpawn = function(taskName) {
-    const value = Game.spawns.Spawn1.spawnCreep(body.base550, taskName, { memory: { role: taskName }})
+   let newBody = body.base600;
+    if(taskName.includes('harvester')||taskName.includes('upgrader')){
+        newBody = body.move550
+    }
+    else if(taskName.includes('transfer')){
+        newBody = body.trans600
+    }
+    const value = Game.spawns.Spawn1.spawnCreep(newBody, taskName, { memory: { role: taskName }})
     if(value===0) return true
     return false
 }
