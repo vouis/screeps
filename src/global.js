@@ -24,8 +24,8 @@ export const roles = {
     tranfer: {number:0,type:'work550'},
     tranfer2: {number:0,type:'work550'},
     repairer: {number:1,type:'base300'},
-    upgrader: {number:2,type:'move550'},
-    builder: {number:2,type:'move550'},
+    upgrader: {number:0,type:'move550'},
+    builder: {number:0,type:'move550'},
 };
 // BODYPART_COST: {
 //     "move": 50,

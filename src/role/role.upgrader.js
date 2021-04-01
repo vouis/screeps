@@ -1,6 +1,6 @@
 import {container_2, find_structure_or_source, source_2} from "../global";
 
-const roleUpgrader= sourceId => ({
+const roleUpgrader= () => ({
     // 采集能量矿
     source: creep => {
         find_structure_or_source(creep,source_2,container_2)
