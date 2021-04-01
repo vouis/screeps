@@ -27,6 +27,9 @@ Spawn.prototype.mainSpawn = function(taskName) {
     else if(taskName.includes('transfer')){
         newBody = body.trans600
     }
+    else if(taskName.includes('claimer')){
+        newBody = body.claim
+    }
     const value = Game.spawns.Spawn1.spawnCreep(newBody, taskName, { memory: { role: taskName }})
     if(value===0) return true
     return false

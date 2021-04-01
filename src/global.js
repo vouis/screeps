@@ -44,9 +44,7 @@ export const body = {
     move550:getBody({WORK:1,CARRY:4,MOVE:5}), //550
     base600:getBody({WORK:2,CARRY:3,MOVE:5}),//600
     trans600:getBody({WORK:5,CARRY:1,MOVE:1}),//600
-    work: getBody({WORK:5,CARRY:1,MOVE:5}),
-    move: getBody({WORK:1,CARRY:6,MOVE:7}),
-    average: getBody({WORK:3,CARRY:4,MOVE:6}),
+    claim:getBody({CLAIM:1,MOVE:1}),// 650
 }
 
 // construct

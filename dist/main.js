@@ -46,9 +46,7 @@ const body = {
     move550:getBody({WORK:1,CARRY:4,MOVE:5}), //550
     base600:getBody({WORK:2,CARRY:3,MOVE:5}),//600
     trans600:getBody({WORK:5,CARRY:1,MOVE:1}),//600
-    work: getBody({WORK:5,CARRY:1,MOVE:5}),
-    move: getBody({WORK:1,CARRY:6,MOVE:7}),
-    average: getBody({WORK:3,CARRY:4,MOVE:6}),
+    claim:getBody({CLAIM:1,MOVE:1}),// 650
 };
 
 // construct
@@ -208,6 +206,20 @@ const otherRoom= () => ({
     switch: creep => creep.updateState()
 });
 
+const roleClaimer= () => ({
+    target: creep => {
+        const room = Game.rooms['E2S34'];
+        if (!room) {
+            creep.moveTo(new RoomPosition(20, 36, 'E2S34'));
+        }
+        else {
+            if(creep.reserveController(creep.room.controller) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(creep.room.controller);
+            }
+        }
+    }
+});
+
 var creepList = {
     harvester1: harvester(),
     harvester2: harvester(),
@@ -221,10 +233,12 @@ var creepList = {
     transfer2_2:roleTransfer2(),
     otherRoom1:otherRoom(),
     otherRoom2:otherRoom(),
+    claimer1:roleClaimer(),
+
 };
 
 // 注意修改其中的 spawn 名称
-// Game.spawns.Spawn1.spawnCreep([MOVE,MOVE,MOVE,MOVE,MOVE,WORK,WORK,CARRY,CARRY,CARRY], 'otherRoom1', { memory: { role: 'otherRoom1' }})
+// Game.spawns.Spawn1.spawnCreep([MOVE,CLAIM], 'claimer1', { memory: { role: 'claimer1' }})
 
 // 引入 creep 配置项
 
@@ -290,6 +304,9 @@ Spawn.prototype.mainSpawn = function(taskName) {
     }
     else if(taskName.includes('transfer')){
         newBody = body.trans600;
+    }
+    else if(taskName.includes('claimer')){
+        newBody = body.claim;
     }
     const value = Game.spawns.Spawn1.spawnCreep(newBody, taskName, { memory: { role: taskName }});
     if(value===0) return true

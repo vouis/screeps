@@ -4,6 +4,7 @@ import builder from './role/role.builder'
 import transfer from './role/role.transfer'
 import transfer2 from './role/role.transfer2'
 import otherRoom from './role/role.otherRoom'
+import claimer from './role/role.claimer'
 export default {
     harvester1: harvester(),
     harvester2: harvester(),
@@ -17,7 +18,9 @@ export default {
     transfer2_2:transfer2(),
     otherRoom1:otherRoom(),
     otherRoom2:otherRoom(),
+    claimer1:claimer(),
+
 }
 
 // 注意修改其中的 spawn 名称
-// Game.spawns.Spawn1.spawnCreep([MOVE,MOVE,MOVE,MOVE,MOVE,WORK,WORK,CARRY,CARRY,CARRY], 'otherRoom1', { memory: { role: 'otherRoom1' }})
+// Game.spawns.Spawn1.spawnCreep([MOVE,CLAIM], 'claimer1', { memory: { role: 'claimer1' }})
