@@ -23,7 +23,7 @@ export const roles = {
     harvester: {number:0,type:'move550'},
     tranfer: {number:0,type:'work550'},
     tranfer2: {number:0,type:'work550'},
-    repairer: {number:1,type:'base300'},
+    repairer: {number:0,type:'base300'},
     upgrader: {number:0,type:'move550'},
     builder: {number:0,type:'move550'},
 };

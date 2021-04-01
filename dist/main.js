@@ -25,7 +25,7 @@ const roles = {
     harvester: {number:0,type:'move550'},
     tranfer: {number:0,type:'work550'},
     tranfer2: {number:0,type:'work550'},
-    repairer: {number:1,type:'base300'},
+    repairer: {number:0,type:'base300'},
     upgrader: {number:0,type:'move550'},
     builder: {number:0,type:'move550'},
 };
@@ -131,16 +131,13 @@ const harvester= () => ({
 });
 
 const roleUpgrader$1= () => ({
-    // 采集能量矿
     source: creep => {
         find_structure_or_source(creep,source_2,container_2);
     },
-    // 升级控制器
     target: creep => {
         const controller = creep.room.controller;
         if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) creep.moveTo(controller);
     },
-    // 状态切换条件，稍后会给出具体实现
     switch: creep => creep.updateState()
 });
 
@@ -157,19 +154,39 @@ const roleTest= () => ({
     switch: creep => creep.updateState()
 });
 
+const roleTransfer= () => ({
+    source: creep => {
+        find_source(creep,source_1);
+    },
+    target: creep => {
+        to_structure(creep,container_1);
+    },
+    switch: creep => creep.updateState()
+});
+
+const roleTransfer2= () => ({
+    source: creep => {
+        find_source(creep,source_2);
+    },
+    target: creep => {
+        to_structure(creep,container_2);
+    },
+    switch: creep => creep.updateState()
+});
+
 var creepConfigs = {
-    // roleTest1: roleTest('5bbcad0e9099fc012e6368bf')
     harvester1: harvester(),
     harvester2: harvester(),
     upgrader1: roleUpgrader$1(),
     upgrader2:roleUpgrader$1(),
     builder1:roleTest(),
-    builder2:roleTest()
+    builder2:roleTest(),
+    transfer:roleTransfer(),
+    transfer2:roleTransfer2(),
 };
 
 // 注意修改其中的 spawn 名称
-// Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], 'roleTest1', { memory: { role: 'roleTest1' }})
-// Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], 'upgrader2', { memory: { role: 'upgrader2' }})
+// Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], 'builder1', { memory: { role: 'builder1' }})
 
 // 引入 creep 配置项
 
@@ -418,13 +435,15 @@ module.exports.loop = function () {
         harvester: _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester'||creep.memory.role == 'harvester1'||creep.memory.role == 'harvester2'),
         builder: _.filter(Game.creeps, (creep) => creep.memory.role == 'builder'||creep.memory.role == 'builder1'||creep.memory.role == 'builder2'),
         upgrader: _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader'||creep.memory.role == 'upgrader1'||creep.memory.role == 'upgrader2'),
-        tranfer: _.filter(Game.creeps, (creep) => creep.memory.role == 'tranfer'),
+        tranfer: _.filter(Game.creeps, (creep) => creep.memory.role == 'tranfer'||creep.memory.role == 'transfer1'||creep.memory.role == 'transfer2'),
         tranfer2: _.filter(Game.creeps, (creep) => creep.memory.role == 'tranfer2'),
         repairer: _.filter(Game.creeps, (creep) => creep.memory.role == 'repairer')
     };
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
-            if(name==='harvester1'||name==='harvester2'||name === 'upgrader1'||name === 'upgrader2'||name === 'builder1'||name === 'builder2'){
+            if(name==='harvester1'||name==='harvester2'||name === 'upgrader1'
+                ||name === 'upgrader2'||name === 'builder1'||name === 'builder2'
+            ||name==='transfer1'||name === 'transfer2'){
                 Game.spawns[spawnName].addTask(name);
                 delete Memory.creeps[name];
                 return;
@@ -477,7 +496,8 @@ module.exports.loop = function () {
         var creep = Game.creeps[name];
         if(creep.memory.role == 'harvester1'||creep.memory.role == 'harvester2'
             ||creep.memory.role == 'upgrader1'||creep.memory.role == 'upgrader2'
-            ||creep.memory.role == 'builder1'||creep.memory.role == 'builder2'){
+            ||creep.memory.role == 'builder1'||creep.memory.role == 'builder2'
+        ||creep.memory.role == 'transfer1'||creep.memory.role == 'transfer2'){
             creep.work();
         }
         if (creep.memory.role == 'harvester') {
