@@ -125,3 +125,16 @@ export const find_building = function (creep) {
     moveto_Target(creep)
     }
 }
+
+export const to_destroy_building = function (creep) {
+    var targets = creep.room.find(FIND_STRUCTURES, {
+        filter: (targets) => targets.hits < targets.hitsMax
+    });
+    targets.sort((a, b) => a.hits - b.hits);
+    if (targets.length) {
+        if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
+            creep.say('repair');
+        }
+    }
+}

@@ -1,6 +1,7 @@
 import {
     find_building,
     find_structure_or_source,
+    to_destroy_building,
     source_North,
 } from "../global";
 
@@ -15,6 +16,7 @@ const otherRoom= () => ({
         }
     },
     target: creep => {
+        to_destroy_building(creep);
         find_building(creep)
         //to_structure(creep,container_1)
     },
