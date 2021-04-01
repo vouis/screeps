@@ -205,6 +205,7 @@ const otherRoom= () => ({
     target: creep => {
         to_destroy_building(creep);
         find_building(creep);
+        moveto_Target$1(creep);
     },
     switch: creep => creep.updateState()
 });

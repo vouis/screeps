@@ -4,6 +4,7 @@ import {
     to_destroy_building,
     source_North,
     container_North,
+    moveto_Target,
 } from "../global";
 
 const otherRoom= () => ({
@@ -19,6 +20,7 @@ const otherRoom= () => ({
     target: creep => {
         to_destroy_building(creep);
         find_building(creep)
+        moveto_Target(creep);
     },
     switch: creep => creep.updateState()
 })
