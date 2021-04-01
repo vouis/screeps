@@ -56,7 +56,7 @@ const tower =Game.getObjectById('606496df680e4ac68b2d8ccd');
 const storage =Game.getObjectById('5ec4620eb6a35c398e9783cb');
 
 Game.getObjectById('60619e848532e078ac6919d2');
-const container_1 = Game.getObjectById('606534045ead6e4ed7b9afcc');
+const container_1 = Game.getObjectById('606545e6a4e2a38c708728ed');
 const container_2 = Game.getObjectById('60653e74e6f7f835e1474818');
 
 const source_1 = Game.getObjectById('5bbcad0e9099fc012e6368bf');
@@ -74,23 +74,6 @@ const find_structure_or_source = function (creep,source,structure) {
         creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
     } else {
         find_source(creep,source);
-    }
-};
-
-const to_structure = function (creep,structure) {
-        if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
-            creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
-        }
-};
-
-const find_building = function (creep) {
-    var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
-    if (targets.length) {
-        if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
-        }
-    } else {
-        return 0;
     }
 };
 
@@ -117,6 +100,23 @@ const moveto_Target$1 = function (creep) {
     }else {
         const controller = creep.room.controller;
         if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) creep.moveTo(controller);
+    }
+};
+
+const to_structure = function (creep,structure) {
+        if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+            creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
+        }
+};
+
+const find_building = function (creep) {
+    var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+    if (targets.length) {
+        if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
+        }
+    } else {
+    moveto_Target$1(creep);
     }
 };
 

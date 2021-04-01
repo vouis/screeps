@@ -55,7 +55,7 @@ export const storage =Game.getObjectById('5ec4620eb6a35c398e9783cb')
 export const mode = 'base'
 
 export const container_spawn=Game.getObjectById('60619e848532e078ac6919d2')
-export const container_1 = Game.getObjectById('606534045ead6e4ed7b9afcc')
+export const container_1 = Game.getObjectById('606545e6a4e2a38c708728ed')
 export const container_2 = Game.getObjectById('60653e74e6f7f835e1474818')
 
 export const source_1 = Game.getObjectById('5bbcad0e9099fc012e6368bf')
@@ -81,6 +81,32 @@ export const find_structure_or_source = function (creep,source,structure) {
     }
 }
 
+export const moveto_Target = function (creep) {
+    var targets = creep.room.find(FIND_STRUCTURES, {
+        filter: (structure) => {
+            return (structure.structureType == STRUCTURE_EXTENSION ||
+                structure.structureType == STRUCTURE_SPAWN) &&
+                structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
+        }
+    });
+    if (tower && tower.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        targets.push(tower)
+    }
+    if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        targets.push(storage)
+    }
+    if (targets.length > 0) {
+
+        if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+
+            creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
+        }
+    }else{
+        const controller = creep.room.controller
+        if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) creep.moveTo(controller)
+    }
+}
+
 export const to_structure = function (creep,structure) {
         if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
             creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
@@ -94,6 +120,6 @@ export const find_building = function (creep) {
             creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
         }
     } else {
-        return 0;
+    moveto_Target(creep)
     }
 }
