@@ -181,7 +181,7 @@ const otherRoom= () => ({
     source: creep => {
         const room = Game.rooms['E2S34'];
         if (!room) {
-            creep.moveTo(new RoomPosition(25, 25, 'E2S34'));
+            creep.moveTo(new RoomPosition(25, 22, 'E2S34'));
         }
         else {
             find_structure_or_source(creep, source_North, null);
