@@ -43,7 +43,8 @@ export const body = {
     work550:getBody({WORK:4,CARRY:1,MOVE:1}), //550
     move550:getBody({WORK:1,CARRY:4,MOVE:5}), //550
     base600:getBody({WORK:2,CARRY:3,MOVE:5}),//600
-    trans600:getBody({WORK:5,CARRY:1,MOVE:1}),//600
+    work600:getBody({WORK:4,CARRY:1,MOVE:3}), //600
+    trans800:getBody({WORK:6,CARRY:1,MOVE:3}),//600
     claim:getBody({CLAIM:1,MOVE:1}),// 650
 }
 
@@ -58,6 +59,7 @@ export const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd')
 
 export const container_1 = Game.getObjectById('606545e6a4e2a38c708728ed')
 export const container_2 = Game.getObjectById('60653e74e6f7f835e1474818')
+export const container_North = Game.getObjectById('5bbcad0e9099fc012e6368bc')
 
 export const source_North = Game.getObjectById('5bbcad0e9099fc012e6368bc')
 export const source_1 = Game.getObjectById('5bbcad0e9099fc012e6368bf')

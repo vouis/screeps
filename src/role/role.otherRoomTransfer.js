@@ -1,26 +1,24 @@
 import {
-    find_building,
-    find_structure_or_source,
-    to_destroy_building,
-    source_North,
     container_North,
+    find_source, find_structure_or_source,
+    source_North,
+    to_structure
 } from "../global";
 
-const otherRoom= () => ({
+const roleTransferN= () => ({
     source: creep => {
         const room = Game.rooms['E2S34']
         if (!room) {
             creep.moveTo(new RoomPosition(25, 22, 'E2S34'))
         }
         else{
-            find_structure_or_source(creep, source_North, container_North)
+            find_source(creep,source_North)
         }
     },
     target: creep => {
-        to_destroy_building(creep);
-        find_building(creep)
+        to_structure(creep,container_North)
     },
     switch: creep => creep.updateState()
 })
 
-export default otherRoom;
+export default roleTransferN;

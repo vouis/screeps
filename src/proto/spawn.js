@@ -25,7 +25,7 @@ Spawn.prototype.mainSpawn = function(taskName) {
         newBody = body.move550
     }
     else if(taskName.includes('transfer')){
-        newBody = body.trans600
+        newBody = body.trans800
     }
     else if(taskName.includes('claimer')){
         newBody = body.claim

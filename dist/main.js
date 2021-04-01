@@ -45,7 +45,8 @@ const body = {
     work550:getBody({WORK:4,CARRY:1,MOVE:1}), //550
     move550:getBody({WORK:1,CARRY:4,MOVE:5}), //550
     base600:getBody({WORK:2,CARRY:3,MOVE:5}),//600
-    trans600:getBody({WORK:5,CARRY:1,MOVE:1}),//600
+    work600:getBody({WORK:4,CARRY:1,MOVE:3}), //600
+    trans800:getBody({WORK:6,CARRY:1,MOVE:3}),//600
     claim:getBody({CLAIM:1,MOVE:1}),// 650
 };
 
@@ -60,6 +61,7 @@ const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd');
 
 const container_1 = Game.getObjectById('606545e6a4e2a38c708728ed');
 const container_2 = Game.getObjectById('60653e74e6f7f835e1474818');
+const container_North = Game.getObjectById('5bbcad0e9099fc012e6368bc');
 
 const source_North = Game.getObjectById('5bbcad0e9099fc012e6368bc');
 const source_1 = Game.getObjectById('5bbcad0e9099fc012e6368bf');
@@ -197,13 +199,12 @@ const otherRoom= () => ({
             creep.moveTo(new RoomPosition(25, 22, 'E2S34'));
         }
         else {
-            find_structure_or_source(creep, source_North, null);
+            find_structure_or_source(creep, source_North, container_North);
         }
     },
     target: creep => {
         to_destroy_building(creep);
         find_building(creep);
-        //to_structure(creep,container_1)
     },
     switch: creep => creep.updateState()
 });
@@ -222,6 +223,22 @@ const roleClaimer= () => ({
     }
 });
 
+const roleTransferN= () => ({
+    source: creep => {
+        const room = Game.rooms['E2S34'];
+        if (!room) {
+            creep.moveTo(new RoomPosition(25, 22, 'E2S34'));
+        }
+        else {
+            find_source(creep,source_North);
+        }
+    },
+    target: creep => {
+        to_structure(creep,container_North);
+    },
+    switch: creep => creep.updateState()
+});
+
 var creepList = {
     harvester1: harvester(),
     harvester2: harvester(),
@@ -230,17 +247,19 @@ var creepList = {
     builder1:roleBuilder$1(),
     builder2:roleBuilder$1(),
     transfer1_1:roleTransfer(),
-    transfer1_2:roleTransfer(),
+    // transfer1_2:transfer(),
     transfer2_1:roleTransfer2(),
-    transfer2_2:roleTransfer2(),
+    // transfer2_2:transfer2(),
+    // north room
     otherRoom1:otherRoom(),
     otherRoom2:otherRoom(),
     claimer1:roleClaimer(),
+    transferN1:roleTransferN()
 
 };
 
-// 注意修改其中的 spawn 名称
-// Game.spawns.Spawn1.spawnCreep([MOVE,CLAIM], 'claimer1', { memory: { role: 'claimer1' }})
+// 注意修改其中的 spawn 名称 work550:getBody({WORK:4,CARRY:1,MOVE:1}),
+// Game.spawns.Spawn1.spawnCreep([MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,WORK,WORK,CARRY], 'transferN1', { memory: { role: 'transferN1' }})
 
 // 引入 creep 配置项
 
@@ -305,7 +324,7 @@ Spawn.prototype.mainSpawn = function(taskName) {
         newBody = body.move550;
     }
     else if(taskName.includes('transfer')){
-        newBody = body.trans600;
+        newBody = body.trans800;
     }
     else if(taskName.includes('claimer')){
         newBody = body.claim;
