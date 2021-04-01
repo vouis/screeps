@@ -31,7 +31,7 @@ module.exports.loop = function () {
     }
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
-            if(name==='harvester1'||name==='harvester2'){
+            if(name==='harvester1'||name==='harvester2'||name === 'upgrader1'||name === 'upgrader2'){
                 Game.spawns[spawnName].addTask(name);
                 delete Memory.creeps[name];
                 return;
@@ -39,7 +39,7 @@ module.exports.loop = function () {
             delete Memory.creeps[name];
         }
     }
-    
+
     Game.spawns[spawnName].work();
 
     if (role.harvester.length < 1) {
@@ -82,7 +82,7 @@ module.exports.loop = function () {
 
     for (var name in Game.creeps) {
         var creep = Game.creeps[name];
-        if(creep.memory.role == 'harvester1'||creep.memory.role == 'harvester2'){
+        if(creep.memory.role == 'harvester1'||creep.memory.role == 'harvester2'||creep.memory.role == 'upgrader1'||creep.memory.role == 'upgrader2'){
             creep.work()
         }
         if (creep.memory.role == 'harvester') {

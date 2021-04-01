@@ -130,15 +130,31 @@ const harvester= () => ({
     switch: creep => creep.updateState()
 });
 
+const roleUpgrader$1= sourceId => ({
+    // 采集能量矿
+    source: creep => {
+        find_structure_or_source(creep,source_2,container_2);
+    },
+    // 升级控制器
+    target: creep => {
+        const controller = creep.room.controller;
+        if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) creep.moveTo(controller);
+    },
+    // 状态切换条件，稍后会给出具体实现
+    switch: creep => creep.updateState()
+});
+
 var creepConfigs = {
     // roleTest1: roleTest('5bbcad0e9099fc012e6368bf')
     harvester1: harvester(),
-    harvester2: harvester()
+    harvester2: harvester(),
+    upgrader1: roleUpgrader$1(),
+    upgrader2:roleUpgrader$1(),
 };
 
 // 注意修改其中的 spawn 名称
 // Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], 'roleTest1', { memory: { role: 'roleTest1' }})
-// Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], 'harvester2', { memory: { role: 'harvester2' }})
+// Game.spawns.Spawn1.spawnCreep([WORK, CARRY, MOVE], 'upgrader1', { memory: { role: 'upgrader1' }})
 
 // 引入 creep 配置项
 
@@ -393,7 +409,7 @@ module.exports.loop = function () {
     };
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
-            if(name==='harvester1'||name==='harvester2'){
+            if(name==='harvester1'||name==='harvester2'||name === 'upgrader1'||name === 'upgrader2'){
                 Game.spawns[spawnName].addTask(name);
                 delete Memory.creeps[name];
                 return;
@@ -401,7 +417,7 @@ module.exports.loop = function () {
             delete Memory.creeps[name];
         }
     }
-    
+
     Game.spawns[spawnName].work();
 
     if (role.harvester.length < 1) {
@@ -444,7 +460,7 @@ module.exports.loop = function () {
 
     for (var name in Game.creeps) {
         var creep = Game.creeps[name];
-        if(creep.memory.role == 'harvester1'||creep.memory.role == 'harvester2'){
+        if(creep.memory.role == 'harvester1'||creep.memory.role == 'harvester2'||creep.memory.role == 'upgrader1'||creep.memory.role == 'upgrader2'){
             creep.work();
         }
         if (creep.memory.role == 'harvester') {
