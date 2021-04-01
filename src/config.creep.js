@@ -3,6 +3,7 @@ import upgrader from './role/role.upgrader'
 import builder from './role/role.builder'
 import transfer from './role/role.transfer'
 import transfer2 from './role/role.transfer2'
+import otherRoom from './role/role.otherRoom'
 export default {
     harvester1: harvester(),
     harvester2: harvester(),
@@ -14,6 +15,8 @@ export default {
     transfer1_2:transfer(),
     transfer2_1:transfer2(),
     transfer2_2:transfer2(),
+    otherRoom1:otherRoom(),
+    otherRoom2:otherRoom(),
 }
 
 // 注意修改其中的 spawn 名称
