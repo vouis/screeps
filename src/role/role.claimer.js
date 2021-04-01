@@ -1,8 +1,5 @@
 import {
-    container_1,
-    find_source,
-    source_1,
-    to_structure
+    controller_North
 } from "../global";
 
 const roleClaimer= () => ({
@@ -12,8 +9,8 @@ const roleClaimer= () => ({
             creep.moveTo(new RoomPosition(20, 36, 'E2S34'))
         }
         else{
-            if(creep.reserveController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(creep.room.controller);
+            if(creep.reserveController(controller_North) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(controller_North);
             }
         }
     }

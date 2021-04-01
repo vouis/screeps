@@ -52,6 +52,8 @@ export const spawnName = 'Spawn1'
 export const tower =Game.getObjectById('606496df680e4ac68b2d8ccd')
 export const storage =Game.getObjectById('5ec4620eb6a35c398e9783cb')
 
+export const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd')
+
 
 
 export const container_1 = Game.getObjectById('606545e6a4e2a38c708728ed')

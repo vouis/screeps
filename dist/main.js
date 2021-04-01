@@ -54,6 +54,8 @@ const spawnName = 'Spawn1';
 const tower =Game.getObjectById('606496df680e4ac68b2d8ccd');
 const storage =Game.getObjectById('5ec4620eb6a35c398e9783cb');
 
+const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd');
+
 
 
 const container_1 = Game.getObjectById('606545e6a4e2a38c708728ed');
@@ -213,8 +215,8 @@ const roleClaimer= () => ({
             creep.moveTo(new RoomPosition(20, 36, 'E2S34'));
         }
         else {
-            if(creep.reserveController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(creep.room.controller);
+            if(creep.reserveController(controller_North) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(controller_North);
             }
         }
     }
