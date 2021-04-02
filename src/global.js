@@ -117,10 +117,11 @@ export const moveto_Target = function (creep) {
 
 export const to_structure = function (creep,structureId) {
     const structure = Game.getObjectById(structureId);
-        if ( creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE&&
-            JSON.stringify(structure.pos)!==JSON.stringify(creep.pos)&&
+        if (JSON.stringify(structure.pos)!==JSON.stringify(creep.pos)&&
             structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
             creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
+        }else{
+            creep.transfer(structure, RESOURCE_ENERGY)
         }
 }
 
