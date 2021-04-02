@@ -45,6 +45,8 @@ export const body = {
     base600:getBody({WORK:2,CARRY:3,MOVE:5}),//600
     work600:getBody({WORK:4,CARRY:1,MOVE:3}), //600
     trans800:getBody({WORK:6,CARRY:0,MOVE:3}),//600
+    base800:getBody({WORK:4,CARRY:4,MOVE:4}),//800
+    carry800:getBody({WORK:1,CARRY:8,MOVE:5}),//800
     claim:getBody({CLAIM:1,MOVE:1}),// 650
 }
 

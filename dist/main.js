@@ -47,6 +47,8 @@ const body = {
     base600:getBody({WORK:2,CARRY:3,MOVE:5}),//600
     work600:getBody({WORK:4,CARRY:1,MOVE:3}), //600
     trans800:getBody({WORK:6,CARRY:0,MOVE:3}),//600
+    base800:getBody({WORK:4,CARRY:4,MOVE:4}),//800
+    carry800:getBody({WORK:1,CARRY:8,MOVE:5}),//800
     claim:getBody({CLAIM:1,MOVE:1}),// 650
 };
 
@@ -197,6 +199,8 @@ var creepList = {
     harvester2: harvester(),
     upgrader1: roleUpgrader(),
     upgrader2:roleUpgrader(),
+    upgrader3:roleUpgrader(),
+    upgrader4:roleUpgrader(),
     builder1:roleBuilder(),
     builder2:roleBuilder(),
     transfer1_1:roleTransfer(),
@@ -272,9 +276,9 @@ Spawn.prototype.addTask = function(taskName) {
 };
 
 Spawn.prototype.mainSpawn = function(taskName) {
-   let newBody = body.base600;
-    if(taskName.includes('harvester')||taskName.includes('upgrader')){
-        newBody = body.move550;
+   let newBody = body.base800;
+    if(taskName.includes('harvester')){
+        newBody = body.carry800;
     }
     else if(taskName.includes('transfer')){
         newBody = body.trans800;
@@ -282,6 +286,7 @@ Spawn.prototype.mainSpawn = function(taskName) {
     else if(taskName.includes('claimer')){
         newBody = body.claim;
     }
+    // upgrader,builder
     const value = Game.spawns.Spawn1.spawnCreep(newBody, taskName, { memory: { role: taskName }});
     if(value===0) return true
     return false

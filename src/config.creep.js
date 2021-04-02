@@ -11,6 +11,8 @@ export default {
     harvester2: harvester(),
     upgrader1: upgrader(),
     upgrader2:upgrader(),
+    upgrader3:upgrader(),
+    upgrader4:upgrader(),
     builder1:builder(),
     builder2:builder(),
     transfer1_1:transfer(),
