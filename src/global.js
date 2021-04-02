@@ -59,7 +59,7 @@ export const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd')
 
 export const container_1 = Game.getObjectById('606545e6a4e2a38c708728ed')
 export const container_2 = Game.getObjectById('60653e74e6f7f835e1474818')
-export const container_North = Game.getObjectById('60657c0aaf30a7988e44cb99')
+export const container_North = null||Game.getObjectById('60657c0aaf30a7988e44cb99')
 
 export const source_North = Game.getObjectById('5bbcad0e9099fc012e6368bc')
 export const source_1 = Game.getObjectById('5bbcad0e9099fc012e6368bf')

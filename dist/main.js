@@ -55,15 +55,15 @@ const spawnName = 'Spawn1';
 const tower =Game.getObjectById('606496df680e4ac68b2d8ccd');
 const storage =Game.getObjectById('5ec4620eb6a35c398e9783cb');
 
-const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd');
+Game.getObjectById('5bbcad0e9099fc012e6368bd');
 
 
 
 const container_1 = Game.getObjectById('606545e6a4e2a38c708728ed');
 const container_2 = Game.getObjectById('60653e74e6f7f835e1474818');
-const container_North = Game.getObjectById('60657c0aaf30a7988e44cb99');
+Game.getObjectById('60657c0aaf30a7988e44cb99');
 
-const source_North = Game.getObjectById('5bbcad0e9099fc012e6368bc');
+Game.getObjectById('5bbcad0e9099fc012e6368bc');
 const source_1 = Game.getObjectById('5bbcad0e9099fc012e6368bf');
 const source_2 = Game.getObjectById('5bbcad0e9099fc012e6368c0');
 
@@ -194,54 +194,6 @@ const roleTransfer2= () => ({
     switch: creep => creep.updateState()
 });
 
-const otherRoom= () => ({
-    source: creep => {
-        const room = Game.rooms['E2S34'];
-        if (!room) {
-            creep.moveTo(new RoomPosition(25, 22, 'E2S34'));
-        }
-        else {
-            find_structure_or_source(creep, source_North, container_North);
-        }
-    },
-    target: creep => {
-        to_destroy_building(creep);
-        find_building(creep);
-        moveto_Target$1(creep);
-    },
-    switch: creep => creep.updateState()
-});
-
-const roleClaimer= () => ({
-    target: creep => {
-        const room = Game.rooms['E2S34'];
-        if (!room) {
-            creep.moveTo(new RoomPosition(20, 36, 'E2S34'));
-        }
-        else {
-            if(creep.reserveController(controller_North) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(controller_North);
-            }
-        }
-    }
-});
-
-const roleTransferN= () => ({
-    source: creep => {
-        const room = Game.rooms['E2S34'];
-        if (!room) {
-            creep.moveTo(new RoomPosition(25, 22, 'E2S34'));
-        }
-        else {
-            find_source(creep,source_North);
-        }
-    },
-    target: creep => {
-        to_structure(creep,container_North);
-    },
-    switch: creep => creep.updateState()
-});
-
 var creepList = {
     harvester1: harvester(),
     harvester2: harvester(),
@@ -254,10 +206,10 @@ var creepList = {
     transfer2_1:roleTransfer2(),
     // transfer2_2:transfer2(),
     // north room
-    otherRoom1:otherRoom(),
-    otherRoom2:otherRoom(),
-    claimer1:roleClaimer(),
-    transferN1:roleTransferN()
+    // otherRoom1:otherRoom(),
+    // otherRoom2:otherRoom(),
+    // claimer1:claimer(),
+    // transferN1:transferN()
 
 };
 

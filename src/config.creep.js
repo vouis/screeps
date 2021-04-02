@@ -18,10 +18,10 @@ export default {
     transfer2_1:transfer2(),
     // transfer2_2:transfer2(),
     // north room
-    otherRoom1:otherRoom(),
-    otherRoom2:otherRoom(),
-    claimer1:claimer(),
-    transferN1:transferN()
+    // otherRoom1:otherRoom(),
+    // otherRoom2:otherRoom(),
+    // claimer1:claimer(),
+    // transferN1:transferN()
 
 }
 
