@@ -70,6 +70,18 @@ const find_source = function (creep,sourceId) {
     }
 };
 
+const find_container_trans = function (creep,sourceId,structureId) {
+    const source = Game.getObjectById(sourceId);
+    const structure = Game.getObjectById(structureId);
+    if (JSON.stringify(structure.pos)!==JSON.stringify(creep.pos)&&
+        structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
+    }else {
+        creep.harvest(source);
+
+    }
+};
+
 const find_structure_or_source = function (creep,sourceId,structureId) {
     const structure = Game.getObjectById(structureId);
     if (creep.withdraw(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure.store[RESOURCE_ENERGY] != 0) {
@@ -178,13 +190,11 @@ const roleBuilder= () => ({
 });
 
 const roleTransfer= () => ({
-    source: creep => {
-        find_source(creep,source_1);
-    },
+
     target: creep => {
-        to_structure(creep,container_1);
+        find_container_trans(creep,source_1,container_1);
     },
-    switch: creep => creep.updateState()
+
 });
 
 const roleTransfer2= () => ({

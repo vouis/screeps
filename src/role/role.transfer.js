@@ -1,18 +1,15 @@
 import {
     container_1,
-    find_source,
+    find_container_trans,
     source_1,
-    to_structure
 } from "../global";
 
 const roleTransfer= () => ({
-    source: creep => {
-        find_source(creep,source_1)
-    },
+
     target: creep => {
-        to_structure(creep,container_1)
+        find_container_trans(creep,source_1,container_1)
     },
-    switch: creep => creep.updateState()
+
 })
 
 export default roleTransfer;

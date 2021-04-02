@@ -71,6 +71,19 @@ export const find_source = function (creep,sourceId) {
         creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
     }
 }
+
+export const find_container_trans = function (creep,sourceId,structureId) {
+    const source = Game.getObjectById(sourceId);
+    const structure = Game.getObjectById(structureId);
+    if (JSON.stringify(structure.pos)!==JSON.stringify(creep.pos)&&
+        structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
+    }else{
+        creep.harvest(source)
+
+    }
+}
+
 export const find_structure= function (creep,structure) {
     if (creep.withdraw(Game.getObjectById(structure), RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         creep.moveTo(Game.getObjectById(structure), { visualizePathStyle: { stroke: '#ffaa00' } });
