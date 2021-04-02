@@ -44,7 +44,7 @@ export const body = {
     move550:getBody({WORK:1,CARRY:4,MOVE:5}), //550
     base600:getBody({WORK:2,CARRY:3,MOVE:5}),//600
     work600:getBody({WORK:4,CARRY:1,MOVE:3}), //600
-    trans800:getBody({WORK:6,CARRY:1,MOVE:3}),//600
+    trans800:getBody({WORK:6,CARRY:0,MOVE:3}),//600
     claim:getBody({CLAIM:1,MOVE:1}),// 650
 }
 
@@ -78,7 +78,6 @@ export const find_structure= function (creep,structure) {
 }
 
 export const find_structure_or_source = function (creep,sourceId,structureId) {
-    const source = Game.getObjectById(sourceId);
     const structure = Game.getObjectById(structureId);
     if (creep.withdraw(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure.store[RESOURCE_ENERGY] != 0) {
 
