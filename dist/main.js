@@ -53,32 +53,31 @@ const body = {
 // construct
 const spawnName = 'Spawn1';
 const towerId ='606496df680e4ac68b2d8ccd';
-const storage =Game.getObjectById('5ec4620eb6a35c398e9783cb');
 
 Game.getObjectById('5bbcad0e9099fc012e6368bd');
 
 
 
-const container_1 = Game.getObjectById('606545e6a4e2a38c708728ed');
-const container_2 = Game.getObjectById('60653e74e6f7f835e1474818');
-Game.getObjectById('60657c0aaf30a7988e44cb99');
+const container_1 = '606545e6a4e2a38c708728ed';
+const container_2 = '60653e74e6f7f835e1474818';
+const source_1 = '5bbcad0e9099fc012e6368bf';
+const source_2 = '5bbcad0e9099fc012e6368c0';
 
-Game.getObjectById('5bbcad0e9099fc012e6368bc');
-const source_1 = Game.getObjectById('5bbcad0e9099fc012e6368bf');
-const source_2 = Game.getObjectById('5bbcad0e9099fc012e6368c0');
-
-const find_source = function (creep,source) {
+const find_source = function (creep,sourceId) {
+    const source = Game.getObjectById(sourceId);
     if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
         creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
     }
 };
 
-const find_structure_or_source = function (creep,source,structure) {
+const find_structure_or_source = function (creep,sourceId,structureId) {
+    Game.getObjectById(sourceId);
+    const structure = Game.getObjectById(structureId);
     if (creep.withdraw(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure.store[RESOURCE_ENERGY] != 0) {
 
         creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
     } else {
-        find_source(creep,source);
+        find_source(creep,sourceId);
     }
 };
 
@@ -94,9 +93,6 @@ const moveto_Target = function (creep) {
     if (tower && tower.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
         targets.push(tower);
     }
-    if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
-        targets.push(storage);
-    }
     if (targets.length > 0) {
 
         if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
@@ -109,7 +105,8 @@ const moveto_Target = function (creep) {
     }
 };
 
-const to_structure = function (creep,structure) {
+const to_structure = function (creep,structureId) {
+    const structure = Game.getObjectById(structureId);
         if ( creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE&&
             JSON.stringify(structure.pos)!==JSON.stringify(creep.pos)&&
             structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {

@@ -51,37 +51,40 @@ export const body = {
 // construct
 export const spawnName = 'Spawn1'
 export const towerId ='606496df680e4ac68b2d8ccd'
-export const storage =Game.getObjectById('5ec4620eb6a35c398e9783cb')
+export const storage =null
 
 export const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd')
 
 
 
-export const container_1 = Game.getObjectById('606545e6a4e2a38c708728ed')
-export const container_2 = Game.getObjectById('60653e74e6f7f835e1474818')
-export const container_North = null||Game.getObjectById('60657c0aaf30a7988e44cb99')
+export const container_1 = '606545e6a4e2a38c708728ed'
+export const container_2 = '60653e74e6f7f835e1474818'
+export const container_North = null
 
-export const source_North = Game.getObjectById('5bbcad0e9099fc012e6368bc')
-export const source_1 = Game.getObjectById('5bbcad0e9099fc012e6368bf')
-export const source_2 = Game.getObjectById('5bbcad0e9099fc012e6368c0')
+export const source_North = '5bbcad0e9099fc012e6368bc'
+export const source_1 = '5bbcad0e9099fc012e6368bf'
+export const source_2 = '5bbcad0e9099fc012e6368c0'
 
-export const find_source = function (creep,source) {
+export const find_source = function (creep,sourceId) {
+    const source = Game.getObjectById(sourceId);
     if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
         creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
     }
 }
 export const find_structure= function (creep,structure) {
-    if (creep.withdraw(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+    if (creep.withdraw(Game.getObjectById(structure), RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+        creep.moveTo(Game.getObjectById(structure), { visualizePathStyle: { stroke: '#ffaa00' } });
     }
 }
 
-export const find_structure_or_source = function (creep,source,structure) {
+export const find_structure_or_source = function (creep,sourceId,structureId) {
+    const source = Game.getObjectById(sourceId);
+    const structure = Game.getObjectById(structureId);
     if (creep.withdraw(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure.store[RESOURCE_ENERGY] != 0) {
 
         creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
     } else {
-        find_source(creep,source)
+        find_source(creep,sourceId)
     }
 }
 
@@ -112,7 +115,8 @@ export const moveto_Target = function (creep) {
     }
 }
 
-export const to_structure = function (creep,structure) {
+export const to_structure = function (creep,structureId) {
+    const structure = Game.getObjectById(structureId);
         if ( creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE&&
             JSON.stringify(structure.pos)!==JSON.stringify(creep.pos)&&
             structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
