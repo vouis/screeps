@@ -116,16 +116,6 @@ const moveto_Target = function (creep) {
     }
 };
 
-const to_structure = function (creep,structureId) {
-    const structure = Game.getObjectById(structureId);
-        if (JSON.stringify(structure.pos)!==JSON.stringify(creep.pos)&&
-            structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
-            creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
-        }else {
-            creep.transfer(structure, RESOURCE_ENERGY);
-        }
-};
-
 const find_building = function (creep) {
     var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
     if (targets.length) {
@@ -190,19 +180,14 @@ const roleBuilder= () => ({
 });
 
 const roleTransfer= () => ({
-
     target: creep => {
         find_container_trans(creep,source_1,container_1);
     },
-
 });
 
 const roleTransfer2= () => ({
-    source: creep => {
-        find_source(creep,source_2);
-    },
     target: creep => {
-        to_structure(creep,container_2);
+        find_container_trans(creep,source_2,container_2);
     },
     switch: creep => creep.updateState()
 });

@@ -5,11 +5,9 @@ import {
 } from "../global";
 
 const roleTransfer= () => ({
-
     target: creep => {
         find_container_trans(creep,source_1,container_1)
     },
-
 })
 
 export default roleTransfer;
