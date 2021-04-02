@@ -81,7 +81,9 @@ export const find_container_trans = function (creep,sourceId,structureId) {
         structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
         creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
     }else{
-        creep.harvest(source)
+        if(structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0){
+            creep.harvest(source)
+        }
 
     }
 }
