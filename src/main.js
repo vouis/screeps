@@ -1,13 +1,6 @@
-import {spawnName,tower,roles,body} from './global'
+import {spawnName,tower_action,roles,body} from './global'
 import './proto/creep'
 import './proto/spawn'
-import roleHarvester  from './role.harvester'
-import roleUpgrader  from './role.upgrader'
-import roleBuilder  from './role.builder'
-import roleTranfer  from './role.tranfer'
-import roleTranfer2  from './role.tranfer2'
-import roleRepairer  from './role.repairer'
-
 import creepList from './config.creep'
 
 
@@ -58,7 +51,6 @@ module.exports.loop = function () {
     }
 
 
-
     if (Game.spawns[spawnName].spawning) {
         var spawningCreep = Game.creeps[Game.spawns[spawnName].spawning.name];
         Game.spawns[spawnName].room.visual.text(
@@ -68,42 +60,10 @@ module.exports.loop = function () {
             { align: 'left', opacity: 0.8 });
     }
 
-    if (tower) {
-        var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-            filter: (structure) => structure.hits < structure.hitsMax&&structure.structureType !== STRUCTURE_WALL
-        });
-        if (closestDamagedStructure) {
-            tower.repair(closestDamagedStructure);
-        }
+    tower_action()
 
-        var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-        if (closestHostile) {
-            tower.attack(closestHostile);
-        }
-    }
-
-
-    for (var name in Game.creeps) {
-        var creep = Game.creeps[name];
+    for (const name in Game.creeps) {
+        const creep = Game.creeps[name];
             creep.work();
-        if (creep.memory.role == 'harvester') {
-            roleHarvester.run(creep);
-        }
-        if (creep.memory.role == 'upgrader') {
-            roleUpgrader.run(creep);
-        }
-        if (creep.memory.role == 'builder') {
-            if (roles.builder.number == 0) { creep.memory.role = "upgrader" }
-            roleBuilder.run(creep);
-        }
-        if (creep.memory.role == 'tranfer') {
-            roleTranfer.run(creep);
-        }
-        if (creep.memory.role == 'tranfer2') {
-            roleTranfer2.run(creep);
-        }
-        if (creep.memory.role == 'repairer') {
-            roleRepairer.run(creep);
-        }
     }
 }
