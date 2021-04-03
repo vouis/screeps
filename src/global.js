@@ -159,7 +159,7 @@ export const find_building = function (creep, isUpgrade) {
 
 export const to_destroy_building = function (creep) {
     var targets = creep.room.find(FIND_STRUCTURES, {
-        filter: (targets) => targets.hits < targets.hitsMax
+        filter: (targets) => targets.hits < targets.hitsMax && structure.structureType !== STRUCTURE_WALL
     });
     targets.sort((a, b) => a.hits - b.hits);
     if (targets.length) {
