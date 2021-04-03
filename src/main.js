@@ -2,6 +2,7 @@ import { spawnName, tower_action, roles, body } from './global'
 import './proto/creep'
 import './proto/spawn'
 import creepList from './config.creep'
+import stateScanner from './stateScanner/index'
 
 
 const getName = (role) => {
@@ -15,6 +16,11 @@ var createCreeps = function (role, type) {
 
 
 module.exports.loop = function () {
+    // 统计全局资源使用
+    stateScanner()
+    if (Game.cpu.bucket > 6000) {
+        Game.cpu.generatePixel();
+    }
     var role = {
         total: _.filter(Game.creeps),
         harvester: _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester' || creep.memory.role == 'harvester1' || creep.memory.role == 'harvester2'),

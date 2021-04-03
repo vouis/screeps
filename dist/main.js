@@ -335,6 +335,23 @@ Spawn.prototype.mainSpawn = function (taskName) {
     return false
 };
 
+var stateScanner$1 = stateScanner = function () {
+    // 每 20 tick 运行一次
+    if (Game.time % 20) return
+
+    if (!Memory.stats) Memory.stats = {};
+
+    // 统计 GCL / GPL 的升级百分比和等级
+    Memory.stats.gcl = (Game.gcl.progress / Game.gcl.progressTotal) * 100;
+    Memory.stats.gclLevel = Game.gcl.level;
+    Memory.stats.gpl = (Game.gpl.progress / Game.gpl.progressTotal) * 100;
+    Memory.stats.gplLevel = Game.gpl.level;
+    // CPU 的当前使用量
+    Memory.stats.cpu = Game.cpu.getUsed();
+    // bucket 当前剩余量
+    Memory.stats.bucket = Game.cpu.bucket;
+};
+
 var createCreeps = function (role, type) {
     Game.spawns[spawnName].spawnCreep(body[type], role,
         { memory: { role: role } });
@@ -342,6 +359,11 @@ var createCreeps = function (role, type) {
 
 
 module.exports.loop = function () {
+    // 统计全局资源使用
+    stateScanner$1();
+    if (Game.cpu.bucket > 6000) {
+        Game.cpu.generatePixel();
+    }
     var role = {
         total: _.filter(Game.creeps),
         harvester: _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester' || creep.memory.role == 'harvester1' || creep.memory.role == 'harvester2'),
