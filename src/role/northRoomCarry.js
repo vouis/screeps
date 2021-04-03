@@ -6,7 +6,7 @@ import {
     storageId,
 } from "../global";
 
-const northRoomNR = () => ({
+const northRoomCarry = () => ({
     source: creep => {
         const room = Game.rooms['E2S34']
         if (!room) {
@@ -28,4 +28,4 @@ const northRoomNR = () => ({
     switch: creep => creep.updateState()
 })
 
-export default northRoomNR;
+export default northRoomCarry;

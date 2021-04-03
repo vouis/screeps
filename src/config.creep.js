@@ -5,8 +5,8 @@ import transfer from './role/role.transfer'
 import transfer2 from './role/role.transfer2'
 import transtorage from './role/role.transtorage'
 import transtorage2 from './role/role.transtorage2'
-import northRoom from './role/role.NorthRoom'
-import northRoomNR from './role/northRoomNoRepair'
+import northRoomRepair from './role/role.NorthRoomRepair'
+import northRoomCarry from './role/northRoomCarry'
 import claimer from './role/role.claimer'
 import transferN from './role/role.northRoomTransfer'
 export default {
@@ -23,8 +23,9 @@ export default {
     transtorage1_1: transtorage(),
     transtorage2_1: transtorage2(),
     // north room
-    northRoom1: northRoom(),
-    northRoom2: northRoomNR(),
+    northRoomRepair: northRoomRepair(),
+    northRoomCarry1: northRoomCarry(),
+    northRoomCarry2: northRoomNR(),
     claimerN: claimer(),
     transferN: transferN()
 

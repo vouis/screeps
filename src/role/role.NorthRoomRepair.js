@@ -7,7 +7,7 @@ import {
     storageId,
 } from "../global";
 
-const NorthRoom = () => ({
+const northRoomRepair = () => ({
     source: creep => {
         const room = Game.rooms['E2S34']
         if (!room) {
@@ -20,14 +20,8 @@ const NorthRoom = () => ({
     target: creep => {
         if (to_destroy_building(creep)) { return; }
         if (find_building(creep, false)) { return; };
-        const storage = Game.getObjectById(storageId)
-        if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
-            if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });
-            }
-        }
     },
     switch: creep => creep.updateState()
 })
 
-export default NorthRoom;
+export default northRoomRepair;
