@@ -55,7 +55,7 @@ const body = {
 // construct
 const spawnName = 'Spawn1';
 const towerId = '606496df680e4ac68b2d8ccd';
-const storageId$1 = '6067b156cea495591213b0ea';
+const storageId = '6067b156cea495591213b0ea';
 
 Game.getObjectById('5bbcad0e9099fc012e6368bd');
 
@@ -104,7 +104,7 @@ const find_structure_or_source = function (creep, sourceId, structureId1, struct
 
 const moveto_Target = function (creep) {
     const tower = Game.getObjectById(towerId);
-    const storage = Game.getObjectById(storageId$1);
+    const storage = Game.getObjectById(storageId);
     var targets = creep.room.find(FIND_STRUCTURES, {
         filter: (structure) => {
             return (structure.structureType == STRUCTURE_EXTENSION ||
@@ -162,7 +162,7 @@ const tower_action = function () {
 
 const harvester = () => ({
     source: creep => {
-        find_structure_or_source(creep, source_1, container_1, storageId$1);
+        find_structure_or_source(creep, source_1, container_1, storageId);
     },
     target: creep => {
         moveto_Target(creep);

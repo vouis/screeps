@@ -1,4 +1,4 @@
-import { container_2, find_structure_or_source, source_2, storage } from "../global";
+import { container_2, find_structure_or_source, source_2, storageId } from "../global";
 
 const roleTranstorage = () => ({
     source: creep => {
