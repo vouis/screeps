@@ -145,7 +145,7 @@ const find_building = function (creep, isUpgrade) {
 
 const to_destroy_building = function (creep) {
     var targets = creep.room.find(FIND_STRUCTURES, {
-        filter: (targets) => targets.hits < targets.hitsMax && structure.structureType !== STRUCTURE_WALL
+        filter: (targets) => targets.hits < targets.hitsMax && targets.structureType !== STRUCTURE_WALL
     });
     targets.sort((a, b) => a.hits - b.hits);
     if (targets.length) {
@@ -212,15 +212,15 @@ const roleBuilder = () => ({
     switch: creep => creep.updateState()
 });
 
-const roleTransfer= () => ({
+const roleTransfer = () => ({
     target: creep => {
-        find_container_trans(creep,source_1,container_1);
+        find_container_trans(creep, source_1, container_1);
     },
 });
 
-const roleTransfer2= () => ({
+const roleTransfer2 = () => ({
     target: creep => {
-        find_container_trans(creep,source_2,container_2);
+        find_container_trans(creep, source_2, container_2);
     },
     switch: creep => creep.updateState()
 });
@@ -267,7 +267,7 @@ const NorthRoom = () => ({
     },
     target: creep => {
         if (to_destroy_building(creep)) { return; }
-        if (find_building(creep, false)) { return; }        const storage = Game.getObjectById(storageId);
+        if (find_building(creep, false)) { return; } const storage = Game.getObjectById(storageId);
         if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
             if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });
@@ -288,7 +288,7 @@ const northRoomNR = () => ({
         }
     },
     target: creep => {
-        if (find_building(creep, false)) { return; }        const storage = Game.getObjectById(storageId);
+        if (find_building(creep, false)) { return; } const storage = Game.getObjectById(storageId);
         if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
             if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });
@@ -298,14 +298,14 @@ const northRoomNR = () => ({
     switch: creep => creep.updateState()
 });
 
-const roleClaimer= () => ({
+const roleClaimer = () => ({
     target: creep => {
         const room = Game.rooms['E2S34'];
         if (!room) {
             creep.moveTo(new RoomPosition(20, 36, 'E2S34'));
         }
         else {
-            if(creep.reserveController(controller_North) == ERR_NOT_IN_RANGE) {
+            if (creep.reserveController(controller_North) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(controller_North);
             }
         }
@@ -363,8 +363,7 @@ var creepList = {
 
 // 引入 creep 配置项
 
-Creep.prototype.work = function()
-{
+Creep.prototype.work = function () {
     // 检查 creep 内存中的角色是否存在
     if (!(this.memory.role in creepList)) {
         console.log(`creep ${this.name} 内存属性 role 不属于任何已存在的 creepConfigs 名称`);
@@ -385,14 +384,13 @@ Creep.prototype.work = function()
     }
 };
 
-Creep.prototype.updateState = function()
-{
+Creep.prototype.updateState = function () {
     // creep 身上没有能量 && creep 之前的状态为“工作”
-    if(this.store[RESOURCE_ENERGY] <= 0 && this.memory.working) {
+    if (this.store[RESOURCE_ENERGY] <= 0 && this.memory.working) {
         this.memory.working = false;
     }
     // creep 身上能量满了 && creep 之前的状态为“不工作”
-    if(this.store[RESOURCE_ENERGY] >= this.store.getCapacity() && !this.memory.working) {
+    if (this.store[RESOURCE_ENERGY] >= this.store.getCapacity() && !this.memory.working) {
         this.memory.working = true;
     }
 
@@ -435,7 +433,7 @@ Spawn.prototype.mainSpawn = function (taskName) {
     return false
 };
 
-function stateScanner () {
+function stateScanner() {
     // 每 20 tick 运行一次
     if (Game.time % 20) return
 
