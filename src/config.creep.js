@@ -7,7 +7,7 @@ import transtorage from './role/role.transtorage'
 import transtorage2 from './role/role.transtorage2'
 import northRoom from './role/role.NorthRoom'
 import claimer from './role/role.claimer'
-import transferN from './role/role.otherRoomTransfer'
+import transferN from './role/role.northRoomTransfer'
 export default {
     harvester1: harvester(),
     harvester2: harvester(),
@@ -25,7 +25,7 @@ export default {
     northRoom1: northRoom(),
     northRoom2: northRoom(),
     claimerN: claimer(),
-    // transferN1:transferN()
+    transferN: transferN()
 
 }
 
@@ -35,7 +35,6 @@ export default {
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'harvester2', { memory: { role: 'harvester2' } })
 
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK], 'transfer1_1', { memory: { role: 'transfer1_1' } })
-
 
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK], 'transfer2_1', { memory: { role: 'transfer2_1' } })
 
@@ -49,3 +48,4 @@ export default {
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'transtorage2_1', { memory: { role: 'transtorage2_1' } })
 
 //Game.spawns.Spawn1.spawnCreep([CLAIM, CLAIM, MOVE,MOVE], 'claimerN', { memory: { role: 'claimerN' } })
+// Game.spawns.Spawn1.spawnCreep([MOVE, WORK], 'transferN', { memory: { role: 'transferN' } })
