@@ -330,7 +330,7 @@ var creepList = {
     // north room
     northRoomRepair: northRoomRepair(),
     northRoomCarry1: northRoomCarry(),
-    northRoomCarry2: northRoomNR(),
+    northRoomCarry2: northRoomCarry(),
     claimerN: roleClaimer(),
     transferN: roleTransferN()
 
@@ -356,6 +356,8 @@ var creepList = {
 
 //Game.spawns.Spawn1.spawnCreep([CLAIM, CLAIM, MOVE,MOVE], 'claimerN', { memory: { role: 'claimerN' } })
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK], 'transferN', { memory: { role: 'transferN' } })
+
+//Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomCarry1', { memory: { role: 'northRoomCarry1' } })
 
 // 引入 creep 配置项
 
