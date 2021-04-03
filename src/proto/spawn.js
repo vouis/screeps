@@ -21,10 +21,10 @@ Spawn.prototype.addTask = function (taskName) {
 
 Spawn.prototype.mainSpawn = function (taskName) {
     let newBody = body.base800;
-    if (taskName.includes('harvester')) {
+    if (taskName.includes('harvester') || taskName.includes('transtorage')) {
         newBody = body.carry800
     }
-    else if (taskName.includes('trans')) {
+    else if (taskName.includes('transfer')) {
         newBody = body.trans800
     }
     else if (taskName.includes('claimer')) {
