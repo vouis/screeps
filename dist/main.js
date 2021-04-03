@@ -162,7 +162,7 @@ const tower_action = function () {
 
 const harvester = () => ({
     source: creep => {
-        find_structure_or_source(creep, source_1, container_1, storageId);
+        find_structure_or_source(creep, source_1, container_1, storageId$1);
     },
     target: creep => {
         moveto_Target(creep);
