@@ -47,6 +47,7 @@ export const body = {
     trans800: getBody({ WORK: 6, CARRY: 0, MOVE: 3 }),//600
     base800: getBody({ WORK: 4, CARRY: 4, MOVE: 4 }),//800
     carry800: getBody({ WORK: 1, CARRY: 8, MOVE: 5 }),//800
+    upBu1300: getBody({ WORK: 5, CARRY: 9, MOVE: 7 }),//1300
     claim: getBody({ CLAIM: 2, MOVE: 2 }),// 650
 }
 

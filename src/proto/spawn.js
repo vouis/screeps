@@ -20,7 +20,7 @@ Spawn.prototype.addTask = function (taskName) {
 }
 
 Spawn.prototype.mainSpawn = function (taskName) {
-    let newBody = body.base800;
+    let newBody = body.upBu1300;
     if (taskName.includes('harvester')) {
         newBody = body.carry800
     }
