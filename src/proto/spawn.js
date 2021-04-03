@@ -21,6 +21,9 @@ Spawn.prototype.addTask = function (taskName) {
 
 Spawn.prototype.mainSpawn = function (taskName) {
     let newBody = body.upBu1300;
+    if (taskName.includes('transtorage') || taskName.includes('northRoom')) {
+        newBody = body.walking
+    }
     if (taskName.includes('harvester')) {
         newBody = body.carry800
     }

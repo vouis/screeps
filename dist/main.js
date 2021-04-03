@@ -50,6 +50,7 @@ const body = {
     base800: getBody({ WORK: 4, CARRY: 4, MOVE: 4 }),//800
     carry800: getBody({ WORK: 1, CARRY: 8, MOVE: 5 }),//800
     upBu1300: getBody({ WORK: 5, CARRY: 9, MOVE: 7 }),//1300
+    walking: getBody({ WORK: 1, CARRY: 19, MOVE: 5 }),//1300
     claim: getBody({ CLAIM: 2, MOVE: 2 }),// 650
 };
 
@@ -418,6 +419,9 @@ Spawn.prototype.addTask = function (taskName) {
 
 Spawn.prototype.mainSpawn = function (taskName) {
     let newBody = body.upBu1300;
+    if (taskName.includes('transtorage') || taskName.includes('northRoom')) {
+        newBody = body.walking;
+    }
     if (taskName.includes('harvester')) {
         newBody = body.carry800;
     }
