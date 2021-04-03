@@ -111,7 +111,6 @@ export const find_structure_or_source = function (creep, sourceId, structureId, 
 
 export const moveto_Target = function (creep) {
     const tower = Game.getObjectById(towerId)
-    const storage = Game.getObjectById(storageId)
     var targets = creep.room.find(FIND_STRUCTURES, {
         filter: (structure) => {
             return (structure.structureType == STRUCTURE_EXTENSION ||
@@ -121,10 +120,6 @@ export const moveto_Target = function (creep) {
     });
     if (tower && tower.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
         targets.push(tower)
-    }
-
-    if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
-        targets.push(storage)
     }
     if (targets.length > 0) {
 
