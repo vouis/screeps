@@ -18,8 +18,14 @@ const NorthRoom = () => ({
         }
     },
     target: creep => {
-        to_destroy_building(creep);
-        find_building(creep, false)
+        if (to_destroy_building(creep)) { return; }
+        if (find_building(creep, false)) { return; };
+        const storage = Game.getObjectById(storageId)
+        if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+            if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });
+            }
+        }
     },
     switch: creep => creep.updateState()
 })

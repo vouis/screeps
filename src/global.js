@@ -147,11 +147,13 @@ export const find_building = function (creep, isUpgrade) {
         if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
             creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
         }
+        return true;
     } else {
         if (isUpgrade) {
             const controller = creep.room.controller
             if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) creep.moveTo(controller)
         }
+        return false;
     }
 }
 
@@ -165,6 +167,10 @@ export const to_destroy_building = function (creep) {
             creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
             creep.say('repair');
         }
+        return true;
+    }
+    else {
+        return false;
     }
 }
 
