@@ -1,8 +1,8 @@
-import {container_2, find_structure_or_source, source_2} from "../global";
+import { container_2, find_structure_or_source, source_2 } from "../global";
 
-const roleUpgrader= () => ({
+const roleUpgrader = () => ({
     source: creep => {
-        find_structure_or_source(creep,source_2,container_2)
+        find_structure_or_source(creep, source_2, container_2)
     },
     target: creep => {
         const controller = creep.room.controller

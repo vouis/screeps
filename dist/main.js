@@ -1,20 +1,20 @@
 'use strict';
 
-const getBody = (body) =>{
+const getBody = (body) => {
     const newBody = [];
-    while(body.WORK){
+    while (body.WORK) {
         newBody.push(WORK);
         body.WORK--;
     }
-    while(body.CARRY){
+    while (body.CARRY) {
         newBody.push(CARRY);
         body.CARRY--;
     }
-    while(body.MOVE){
+    while (body.MOVE) {
         newBody.push(MOVE);
         body.MOVE--;
     }
-    while(body.CLAIM){
+    while (body.CLAIM) {
         newBody.push(CLAIM);
         body.CLAIM--;
     }
@@ -22,12 +22,12 @@ const getBody = (body) =>{
 };
 
 const roles = {
-    harvester: {number:0,type:'move550'},
-    tranfer: {number:0,type:'work550'},
-    tranfer2: {number:0,type:'work550'},
-    repairer: {number:0,type:'base300'},
-    upgrader: {number:0,type:'move550'},
-    builder: {number:0,type:'move550'},
+    harvester: { number: 0, type: 'move550' },
+    tranfer: { number: 0, type: 'work550' },
+    tranfer2: { number: 0, type: 'work550' },
+    repairer: { number: 0, type: 'base300' },
+    upgrader: { number: 0, type: 'move550' },
+    builder: { number: 0, type: 'move550' },
 };
 // BODYPART_COST: {
 //     "move": 50,
@@ -40,21 +40,22 @@ const roles = {
 //         "claim": 600
 // },
 const body = {
-    base:getBody({WORK:1,CARRY:1,MOVE:1}), //200
-    base300:getBody({WORK:2,CARRY:1,MOVE:1}), //300
-    work550:getBody({WORK:4,CARRY:1,MOVE:1}), //550
-    move550:getBody({WORK:1,CARRY:4,MOVE:5}), //550
-    base600:getBody({WORK:2,CARRY:3,MOVE:5}),//600
-    work600:getBody({WORK:4,CARRY:1,MOVE:3}), //600
-    trans800:getBody({WORK:6,CARRY:0,MOVE:3}),//600
-    base800:getBody({WORK:4,CARRY:4,MOVE:4}),//800
-    carry800:getBody({WORK:1,CARRY:8,MOVE:5}),//800
-    claim:getBody({CLAIM:1,MOVE:1}),// 650
+    base: getBody({ WORK: 1, CARRY: 1, MOVE: 1 }), //200
+    base300: getBody({ WORK: 2, CARRY: 1, MOVE: 1 }), //300
+    work550: getBody({ WORK: 4, CARRY: 1, MOVE: 1 }), //550
+    move550: getBody({ WORK: 1, CARRY: 4, MOVE: 5 }), //550
+    base600: getBody({ WORK: 2, CARRY: 3, MOVE: 5 }),//600
+    work600: getBody({ WORK: 4, CARRY: 1, MOVE: 3 }), //600
+    trans800: getBody({ WORK: 6, CARRY: 0, MOVE: 3 }),//600
+    base800: getBody({ WORK: 4, CARRY: 4, MOVE: 4 }),//800
+    carry800: getBody({ WORK: 1, CARRY: 8, MOVE: 5 }),//800
+    claim: getBody({ CLAIM: 1, MOVE: 1 }),// 650
 };
 
 // construct
 const spawnName = 'Spawn1';
-const towerId ='606496df680e4ac68b2d8ccd';
+const towerId = '606496df680e4ac68b2d8ccd';
+const storageId$1 = '6067b156cea495591213b0ea';
 
 Game.getObjectById('5bbcad0e9099fc012e6368bd');
 
@@ -65,39 +66,45 @@ const container_2 = '60653e74e6f7f835e1474818';
 const source_1 = '5bbcad0e9099fc012e6368bf';
 const source_2 = '5bbcad0e9099fc012e6368c0';
 
-const find_source = function (creep,sourceId) {
+const find_source = function (creep, sourceId) {
     const source = Game.getObjectById(sourceId);
     if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
         creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
     }
 };
 
-const find_container_trans = function (creep,sourceId,structureId) {
+const find_container_trans = function (creep, sourceId, structureId) {
     const source = Game.getObjectById(sourceId);
     const structure = Game.getObjectById(structureId);
-    if (JSON.stringify(structure.pos)!==JSON.stringify(creep.pos)&&
+    if (JSON.stringify(structure.pos) !== JSON.stringify(creep.pos) &&
         structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
         creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
-    }else {
-        if(structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0){
+    } else {
+        if (structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
             creep.harvest(source);
         }
 
     }
 };
 
-const find_structure_or_source = function (creep,sourceId,structureId) {
-    const structure = Game.getObjectById(structureId);
-    if (creep.withdraw(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure.store[RESOURCE_ENERGY] != 0) {
+const find_structure_or_source = function (creep, sourceId, structureId1, structureId2) {
+    const structure1 = Game.getObjectById(structureId1);
+    const structure2 = Game.getObjectById(structureId2);
+    const source = Game.getObjectById(sourceId);
+    if (creep.withdraw(structure1, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure1.store[RESOURCE_ENERGY] != 0) {
 
-        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
-    } else {
-        find_source(creep,sourceId);
+        creep.moveTo(structure1, { visualizePathStyle: { stroke: '#ffaa00' } });
+    } else if (source.energy) {
+        find_source(creep, sourceId);
+    }
+    else if (structure2 && creep.withdraw(structure2, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure2.store[RESOURCE_ENERGY] != 0) {
+        creep.moveTo(structure2, { visualizePathStyle: { stroke: '#ffaa00' } });
     }
 };
 
 const moveto_Target = function (creep) {
     const tower = Game.getObjectById(towerId);
+    const storage = Game.getObjectById(storageId$1);
     var targets = creep.room.find(FIND_STRUCTURES, {
         filter: (structure) => {
             return (structure.structureType == STRUCTURE_EXTENSION ||
@@ -108,13 +115,17 @@ const moveto_Target = function (creep) {
     if (tower && tower.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
         targets.push(tower);
     }
+
+    if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        targets.push(storage);
+    }
     if (targets.length > 0) {
 
         if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 
             creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
         }
-    }else {
+    } else {
         const controller = creep.room.controller;
         if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) creep.moveTo(controller);
     }
@@ -132,11 +143,11 @@ const find_building = function (creep) {
     }
 };
 
-const tower_action = function(){
+const tower_action = function () {
     const tower = Game.getObjectById(towerId);
     if (tower) {
         var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-            filter: (structure) => structure.hits < structure.hitsMax&&structure.structureType !== STRUCTURE_WALL
+            filter: (structure) => structure.hits < structure.hitsMax && structure.structureType !== STRUCTURE_WALL
         });
         if (closestDamagedStructure) {
             tower.repair(closestDamagedStructure);
@@ -149,9 +160,9 @@ const tower_action = function(){
     }
 };
 
-const harvester= () => ({
+const harvester = () => ({
     source: creep => {
-        find_structure_or_source(creep, source_1, container_1);
+        find_structure_or_source(creep, source_1, container_1, storageId);
     },
     target: creep => {
         moveto_Target(creep);
@@ -159,9 +170,9 @@ const harvester= () => ({
     switch: creep => creep.updateState()
 });
 
-const roleUpgrader= () => ({
+const roleUpgrader = () => ({
     source: creep => {
-        find_structure_or_source(creep,source_2,container_2);
+        find_structure_or_source(creep, source_2, container_2);
     },
     target: creep => {
         const controller = creep.room.controller;
@@ -196,19 +207,31 @@ const roleTransfer2= () => ({
     switch: creep => creep.updateState()
 });
 
+const roleTranstorage = () => ({
+    source: creep => {
+        find_structure_or_source(creep, source_2, container_2);
+    },
+    target: creep => {
+        const storage = Game.getObjectById(storageId);
+        if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+            targets.push(storage);
+        }
+    },
+    switch: creep => creep.updateState()
+});
+
 var creepList = {
     harvester1: harvester(),
     harvester2: harvester(),
     upgrader1: roleUpgrader(),
-    upgrader2:roleUpgrader(),
-    upgrader3:roleUpgrader(),
-    upgrader4:roleUpgrader(),
-    builder1:roleBuilder(),
-    builder2:roleBuilder(),
-    transfer1_1:roleTransfer(),
-    // transfer1_2:transfer(),
-    transfer2_1:roleTransfer2(),
-    // transfer2_2:transfer2(),
+    upgrader2: roleUpgrader(),
+    upgrader3: roleUpgrader(),
+    upgrader4: roleUpgrader(),
+    builder1: roleBuilder(),
+    builder2: roleBuilder(),
+    transfer1_1: roleTransfer(),
+    transfer2_1: roleTransfer2(),
+    transtorage1: roleTranstorage(),
     // north room
     // otherRoom1:otherRoom(),
     // otherRoom2:otherRoom(),
@@ -219,6 +242,21 @@ var creepList = {
 
 // 注意修改其中的 spawn 名称 work550:getBody({WORK:4,CARRY:1,MOVE:1}),
 // Game.spawns.Spawn1.spawnCreep([MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,WORK,WORK,CARRY], 'transferN1', { memory: { role: 'transferN1' }})
+
+// Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'harvester2', { memory: { role: 'harvester2' } })
+
+// Game.spawns.Spawn1.spawnCreep([MOVE, WORK], 'transfer1_1', { memory: { role: 'transfer1_1' } })
+
+
+// Game.spawns.Spawn1.spawnCreep([MOVE, WORK], 'transfer2_1', { memory: { role: 'transfer2_1' } })
+
+// Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'upgrader1', { memory: { role: 'upgrader1' } })
+// Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'upgrader2', { memory: { role: 'upgrader2' } })
+
+// Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'builder1', { memory: { role: 'builder1' } })
+// Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'builder2', { memory: { role: 'builder2' } })
+
+//Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'transtorage1', { memory: { role: 'transtorage1' } })
 
 // 引入 creep 配置项
 
@@ -258,7 +296,7 @@ Creep.prototype.updateState = function()
     return this.memory.working
 };
 
-Spawn.prototype.work = function() {
+Spawn.prototype.work = function () {
     // 自己已经在生成了 / 内存里没有生成队列 / 生产队列为空 就啥都不干
     if (this.spawning || !this.memory.spawnList || this.memory.spawnList.length == 0) return
     // 进行生成
@@ -268,38 +306,34 @@ Spawn.prototype.work = function() {
 };
 
 
-Spawn.prototype.addTask = function(taskName) {
+Spawn.prototype.addTask = function (taskName) {
     // 任务加入队列
-    if(this.memory.spawnList===undefined){
+    if (this.memory.spawnList === undefined) {
         this.memory.spawnList = [];
     }
     this.memory.spawnList.push(taskName);
     return this.memory.spawnList.length
 };
 
-Spawn.prototype.mainSpawn = function(taskName) {
-   let newBody = body.base800;
-    if(taskName.includes('harvester')){
+Spawn.prototype.mainSpawn = function (taskName) {
+    let newBody = body.base800;
+    if (taskName.includes('harvester')) {
         newBody = body.carry800;
     }
-    else if(taskName.includes('transfer')){
+    else if (taskName.includes('trans')) {
         newBody = body.trans800;
     }
-    else if(taskName.includes('claimer')){
+    else if (taskName.includes('claimer')) {
         newBody = body.claim;
     }
     // upgrader,builder
-    const value = Game.spawns.Spawn1.spawnCreep(newBody, taskName, { memory: { role: taskName }});
-    if(value===0) return true
+    const value = Game.spawns.Spawn1.spawnCreep(newBody, taskName, { memory: { role: taskName } });
+    if (value === 0) return true
     return false
 };
 
-const getName = (role) =>{
-    return role + Game.time;
-};
-
-var createCreeps = function (role,type) {
-    Game.spawns[spawnName].spawnCreep(body[type], getName(role),
+var createCreeps = function (role, type) {
+    Game.spawns[spawnName].spawnCreep(body[type], role,
         { memory: { role: role } });
 };
 
@@ -307,18 +341,18 @@ var createCreeps = function (role,type) {
 module.exports.loop = function () {
     var role = {
         total: _.filter(Game.creeps),
-        harvester: _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester'||creep.memory.role == 'harvester1'||creep.memory.role == 'harvester2'),
-        builder: _.filter(Game.creeps, (creep) => creep.memory.role == 'builder'||creep.memory.role == 'builder1'||creep.memory.role == 'builder2'),
-        upgrader: _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader'||creep.memory.role == 'upgrader1'||creep.memory.role == 'upgrader2'),
-        tranfer: _.filter(Game.creeps, (creep) => creep.memory.role == 'tranfer'||creep.memory.role == 'transfer1_1'||creep.memory.role == 'transfer1_2'
-            ||creep.memory.role == 'transfer2_1'||creep.memory.role == 'transfer2_2'),
+        harvester: _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester' || creep.memory.role == 'harvester1' || creep.memory.role == 'harvester2'),
+        builder: _.filter(Game.creeps, (creep) => creep.memory.role == 'builder' || creep.memory.role == 'builder1' || creep.memory.role == 'builder2'),
+        upgrader: _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader' || creep.memory.role == 'upgrader1' || creep.memory.role == 'upgrader2'),
+        tranfer: _.filter(Game.creeps, (creep) => creep.memory.role == 'tranfer' || creep.memory.role == 'transfer1_1' || creep.memory.role == 'transfer1_2'
+            || creep.memory.role == 'transfer2_1' || creep.memory.role == 'transfer2_2'),
         tranfer2: _.filter(Game.creeps, (creep) => creep.memory.role == 'tranfer2'),
         repairer: _.filter(Game.creeps, (creep) => creep.memory.role == 'repairer')
     };
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
-            for(let key in creepList){
-                if(name === key){
+            for (let key in creepList) {
+                if (name === key) {
                     Game.spawns[spawnName].addTask(name);
                 }
             }
@@ -330,12 +364,12 @@ module.exports.loop = function () {
 
     if (role.harvester.length < 1) {
         console.log('Spawning new harvester: ');
-        createCreeps('harvester','base');
+        createCreeps('harvester1', 'base');
     }
-    for(let i in roles){
-        if(role[i].length<roles[i].number){
-            console.log(role[i].length, 'Spawning new ',i);
-            createCreeps(i,roles[i].type);
+    for (let i in roles) {
+        if (role[i].length < roles[i].number) {
+            console.log(role[i].length, 'Spawning new ', i);
+            createCreeps(i, roles[i].type);
             break;
         }
     }
@@ -354,7 +388,7 @@ module.exports.loop = function () {
 
     for (const name in Game.creeps) {
         const creep = Game.creeps[name];
-            creep.work();
+        creep.work();
     }
 };
 //# sourceMappingURL=main.js.map
