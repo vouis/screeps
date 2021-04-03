@@ -56,7 +56,7 @@ const body = {
 // construct
 const spawnName = 'Spawn1';
 const towerId = '606496df680e4ac68b2d8ccd';
-const storageId$1 = '6067b156cea495591213b0ea';
+const storageId = '6067b156cea495591213b0ea';
 
 const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd');
 
@@ -180,7 +180,7 @@ const tower_action = function () {
 
 const harvester = () => ({
     source: creep => {
-        find_structure_or_source(creep, source_1, container_1, storageId$1);
+        find_structure_or_source(creep, source_1, container_1, storageId);
     },
     target: creep => {
         moveto_Target(creep);
@@ -190,7 +190,7 @@ const harvester = () => ({
 
 const roleUpgrader = () => ({
     source: creep => {
-        find_structure_or_source(creep, source_2, container_2, storageId$1);
+        find_structure_or_source(creep, source_2, container_2, storageId);
     },
     target: creep => {
         const controller = creep.room.controller;
@@ -202,7 +202,7 @@ const roleUpgrader = () => ({
 const roleBuilder = () => ({
 
     source: creep => {
-        find_structure_or_source(creep, source_2, container_2, storageId$1);
+        find_structure_or_source(creep, source_2, container_2, storageId);
     },
 
     target: creep => {
@@ -230,7 +230,7 @@ const roleTranstorage = () => ({
         find_structure_or_source(creep, source_1, container_1);
     },
     target: creep => {
-        const storage = Game.getObjectById(storageId$1);
+        const storage = Game.getObjectById(storageId);
         if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
             if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });
@@ -245,7 +245,7 @@ const roleTranstorage2 = () => ({
         find_structure_or_source(creep, source_2, container_2);
     },
     target: creep => {
-        const storage = Game.getObjectById(storageId$1);
+        const storage = Game.getObjectById(storageId);
         if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
             if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });

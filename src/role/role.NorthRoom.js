@@ -4,7 +4,7 @@ import {
     to_destroy_building,
     source_North,
     container_North,
-    moveto_Target,
+    storageId,
 } from "../global";
 
 const NorthRoom = () => ({
