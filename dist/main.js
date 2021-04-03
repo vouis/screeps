@@ -63,6 +63,9 @@ Game.getObjectById('5bbcad0e9099fc012e6368bd');
 
 const container_1 = '606545e6a4e2a38c708728ed';
 const container_2 = '60653e74e6f7f835e1474818';
+const container_North = null;
+
+const source_North = '5bbcad0e9099fc012e6368bc';
 const source_1 = '5bbcad0e9099fc012e6368bf';
 const source_2 = '5bbcad0e9099fc012e6368c0';
 
@@ -123,15 +126,30 @@ const moveto_Target = function (creep) {
     }
 };
 
-const find_building = function (creep) {
+const find_building = function (creep, isUpgrade) {
     var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
     if (targets.length) {
         if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
             creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
         }
     } else {
-        const controller = creep.room.controller;
-        if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) creep.moveTo(controller);
+        if (isUpgrade) {
+            const controller = creep.room.controller;
+            if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) creep.moveTo(controller);
+        }
+    }
+};
+
+const to_destroy_building = function (creep) {
+    var targets = creep.room.find(FIND_STRUCTURES, {
+        filter: (targets) => targets.hits < targets.hitsMax
+    });
+    targets.sort((a, b) => a.hits - b.hits);
+    if (targets.length) {
+        if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
+            creep.say('repair');
+        }
     }
 };
 
@@ -175,15 +193,15 @@ const roleUpgrader = () => ({
 });
 
 const roleBuilder = () => ({
-    // 采集能量矿
+
     source: creep => {
         find_structure_or_source(creep, source_2, container_2, storageId);
     },
-    // 升级控制器
+
     target: creep => {
-        find_building(creep);
+        find_building(creep, true);
     },
-    // 状态切换条件，稍后会给出具体实现
+
     switch: creep => creep.updateState()
 });
 
@@ -230,6 +248,23 @@ const roleTranstorage2 = () => ({
     switch: creep => creep.updateState()
 });
 
+const NorthRoom = () => ({
+    source: creep => {
+        const room = Game.rooms['E2S34'];
+        if (!room) {
+            creep.moveTo(new RoomPosition(25, 22, 'E2S34'));
+        }
+        else {
+            find_structure_or_source(creep, source_North, container_North);
+        }
+    },
+    target: creep => {
+        to_destroy_building(creep);
+        find_building(creep, false);
+    },
+    switch: creep => creep.updateState()
+});
+
 var creepList = {
     harvester1: harvester(),
     harvester2: harvester(),
@@ -244,15 +279,15 @@ var creepList = {
     transtorage1_1: roleTranstorage(),
     transtorage2_1: roleTranstorage2(),
     // north room
-    // otherRoom1:otherRoom(),
-    // otherRoom2:otherRoom(),
+    northRoom1: NorthRoom(),
+    northRoom2: NorthRoom(),
     // claimer1:claimer(),
     // transferN1:transferN()
 
 };
 
 // 注意修改其中的 spawn 名称 work550:getBody({WORK:4,CARRY:1,MOVE:1}),
-// Game.spawns.Spawn1.spawnCreep([MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,WORK,WORK,CARRY], 'transferN1', { memory: { role: 'transferN1' }})
+// Game.spawns.Spawn1.spawnCreep([MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY], 'northRoom1', { memory: { role: 'northRoom1' }})
 
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'harvester2', { memory: { role: 'harvester2' } })
 

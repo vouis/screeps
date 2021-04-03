@@ -140,15 +140,17 @@ export const to_structure = function (creep, structureId) {
     }
 }
 
-export const find_building = function (creep) {
+export const find_building = function (creep, isUpgrade) {
     var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
     if (targets.length) {
         if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
             creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
         }
     } else {
-        const controller = creep.room.controller
-        if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) creep.moveTo(controller)
+        if (isUpgrade) {
+            const controller = creep.room.controller
+            if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) creep.moveTo(controller)
+        }
     }
 }
 
