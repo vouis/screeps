@@ -87,18 +87,18 @@ const find_container_trans = function (creep, sourceId, structureId) {
     }
 };
 
-const find_structure_or_source = function (creep, sourceId, structureId1, structureId2) {
-    const structure1 = Game.getObjectById(structureId1);
-    const structure2 = Game.getObjectById(structureId2);
+const find_structure_or_source = function (creep, sourceId, structureId, storageId) {
+    const structure = Game.getObjectById(structureId);
+    const storage = Game.getObjectById(storageId);
     const source = Game.getObjectById(sourceId);
-    if (creep.withdraw(structure1, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure1.store[RESOURCE_ENERGY] != 0) {
+    if (storage && creep.withdraw(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && storage.store[RESOURCE_ENERGY] != 0) {
+        creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffaa00' } });
+    }
+    else if (creep.withdraw(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure.store[RESOURCE_ENERGY] != 0) {
 
-        creep.moveTo(structure1, { visualizePathStyle: { stroke: '#ffaa00' } });
+        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
     } else if (source.energy) {
         find_source(creep, sourceId);
-    }
-    else if (structure2 && creep.withdraw(structure2, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure2.store[RESOURCE_ENERGY] != 0) {
-        creep.moveTo(structure2, { visualizePathStyle: { stroke: '#ffaa00' } });
     }
 };
 
@@ -173,7 +173,7 @@ const harvester = () => ({
 
 const roleUpgrader = () => ({
     source: creep => {
-        find_structure_or_source(creep, source_2, container_2);
+        find_structure_or_source(creep, source_2, container_2, storageId);
     },
     target: creep => {
         const controller = creep.room.controller;
@@ -185,7 +185,7 @@ const roleUpgrader = () => ({
 const roleBuilder = () => ({
     // 采集能量矿
     source: creep => {
-        find_structure_or_source(creep, source_2, container_2);
+        find_structure_or_source(creep, source_2, container_2, storageId);
     },
     // 升级控制器
     target: creep => {
@@ -209,6 +209,21 @@ const roleTransfer2 = () => ({
 });
 
 const roleTranstorage = () => ({
+    source: creep => {
+        find_structure_or_source(creep, source_1, container_1);
+    },
+    target: creep => {
+        const storage = Game.getObjectById(storageId);
+        if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+            if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });
+            }
+        }
+    },
+    switch: creep => creep.updateState()
+});
+
+const roleTranstorage2 = () => ({
     source: creep => {
         find_structure_or_source(creep, source_2, container_2);
     },
@@ -234,7 +249,8 @@ var creepList = {
     builder2: roleBuilder(),
     transfer1_1: roleTransfer(),
     transfer2_1: roleTransfer2(),
-    transtorage1: roleTranstorage(),
+    transtorage1_1: roleTranstorage(),
+    transtorage2_1: roleTranstorage2(),
     // north room
     // otherRoom1:otherRoom(),
     // otherRoom2:otherRoom(),
@@ -260,6 +276,7 @@ var creepList = {
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'builder2', { memory: { role: 'builder2' } })
 
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'transtorage1', { memory: { role: 'transtorage1' } })
+//Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'transtorage2', { memory: { role: 'transtorage2' } })
 
 // 引入 creep 配置项
 

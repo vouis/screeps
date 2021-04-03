@@ -4,6 +4,7 @@ import builder from './role/role.builder'
 import transfer from './role/role.transfer'
 import transfer2 from './role/role.transfer2'
 import transtorage from './role/role.transtorage'
+import transtorage2 from './role/role.transtorage2'
 import otherRoom from './role/role.otherRoom'
 import claimer from './role/role.claimer'
 import transferN from './role/role.otherRoomTransfer'
@@ -18,7 +19,8 @@ export default {
     builder2: builder(),
     transfer1_1: transfer(),
     transfer2_1: transfer2(),
-    transtorage1: transtorage(),
+    transtorage1_1: transtorage(),
+    transtorage2_1: transtorage2(),
     // north room
     // otherRoom1:otherRoom(),
     // otherRoom2:otherRoom(),
@@ -44,3 +46,4 @@ export default {
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'builder2', { memory: { role: 'builder2' } })
 
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'transtorage1', { memory: { role: 'transtorage1' } })
+//Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'transtorage2', { memory: { role: 'transtorage2' } })

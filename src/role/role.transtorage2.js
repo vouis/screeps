@@ -1,8 +1,8 @@
-import { container_1, find_structure_or_source, source_1, storageId } from "../global";
+import { container_2, find_structure_or_source, source_2, storageId } from "../global";
 
-const roleTranstorage = () => ({
+const roleTranstorage2 = () => ({
     source: creep => {
-        find_structure_or_source(creep, source_1, container_1)
+        find_structure_or_source(creep, source_2, container_2)
     },
     target: creep => {
         const storage = Game.getObjectById(storageId)
@@ -15,4 +15,4 @@ const roleTranstorage = () => ({
     switch: creep => creep.updateState()
 })
 
-export default roleTranstorage;
+export default roleTranstorage2;

@@ -94,18 +94,18 @@ export const find_structure = function (creep, structure) {
     }
 }
 
-export const find_structure_or_source = function (creep, sourceId, structureId1, structureId2) {
-    const structure1 = Game.getObjectById(structureId1);
-    const structure2 = Game.getObjectById(structureId2);
-    const source = Game.getObjectById(sourceId);
-    if (creep.withdraw(structure1, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure1.store[RESOURCE_ENERGY] != 0) {
+export const find_structure_or_source = function (creep, sourceId, structureId, storageId) {
+    const structure = Game.getObjectById(structureId);
+    const storage = Game.getObjectById(storageId);
+    const source = Game.getObjectById(sourceId)
+    if (storage && creep.withdraw(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && storage.store[RESOURCE_ENERGY] != 0) {
+        creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffaa00' } });
+    }
+    else if (creep.withdraw(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure.store[RESOURCE_ENERGY] != 0) {
 
-        creep.moveTo(structure1, { visualizePathStyle: { stroke: '#ffaa00' } });
+        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
     } else if (source.energy) {
         find_source(creep, sourceId)
-    }
-    else if (structure2 && creep.withdraw(structure2, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure2.store[RESOURCE_ENERGY] != 0) {
-        creep.moveTo(structure2, { visualizePathStyle: { stroke: '#ffaa00' } });
     }
 }
 
