@@ -6,6 +6,7 @@ import transfer2 from './role/role.transfer2'
 import transtorage from './role/role.transtorage'
 import transtorage2 from './role/role.transtorage2'
 import northRoom from './role/role.NorthRoom'
+import northRoomNR from './role/northRoomNoRepair'
 import claimer from './role/role.claimer'
 import transferN from './role/role.northRoomTransfer'
 export default {
@@ -23,7 +24,7 @@ export default {
     transtorage2_1: transtorage2(),
     // north room
     northRoom1: northRoom(),
-    northRoom2: northRoom(),
+    northRoom2: northRoomNR(),
     claimerN: claimer(),
     transferN: transferN()
 
