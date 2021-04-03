@@ -214,7 +214,7 @@ const roleTranstorage = () => ({
     target: creep => {
         const storage = Game.getObjectById(storageId);
         if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
-            targets.push(storage);
+            creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });
         }
     },
     switch: creep => creep.updateState()
