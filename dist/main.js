@@ -59,15 +59,12 @@ const spawnName = 'Spawn1';
 const towerId = '606496df680e4ac68b2d8ccd';
 const storageId = '6067b156cea495591213b0ea';
 
-const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd');
+Game.getObjectById('5bbcad0e9099fc012e6368bd');
 
 
 
 const container_1 = '606545e6a4e2a38c708728ed';
 const container_2 = '60653e74e6f7f835e1474818';
-const container_North = '60686fec1e82527a381169e0';
-
-const source_North = '5bbcad0e9099fc012e6368bc';
 const source_1 = '5bbcad0e9099fc012e6368bf';
 const source_2 = '5bbcad0e9099fc012e6368c0';
 
@@ -140,23 +137,6 @@ const find_building = function (creep, isUpgrade) {
             const controller = creep.room.controller;
             if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) creep.moveTo(controller);
         }
-        return false;
-    }
-};
-
-const to_destroy_building = function (creep) {
-    var targets = creep.room.find(FIND_STRUCTURES, {
-        filter: (targets) => targets.hits < targets.hitsMax && targets.structureType !== STRUCTURE_WALL
-    });
-    targets.sort((a, b) => a.hits - b.hits);
-    if (targets.length) {
-        if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
-            creep.say('repair');
-        }
-        return true;
-    }
-    else {
         return false;
     }
 };
@@ -256,64 +236,6 @@ const roleTranstorage2 = () => ({
     switch: creep => creep.updateState()
 });
 
-const northRoomRepair = () => ({
-    source: creep => {
-        const room = Game.rooms['E2S34'];
-        if (!room) {
-            creep.moveTo(new RoomPosition(25, 22, 'E2S34'));
-        }
-        else {
-            find_structure_or_source(creep, source_North, container_North);
-        }
-    },
-    target: creep => {
-        if (to_destroy_building(creep)) { return; }
-        if (find_building(creep, false)) { return; }    },
-    switch: creep => creep.updateState()
-});
-
-const northRoomCarry = () => ({
-    source: creep => {
-        const room = Game.rooms['E2S34'];
-        if (!room) {
-            creep.moveTo(new RoomPosition(25, 22, 'E2S34'));
-        }
-        else {
-            find_structure_or_source(creep, source_North, container_North);
-        }
-    },
-    target: creep => {
-        if (find_building(creep, false)) { return; }        const storage = Game.getObjectById(storageId);
-        if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
-            if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });
-            }
-        }
-    },
-    switch: creep => creep.updateState()
-});
-
-const roleClaimer= () => ({
-    target: creep => {
-        const room = Game.rooms['E2S34'];
-        if (!room) {
-            creep.moveTo(new RoomPosition(20, 36, 'E2S34'));
-        }
-        else {
-            if(creep.reserveController(controller_North) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(controller_North);
-            }
-        }
-    }
-});
-
-const roleTransferN = () => ({
-    target: creep => {
-        find_container_trans(creep, source_North, container_North);
-    },
-
-});
-
 var creepList = {
     harvester1: harvester(),
     harvester2: harvester(),
@@ -328,11 +250,11 @@ var creepList = {
     transtorage1_1: roleTranstorage(),
     transtorage2_1: roleTranstorage2(),
     // north room
-    northRoomRepair: northRoomRepair(),
-    northRoomCarry1: northRoomCarry(),
-    northRoomCarry2: northRoomCarry(),
-    claimerN: roleClaimer(),
-    transferN: roleTransferN()
+    // northRoomRepair: northRoomRepair(),
+    // northRoomCarry1: northRoomCarry(),
+    // northRoomCarry2: northRoomCarry(),
+    // claimerN: claimer(),
+    // transferN: transferN()
 
 };
 
@@ -358,6 +280,8 @@ var creepList = {
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK], 'transferN', { memory: { role: 'transferN' } })
 
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomCarry1', { memory: { role: 'northRoomCarry1' } })
+//Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomCarry2', { memory: { role: 'northRoomCarry2' } })
+//Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomRepair', { memory: { role: 'northRoomRepairs' } })
 
 // 引入 creep 配置项
 

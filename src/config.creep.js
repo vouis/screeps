@@ -23,11 +23,11 @@ export default {
     transtorage1_1: transtorage(),
     transtorage2_1: transtorage2(),
     // north room
-    northRoomRepair: northRoomRepair(),
-    northRoomCarry1: northRoomCarry(),
-    northRoomCarry2: northRoomCarry(),
-    claimerN: claimer(),
-    transferN: transferN()
+    // northRoomRepair: northRoomRepair(),
+    // northRoomCarry1: northRoomCarry(),
+    // northRoomCarry2: northRoomCarry(),
+    // claimerN: claimer(),
+    // transferN: transferN()
 
 }
 
@@ -53,3 +53,5 @@ export default {
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK], 'transferN', { memory: { role: 'transferN' } })
 
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomCarry1', { memory: { role: 'northRoomCarry1' } })
+//Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomCarry2', { memory: { role: 'northRoomCarry2' } })
+//Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomRepair', { memory: { role: 'northRoomRepairs' } })
