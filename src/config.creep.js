@@ -24,13 +24,13 @@ export default {
     // north room
     northRoom1: northRoom(),
     northRoom2: northRoom(),
-    // claimer1:claimer(),
+    claimerN: claimer(),
     // transferN1:transferN()
 
 }
 
 // 注意修改其中的 spawn 名称 work550:getBody({WORK:4,CARRY:1,MOVE:1}),
-// Game.spawns.Spawn1.spawnCreep([MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY], 'northRoom1', { memory: { role: 'northRoom1' }})
+// Game.spawns.Spawn1.spawnCreep([MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY], 'northRoom2', { memory: { role: 'northRoom2' }})
 
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'harvester2', { memory: { role: 'harvester2' } })
 
@@ -47,3 +47,5 @@ export default {
 
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'transtorage1_1', { memory: { role: 'transtorage1_1' } })
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'transtorage2_1', { memory: { role: 'transtorage2_1' } })
+
+//Game.spawns.Spawn1.spawnCreep([CLAIM, CLAIM, MOVE,MOVE], 'claimerN', { memory: { role: 'claimerN' } })

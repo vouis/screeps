@@ -49,7 +49,7 @@ const body = {
     trans800: getBody({ WORK: 6, CARRY: 0, MOVE: 3 }),//600
     base800: getBody({ WORK: 4, CARRY: 4, MOVE: 4 }),//800
     carry800: getBody({ WORK: 1, CARRY: 8, MOVE: 5 }),//800
-    claim: getBody({ CLAIM: 1, MOVE: 1 }),// 650
+    claim: getBody({ CLAIM: 2, MOVE: 2 }),// 650
 };
 
 // construct
@@ -57,7 +57,7 @@ const spawnName = 'Spawn1';
 const towerId = '606496df680e4ac68b2d8ccd';
 const storageId = '6067b156cea495591213b0ea';
 
-Game.getObjectById('5bbcad0e9099fc012e6368bd');
+const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd');
 
 
 
@@ -205,15 +205,15 @@ const roleBuilder = () => ({
     switch: creep => creep.updateState()
 });
 
-const roleTransfer = () => ({
+const roleTransfer= () => ({
     target: creep => {
-        find_container_trans(creep, source_1, container_1);
+        find_container_trans(creep,source_1,container_1);
     },
 });
 
-const roleTransfer2 = () => ({
+const roleTransfer2= () => ({
     target: creep => {
-        find_container_trans(creep, source_2, container_2);
+        find_container_trans(creep,source_2,container_2);
     },
     switch: creep => creep.updateState()
 });
@@ -265,6 +265,20 @@ const NorthRoom = () => ({
     switch: creep => creep.updateState()
 });
 
+const roleClaimer= () => ({
+    target: creep => {
+        const room = Game.rooms['E2S34'];
+        if (!room) {
+            creep.moveTo(new RoomPosition(20, 36, 'E2S34'));
+        }
+        else {
+            if(creep.reserveController(controller_North) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(controller_North);
+            }
+        }
+    }
+});
+
 var creepList = {
     harvester1: harvester(),
     harvester2: harvester(),
@@ -281,13 +295,13 @@ var creepList = {
     // north room
     northRoom1: NorthRoom(),
     northRoom2: NorthRoom(),
-    // claimer1:claimer(),
+    claimerN: roleClaimer(),
     // transferN1:transferN()
 
 };
 
 // 注意修改其中的 spawn 名称 work550:getBody({WORK:4,CARRY:1,MOVE:1}),
-// Game.spawns.Spawn1.spawnCreep([MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY], 'northRoom1', { memory: { role: 'northRoom1' }})
+// Game.spawns.Spawn1.spawnCreep([MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY], 'northRoom2', { memory: { role: 'northRoom2' }})
 
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'harvester2', { memory: { role: 'harvester2' } })
 
@@ -305,9 +319,12 @@ var creepList = {
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'transtorage1_1', { memory: { role: 'transtorage1_1' } })
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'transtorage2_1', { memory: { role: 'transtorage2_1' } })
 
+//Game.spawns.Spawn1.spawnCreep([CLAIM, CLAIM, MOVE,MOVE], 'claimerN', { memory: { role: 'claimerN' } })
+
 // 引入 creep 配置项
 
-Creep.prototype.work = function () {
+Creep.prototype.work = function()
+{
     // 检查 creep 内存中的角色是否存在
     if (!(this.memory.role in creepList)) {
         console.log(`creep ${this.name} 内存属性 role 不属于任何已存在的 creepConfigs 名称`);
@@ -328,13 +345,14 @@ Creep.prototype.work = function () {
     }
 };
 
-Creep.prototype.updateState = function () {
+Creep.prototype.updateState = function()
+{
     // creep 身上没有能量 && creep 之前的状态为“工作”
-    if (this.store[RESOURCE_ENERGY] <= 0 && this.memory.working) {
+    if(this.store[RESOURCE_ENERGY] <= 0 && this.memory.working) {
         this.memory.working = false;
     }
     // creep 身上能量满了 && creep 之前的状态为“不工作”
-    if (this.store[RESOURCE_ENERGY] >= this.store.getCapacity() && !this.memory.working) {
+    if(this.store[RESOURCE_ENERGY] >= this.store.getCapacity() && !this.memory.working) {
         this.memory.working = true;
     }
 
@@ -377,7 +395,7 @@ Spawn.prototype.mainSpawn = function (taskName) {
     return false
 };
 
-function stateScanner() {
+function stateScanner () {
     // 每 20 tick 运行一次
     if (Game.time % 20) return
 
