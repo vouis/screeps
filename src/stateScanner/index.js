@@ -1,4 +1,4 @@
-export default stateScanner = function () {
+export default function () {
     // 每 20 tick 运行一次
     if (Game.time % 20) return
 

@@ -182,10 +182,10 @@ const roleUpgrader = () => ({
     switch: creep => creep.updateState()
 });
 
-const roleBuilder= () => ({
+const roleBuilder = () => ({
     // 采集能量矿
     source: creep => {
-        find_structure_or_source(creep,source_2,container_2);
+        find_structure_or_source(creep, source_2, container_2);
     },
     // 升级控制器
     target: creep => {
@@ -195,15 +195,15 @@ const roleBuilder= () => ({
     switch: creep => creep.updateState()
 });
 
-const roleTransfer= () => ({
+const roleTransfer = () => ({
     target: creep => {
-        find_container_trans(creep,source_1,container_1);
+        find_container_trans(creep, source_1, container_1);
     },
 });
 
-const roleTransfer2= () => ({
+const roleTransfer2 = () => ({
     target: creep => {
-        find_container_trans(creep,source_2,container_2);
+        find_container_trans(creep, source_2, container_2);
     },
     switch: creep => creep.updateState()
 });
@@ -263,8 +263,7 @@ var creepList = {
 
 // 引入 creep 配置项
 
-Creep.prototype.work = function()
-{
+Creep.prototype.work = function () {
     // 检查 creep 内存中的角色是否存在
     if (!(this.memory.role in creepList)) {
         console.log(`creep ${this.name} 内存属性 role 不属于任何已存在的 creepConfigs 名称`);
@@ -285,14 +284,13 @@ Creep.prototype.work = function()
     }
 };
 
-Creep.prototype.updateState = function()
-{
+Creep.prototype.updateState = function () {
     // creep 身上没有能量 && creep 之前的状态为“工作”
-    if(this.store[RESOURCE_ENERGY] <= 0 && this.memory.working) {
+    if (this.store[RESOURCE_ENERGY] <= 0 && this.memory.working) {
         this.memory.working = false;
     }
     // creep 身上能量满了 && creep 之前的状态为“不工作”
-    if(this.store[RESOURCE_ENERGY] >= this.store.getCapacity() && !this.memory.working) {
+    if (this.store[RESOURCE_ENERGY] >= this.store.getCapacity() && !this.memory.working) {
         this.memory.working = true;
     }
 
@@ -335,7 +333,7 @@ Spawn.prototype.mainSpawn = function (taskName) {
     return false
 };
 
-var stateScanner$1 = stateScanner = function () {
+function stateScanner() {
     // 每 20 tick 运行一次
     if (Game.time % 20) return
 
@@ -350,7 +348,7 @@ var stateScanner$1 = stateScanner = function () {
     Memory.stats.cpu = Game.cpu.getUsed();
     // bucket 当前剩余量
     Memory.stats.bucket = Game.cpu.bucket;
-};
+}
 
 var createCreeps = function (role, type) {
     Game.spawns[spawnName].spawnCreep(body[type], role,
@@ -360,7 +358,7 @@ var createCreeps = function (role, type) {
 
 module.exports.loop = function () {
     // 统计全局资源使用
-    stateScanner$1();
+    stateScanner();
     if (Game.cpu.bucket > 6000) {
         Game.cpu.generatePixel();
     }
