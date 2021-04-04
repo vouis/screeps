@@ -193,22 +193,30 @@ const roleBuilder = () => ({
     switch: creep => creep.updateState()
 });
 
-const roleTransfer= () => ({
+const roleTransfer = () => ({
     target: creep => {
-        find_container_trans(creep,source_1,container_1);
+        find_container_trans(creep, source_1, container_1);
     },
 });
 
-const roleTransfer2= () => ({
+const roleTransfer2 = () => ({
     target: creep => {
-        find_container_trans(creep,source_2,container_2);
+        find_container_trans(creep, source_2, container_2);
     },
     switch: creep => creep.updateState()
 });
 
 const roleTranstorage = () => ({
     source: creep => {
-        find_structure_or_source(creep, source_1, container_1);
+        const target = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
+        if (target) {
+            if (creep.pickup(target) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(target);
+            }
+        } else {
+            find_structure_or_source(creep, source_1, container_1);
+        }
+
     },
     target: creep => {
         const storage = Game.getObjectById(storageId);
@@ -285,8 +293,7 @@ var creepList = {
 
 // 引入 creep 配置项
 
-Creep.prototype.work = function()
-{
+Creep.prototype.work = function () {
     // 检查 creep 内存中的角色是否存在
     if (!(this.memory.role in creepList)) {
         console.log(`creep ${this.name} 内存属性 role 不属于任何已存在的 creepConfigs 名称`);
@@ -307,14 +314,13 @@ Creep.prototype.work = function()
     }
 };
 
-Creep.prototype.updateState = function()
-{
+Creep.prototype.updateState = function () {
     // creep 身上没有能量 && creep 之前的状态为“工作”
-    if(this.store[RESOURCE_ENERGY] <= 0 && this.memory.working) {
+    if (this.store[RESOURCE_ENERGY] <= 0 && this.memory.working) {
         this.memory.working = false;
     }
     // creep 身上能量满了 && creep 之前的状态为“不工作”
-    if(this.store[RESOURCE_ENERGY] >= this.store.getCapacity() && !this.memory.working) {
+    if (this.store[RESOURCE_ENERGY] >= this.store.getCapacity() && !this.memory.working) {
         this.memory.working = true;
     }
 
@@ -360,7 +366,7 @@ Spawn.prototype.mainSpawn = function (taskName) {
     return false
 };
 
-function stateScanner () {
+function stateScanner() {
     // 每 20 tick 运行一次
     if (Game.time % 20) return
 

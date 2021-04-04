@@ -2,7 +2,15 @@ import { container_1, find_structure_or_source, source_1, storageId } from "../g
 
 const roleTranstorage = () => ({
     source: creep => {
-        find_structure_or_source(creep, source_1, container_1)
+        const target = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
+        if (target) {
+            if (creep.pickup(target) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(target);
+            }
+        } else {
+            find_structure_or_source(creep, source_1, container_1)
+        }
+
     },
     target: creep => {
         const storage = Game.getObjectById(storageId)
