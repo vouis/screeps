@@ -4,6 +4,7 @@ export default function () {
 
     if (!Memory.stats) Memory.stats = {}
 
+
     // 统计 GCL / GPL 的升级百分比和等级
     Memory.stats.gcl = (Game.gcl.progress / Game.gcl.progressTotal) * 100
     Memory.stats.gclLevel = Game.gcl.level
@@ -13,4 +14,12 @@ export default function () {
     Memory.stats.cpu = Game.cpu.getUsed()
     // bucket 当前剩余量
     Memory.stats.bucket = Game.cpu.bucket
+
+    if (Game.cpu.bucket > 6000) {
+        Game.cpu.generatePixel();
+    }
+
+    if (!Memory.invader) Memory.invader = {}
+    Memory.invader.northRoom = 0
+
 }

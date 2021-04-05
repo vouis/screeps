@@ -69,6 +69,8 @@ export const source_North = '5bbcad0e9099fc012e6368bc'
 export const source_1 = '5bbcad0e9099fc012e6368bf'
 export const source_2 = '5bbcad0e9099fc012e6368c0'
 
+export const decayTime = 1500
+
 export const find_source = function (creep, sourceId) {
     const source = Game.getObjectById(sourceId);
     if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
