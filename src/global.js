@@ -55,6 +55,7 @@ export const body = {
 // construct
 export const spawnName = 'Spawn1'
 export const towerId = '606496df680e4ac68b2d8ccd'
+export const towerId2 = '606a07304d24f06a9f242bee'
 export const storageId = '6067b156cea495591213b0ea'
 
 export const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd')
@@ -115,6 +116,7 @@ export const find_structure_or_source = function (creep, sourceId, structureId, 
 
 export const moveto_Target = function (creep) {
     const tower = Game.getObjectById(towerId)
+    const tower2 = Game.getObjectById(towerId2)
     var targets = creep.room.find(FIND_STRUCTURES, {
         filter: (structure) => {
             return (structure.structureType == STRUCTURE_EXTENSION ||
@@ -124,6 +126,9 @@ export const moveto_Target = function (creep) {
     });
     if (tower && tower.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
         targets.push(tower)
+    }
+    if (tower2 && tower2.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        targets.push(tower2)
     }
     if (targets.length > 0) {
 
@@ -179,6 +184,7 @@ export const to_destroy_building = function (creep) {
 
 export const tower_action = function () {
     const tower = Game.getObjectById(towerId)
+    const tower2 = Game.getObjectById(towerId2)
     if (tower) {
         const closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
         if (closestHostile) {
@@ -189,6 +195,19 @@ export const tower_action = function () {
             });
             if (closestDamagedStructure) {
                 tower.repair(closestDamagedStructure);
+            }
+        }
+    }
+    if (tower2) {
+        const closestHostile = tower2.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+        if (closestHostile) {
+            tower2.attack(closestHostile);
+        } else {
+            var closestDamagedStructure = tower2.pos.findClosestByRange(FIND_STRUCTURES, {
+                filter: (structure) => structure.hits < structure.hitsMax && structure.structureType !== STRUCTURE_WALL
+            });
+            if (closestDamagedStructure) {
+                tower2.repair(closestDamagedStructure);
             }
         }
 
