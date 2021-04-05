@@ -2,6 +2,7 @@ import {
     find_container_trans,
     container_North,
     source_North,
+    decayTime,
 } from "../global";
 
 const roleTransferN = () => ({

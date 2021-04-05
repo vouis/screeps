@@ -4,6 +4,7 @@ import {
     source_North,
     container_North,
     storageId,
+    decayTime,
 } from "../global";
 
 const northRoomCarry = () => ({

@@ -4,7 +4,6 @@ import {
     to_destroy_building,
     source_North,
     container_North,
-    storageId,
     decayTime,
 } from "../global";
 
