@@ -58,7 +58,7 @@ export const towerId = '606496df680e4ac68b2d8ccd'
 export const towerId2 = '606a07304d24f06a9f242bee'
 export const storageId = '6067b156cea495591213b0ea'
 
-export const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd')
+export const controller_North = Game.getObjectById('606aca90d769cc43e593751d')
 
 
 
