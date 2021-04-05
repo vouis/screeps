@@ -273,7 +273,10 @@ const roleClaimer = () => ({
                 Memory.invader.northRoom = Game.time;
             }
             creep.moveTo(Game.getObjectById(towerId));
-        } else if (!room && Memory.invader.northRoom + decayTime < Game.time) { //没视野，不被侵略
+        } else if (Memory.invader.northRoom + decayTime > Game.time) { //在侵略时间段
+            creep.moveTo(Game.getObjectById(towerId));
+        }
+        else if (!room && Memory.invader.northRoom + decayTime < Game.time) { //没视野，不被侵略
             creep.moveTo(new RoomPosition(20, 36, 'E2S34'));
         }
 
