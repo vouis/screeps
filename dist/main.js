@@ -395,6 +395,7 @@ var creepList = {
     transtorage1_1: roleTranstorage(),
     transtorage2_1: roleTranstorage2(),
     // north room
+
     northRoomRepair: northRoomRepair(),
     northRoomCarry1: northRoomCarry(),
     northRoomCarry2: northRoomCarry(),
