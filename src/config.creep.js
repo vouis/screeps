@@ -23,11 +23,11 @@ export default {
     transtorage1_1: transtorage(),
     transtorage2_1: transtorage2(),
     // north room
-    // northRoomRepair: northRoomRepair(),
-    // northRoomCarry1: northRoomCarry(),
-    // northRoomCarry2: northRoomCarry(),
+    northRoomRepair: northRoomRepair(),
+    northRoomCarry1: northRoomCarry(),
+    northRoomCarry2: northRoomCarry(),
     claimerN: claimer(),
-    // transferN: transferN()
+    transferN: transferN()
 
 }
 
