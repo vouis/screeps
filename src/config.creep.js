@@ -26,7 +26,7 @@ export default {
     // northRoomRepair: northRoomRepair(),
     // northRoomCarry1: northRoomCarry(),
     // northRoomCarry2: northRoomCarry(),
-    // claimerN: claimer(),
+    claimerN: claimer(),
     // transferN: transferN()
 
 }

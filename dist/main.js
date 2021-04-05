@@ -60,7 +60,7 @@ const towerId = '606496df680e4ac68b2d8ccd';
 const towerId2 = '606a07304d24f06a9f242bee';
 const storageId = '6067b156cea495591213b0ea';
 
-Game.getObjectById('5bbcad0e9099fc012e6368bd');
+const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd');
 
 
 
@@ -68,6 +68,8 @@ const container_1 = '606545e6a4e2a38c708728ed';
 const container_2 = '60653e74e6f7f835e1474818';
 const source_1 = '5bbcad0e9099fc012e6368bf';
 const source_2 = '5bbcad0e9099fc012e6368c0';
+
+const decayTime = 1500;
 
 const find_source = function (creep, sourceId) {
     const source = Game.getObjectById(sourceId);
@@ -212,15 +214,15 @@ const roleBuilder = () => ({
     switch: creep => creep.updateState()
 });
 
-const roleTransfer = () => ({
+const roleTransfer= () => ({
     target: creep => {
-        find_container_trans(creep, source_1, container_1);
+        find_container_trans(creep,source_1,container_1);
     },
 });
 
-const roleTransfer2 = () => ({
+const roleTransfer2= () => ({
     target: creep => {
-        find_container_trans(creep, source_2, container_2);
+        find_container_trans(creep,source_2,container_2);
     },
     switch: creep => creep.updateState()
 });
@@ -263,6 +265,26 @@ const roleTranstorage2 = () => ({
     switch: creep => creep.updateState()
 });
 
+const roleClaimer = () => ({
+    target: creep => {
+        const room = Game.rooms['E2S34'];
+        if (room && room.find(FIND_HOSTILE_CREEPS)) { // 遇到invader计时，往出生点跑
+            if (Memory.invader.northRoom + decayTime < Game.time) { //不在侵略时间段，记录开始时间
+                Memory.invader.northRoom = Game.time;
+            }
+            creep.moveTo(Game.getObjectById(towerId));
+        } else if (!room && Memory.invader.northRoom + decayTime < Game.time) { //没视野，不被侵略
+            creep.moveTo(new RoomPosition(20, 36, 'E2S34'));
+        }
+
+        else if (Memory.invader.northRoom + decayTime < Game.time) { //当前不在侵略时间段
+            if (creep.reserveController(controller_North) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(controller_North);
+            }
+        }
+    }
+});
+
 var creepList = {
     harvester1: harvester(),
     harvester2: harvester(),
@@ -280,7 +302,7 @@ var creepList = {
     // northRoomRepair: northRoomRepair(),
     // northRoomCarry1: northRoomCarry(),
     // northRoomCarry2: northRoomCarry(),
-    // claimerN: claimer(),
+    claimerN: roleClaimer(),
     // transferN: transferN()
 
 };
@@ -312,7 +334,8 @@ var creepList = {
 
 // 引入 creep 配置项
 
-Creep.prototype.work = function () {
+Creep.prototype.work = function()
+{
     // 检查 creep 内存中的角色是否存在
     if (!(this.memory.role in creepList)) {
         console.log(`creep ${this.name} 内存属性 role 不属于任何已存在的 creepConfigs 名称`);
@@ -333,13 +356,14 @@ Creep.prototype.work = function () {
     }
 };
 
-Creep.prototype.updateState = function () {
+Creep.prototype.updateState = function()
+{
     // creep 身上没有能量 && creep 之前的状态为“工作”
-    if (this.store[RESOURCE_ENERGY] <= 0 && this.memory.working) {
+    if(this.store[RESOURCE_ENERGY] <= 0 && this.memory.working) {
         this.memory.working = false;
     }
     // creep 身上能量满了 && creep 之前的状态为“不工作”
-    if (this.store[RESOURCE_ENERGY] >= this.store.getCapacity() && !this.memory.working) {
+    if(this.store[RESOURCE_ENERGY] >= this.store.getCapacity() && !this.memory.working) {
         this.memory.working = true;
     }
 
@@ -385,7 +409,7 @@ Spawn.prototype.mainSpawn = function (taskName) {
     return false
 };
 
-function stateScanner() {
+function stateScanner () {
     // 每 20 tick 运行一次
     if (Game.time % 20) return
 
