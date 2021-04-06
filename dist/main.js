@@ -41,6 +41,7 @@ const roles = {
 // },
 const body = {
     base: getBody({ WORK: 1, CARRY: 1, MOVE: 1 }), //200
+    trans:getBody({ WORK: 2, CARRY: 1, MOVE: 1 }), //300
     base300: getBody({ WORK: 2, CARRY: 1, MOVE: 1 }), //300
     work550: getBody({ WORK: 4, CARRY: 1, MOVE: 1 }), //550
     move550: getBody({ WORK: 1, CARRY: 4, MOVE: 5 }), //550
@@ -59,6 +60,8 @@ const spawnName = 'Spawn1';
 const towerId = '606496df680e4ac68b2d8ccd';
 const towerId2 = '606a07304d24f06a9f242bee';
 const storageId = '6067b156cea495591213b0ea';
+const link2Id = '606bce9496af2a2cda7c90cf';
+const linkCenter = '606bd2642bb56187e6ba3e6a';
 
 const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd');
 
@@ -85,7 +88,7 @@ const find_container_trans = function (creep, sourceId, structureId) {
     const source = Game.getObjectById(sourceId);
     const structure = Game.getObjectById(structureId);
     if (JSON.stringify(structure.pos) !== JSON.stringify(creep.pos) &&
-        structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) { // 走到container上面
         creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
     } else {
         if (structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
@@ -241,8 +244,21 @@ const roleTransfer= () => ({
 });
 
 const roleTransfer2= () => ({
-    target: creep => {
+    source: creep => {
         find_container_trans(creep,source_2,container_2);
+
+    },
+    target: creep => {
+        const link = Game.getObjectById(link2Id);
+
+        if(link.cooldown===0&&link.energy>=700){
+            link.transferEnergy(Game.getObjectById(linkCenter), link.energy);
+        }
+        if (link && link.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+            if (creep.transfer(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(link, { visualizePathStyle: { stroke: '#ffffff' } });
+            }
+        }
     },
     switch: creep => creep.updateState()
 });
@@ -411,7 +427,7 @@ var creepList = {
 
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK], 'transfer1_1', { memory: { role: 'transfer1_1' } })
 
-// Game.spawns.Spawn1.spawnCreep([MOVE, WORK], 'transfer2_1', { memory: { role: 'transfer2_1' } })
+// Game.spawns.Spawn1.spawnCreep([MOVE, WORK,CARRY,WORK], 'transfer2_1', { memory: { role: 'transfer2_1' } })
 
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'upgrader1', { memory: { role: 'upgrader1' } })
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'upgrader2', { memory: { role: 'upgrader2' } })
@@ -482,7 +498,11 @@ Spawn.prototype.addTask = function (taskName) {
     if (this.memory.spawnList === undefined) {
         this.memory.spawnList = [];
     }
-    this.memory.spawnList.push(taskName);
+    if(taskName.includes('harvester')){
+        this.memory.spawnList.splice(0, 0, taskName);
+    }else {
+        this.memory.spawnList.push(taskName);
+    }
     return this.memory.spawnList.length
 };
 
@@ -495,7 +515,7 @@ Spawn.prototype.mainSpawn = function (taskName) {
         newBody = body.carry800;
     }
     else if (taskName.includes('transfer')) {
-        newBody = body.trans800;
+        newBody = body.trans;
     }
     else if (taskName.includes('claimer')) {
         newBody = body.claim;
