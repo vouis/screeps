@@ -291,21 +291,6 @@ const roleTranstorage = () => ({
     switch: creep => creep.updateState()
 });
 
-const roleTranstorage2 = () => ({
-    source: creep => {
-        find_structure_or_source(creep, source_2, container_2);
-    },
-    target: creep => {
-        const storage = Game.getObjectById(storageId);
-        if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
-            if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });
-            }
-        }
-    },
-    switch: creep => creep.updateState()
-});
-
 const northRoomRepair = () => ({
     source: creep => {
         const room = Game.rooms['E2S34'];
@@ -402,6 +387,24 @@ const roleTransferN = () => ({
 
 });
 
+const roleLink2storage = () => ({
+    source: creep => {
+        const link = Game.getObjectById(linkCenter);
+        if (creep.withdraw(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && link.store[RESOURCE_ENERGY] != 0) {
+            creep.moveTo(link, { visualizePathStyle: { stroke: '#ffaa00' } });
+        }
+    },
+    target: creep => {
+        const storage = Game.getObjectById(storageId);
+        if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+            if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });
+            }
+        }
+    },
+    switch: creep => creep.updateState()
+});
+
 var creepList = {
     harvester1: harvester(),
     harvester2: harvester(),
@@ -414,7 +417,7 @@ var creepList = {
     transfer1_1: roleTransfer(),
     transfer2_1: roleTransfer2(),
     transtorage1_1: roleTranstorage(),
-    link2Storage: roleTranstorage2(),
+    link2Storage: roleLink2storage(),
     // north room
 
     northRoomRepair: northRoomRepair(),

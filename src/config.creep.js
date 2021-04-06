@@ -9,6 +9,7 @@ import northRoomRepair from './role/role.NorthRoomRepair'
 import northRoomCarry from './role/northRoomCarry'
 import claimer from './role/role.claimer'
 import transferN from './role/role.northRoomTransfer'
+import roleLink2storage from './role/role.link2storage'
 export default {
     harvester1: harvester(),
     harvester2: harvester(),
@@ -21,7 +22,7 @@ export default {
     transfer1_1: transfer(),
     transfer2_1: transfer2(),
     transtorage1_1: transtorage(),
-    link2Storage: transtorage2(),
+    link2Storage: roleLink2storage(),
     // north room
 
     northRoomRepair: northRoomRepair(),

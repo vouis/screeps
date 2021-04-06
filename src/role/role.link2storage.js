@@ -1,6 +1,6 @@
 import {storageId, linkCenter} from "../global";
 
-const roleTranstorage2 = () => ({
+const roleLink2storage = () => ({
     source: creep => {
         const link = Game.getObjectById(linkCenter)
         if (creep.withdraw(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && link.store[RESOURCE_ENERGY] != 0) {
@@ -18,4 +18,4 @@ const roleTranstorage2 = () => ({
     switch: creep => creep.updateState()
 })
 
-export default roleTranstorage2;
+export default roleLink2storage;
