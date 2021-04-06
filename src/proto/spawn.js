@@ -15,7 +15,11 @@ Spawn.prototype.addTask = function (taskName) {
     if (this.memory.spawnList === undefined) {
         this.memory.spawnList = []
     }
-    this.memory.spawnList.push(taskName)
+    if(taskName.includes('harvester')){
+        this.memory.spawnList.splice(0, 0, taskName)
+    }else{
+        this.memory.spawnList.push(taskName)
+    }
     return this.memory.spawnList.length
 }
 
@@ -28,7 +32,7 @@ Spawn.prototype.mainSpawn = function (taskName) {
         newBody = body.carry800
     }
     else if (taskName.includes('transfer')) {
-        newBody = body.trans800
+        newBody = body.trans
     }
     else if (taskName.includes('claimer')) {
         newBody = body.claim

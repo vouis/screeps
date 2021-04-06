@@ -39,6 +39,7 @@ export const roles = {
 // },
 export const body = {
     base: getBody({ WORK: 1, CARRY: 1, MOVE: 1 }), //200
+    trans:getBody({ WORK: 2, CARRY: 1, MOVE: 1 }), //300
     base300: getBody({ WORK: 2, CARRY: 1, MOVE: 1 }), //300
     work550: getBody({ WORK: 4, CARRY: 1, MOVE: 1 }), //550
     move550: getBody({ WORK: 1, CARRY: 4, MOVE: 5 }), //550
@@ -57,6 +58,8 @@ export const spawnName = 'Spawn1'
 export const towerId = '606496df680e4ac68b2d8ccd'
 export const towerId2 = '606a07304d24f06a9f242bee'
 export const storageId = '6067b156cea495591213b0ea'
+export const link2Id = '606bce9496af2a2cda7c90cf'
+export const linkCenter = '606bd2642bb56187e6ba3e6a'
 
 export const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd')
 
@@ -83,7 +86,7 @@ export const find_container_trans = function (creep, sourceId, structureId) {
     const source = Game.getObjectById(sourceId);
     const structure = Game.getObjectById(structureId);
     if (JSON.stringify(structure.pos) !== JSON.stringify(creep.pos) &&
-        structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) { // 走到container上面
         creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
     } else {
         if (structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
