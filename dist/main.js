@@ -42,6 +42,7 @@ const roles = {
 const body = {
     base: getBody({ WORK: 1, CARRY: 1, MOVE: 1 }), //200
     trans:getBody({ WORK: 2, CARRY: 1, MOVE: 1 }), //300
+    carry:getBody({  CARRY: 2, MOVE: 1 }), //300
     base300: getBody({ WORK: 2, CARRY: 1, MOVE: 1 }), //300
     work550: getBody({ WORK: 4, CARRY: 1, MOVE: 1 }), //550
     move550: getBody({ WORK: 1, CARRY: 4, MOVE: 5 }), //550
@@ -413,7 +414,7 @@ var creepList = {
     transfer1_1: roleTransfer(),
     transfer2_1: roleTransfer2(),
     transtorage1_1: roleTranstorage(),
-    transtorage2_1: roleTranstorage2(),
+    link2Storage: roleTranstorage2(),
     // north room
 
     northRoomRepair: northRoomRepair(),
@@ -523,6 +524,9 @@ Spawn.prototype.mainSpawn = function (taskName) {
     }
     else if (taskName.includes('claimer')) {
         newBody = body.claim;
+    }
+    else if(taskName.includes('link2Storage')){
+        newBody = body.carry;
     }
     // upgrader,builder
     const value = Game.spawns.Spawn1.spawnCreep(newBody, taskName, { memory: { role: taskName } });

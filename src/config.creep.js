@@ -21,7 +21,7 @@ export default {
     transfer1_1: transfer(),
     transfer2_1: transfer2(),
     transtorage1_1: transtorage(),
-    transtorage2_1: transtorage2(),
+    link2Storage: transtorage2(),
     // north room
 
     northRoomRepair: northRoomRepair(),

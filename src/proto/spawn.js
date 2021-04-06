@@ -37,6 +37,9 @@ Spawn.prototype.mainSpawn = function (taskName) {
     else if (taskName.includes('claimer')) {
         newBody = body.claim
     }
+    else if(taskName.includes('link2Storage')){
+        newBody = body.carry
+    }
     // upgrader,builder
     const value = Game.spawns.Spawn1.spawnCreep(newBody, taskName, { memory: { role: taskName } })
     if (value === 0) return true
