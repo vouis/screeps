@@ -41,7 +41,7 @@ const roles = {
 // },
 const body = {
     base: getBody({ WORK: 1, CARRY: 1, MOVE: 1 }), //200
-    trans:getBody({ WORK: 2, CARRY: 1, MOVE: 1 }), //300
+    trans:getBody({ WORK: 4, CARRY: 1, MOVE: 2 }), //300
     carry:getBody({  CARRY: 2, MOVE: 1 }), //300
     base300: getBody({ WORK: 2, CARRY: 1, MOVE: 1 }), //300
     work550: getBody({ WORK: 4, CARRY: 1, MOVE: 1 }), //550
@@ -225,19 +225,6 @@ const roleUpgrader = () => ({
     switch: creep => creep.updateState()
 });
 
-const roleBuilder = () => ({
-
-    source: creep => {
-        find_structure_or_source(creep, source_2, container_2, storageId);
-    },
-
-    target: creep => {
-        find_building(creep, true);
-    },
-
-    switch: creep => creep.updateState()
-});
-
 const roleTransfer= () => ({
     target: creep => {
         find_container_trans(creep,source_1,container_1);
@@ -412,8 +399,8 @@ var creepList = {
     upgrader2: roleUpgrader(),
     upgrader3: roleUpgrader(),
     upgrader4: roleUpgrader(),
-    builder1: roleBuilder(),
-    builder2: roleBuilder(),
+    // builder1: builder(),
+    // builder2: builder(),
     transfer1_1: roleTransfer(),
     transfer2_1: roleTransfer2(),
     transtorage1_1: roleTranstorage(),
