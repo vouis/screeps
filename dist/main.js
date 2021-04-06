@@ -258,6 +258,10 @@ const roleTransfer2= () => ({
             if (creep.transfer(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(link, { visualizePathStyle: { stroke: '#ffffff' } });
             }
+        }else {
+            if (creep.transfer(container_2, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(container_2, { visualizePathStyle: { stroke: '#ffffff' } });
+            }
         }
     },
     switch: creep => creep.updateState()
