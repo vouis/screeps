@@ -39,7 +39,7 @@ export const roles = {
 // },
 export const body = {
     base: getBody({ WORK: 1, CARRY: 1, MOVE: 1 }), //200
-    trans:getBody({ WORK: 6, CARRY: 1, MOVE: 3 }), //300
+    trans:getBody({ WORK: 10, CARRY: 2, MOVE: 3 }), //300
     carry:getBody({  CARRY: 2, MOVE: 1 }), //300
     base300: getBody({ WORK: 2, CARRY: 1, MOVE: 1 }), //300
     work550: getBody({ WORK: 4, CARRY: 1, MOVE: 1 }), //550
