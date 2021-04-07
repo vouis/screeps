@@ -223,6 +223,19 @@ const roleUpgrader = () => ({
     switch: creep => creep.updateState()
 });
 
+const roleBuilder = () => ({
+
+    source: creep => {
+        find_structure_or_source(creep, source_2, container_2, storageId);
+    },
+
+    target: creep => {
+        find_building(creep, true);
+    },
+
+    switch: creep => creep.updateState()
+});
+
 const roleTransfer= () => ({
     target: creep => {
         find_container_trans(creep,source_1,container_1);
@@ -406,7 +419,7 @@ var creepList = {
     upgrader2: roleUpgrader(),
     upgrader3: roleUpgrader(),
     upgrader4: roleUpgrader(),
-    // builder1: builder(),
+    builder1: roleBuilder(),
     // builder2: builder(),
     transfer1_1: roleTransfer(),
     transfer2_1: roleTransfer2(),
