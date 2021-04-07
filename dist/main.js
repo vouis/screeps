@@ -88,14 +88,10 @@ const find_source = function (creep, sourceId) {
 const find_container_trans = function (creep, sourceId, structureId) {
     const source = Game.getObjectById(sourceId);
     const structure = Game.getObjectById(structureId);
-    if (JSON.stringify(structure.pos) !== JSON.stringify(creep.pos) &&
-        structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) { // 走到container上面
+    if (JSON.stringify(structure.pos) !== JSON.stringify(creep.pos)) { // 走到container上面
         creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
     } else {
-        if (structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
             creep.harvest(source);
-        }
-
     }
 };
 
@@ -377,7 +373,7 @@ const roleTransferN = () => ({
 const roleLink2storage = () => ({
     source: creep => {
         const link = Game.getObjectById(linkCenter);
-        if (creep.withdraw(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && link.store[RESOURCE_ENERGY] != 0) {
+        if (creep.withdraw(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
             creep.moveTo(link, { visualizePathStyle: { stroke: '#ffaa00' } });
         }
     },
