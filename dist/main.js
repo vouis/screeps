@@ -236,16 +236,20 @@ const roleTransfer2= () => ({
         if (JSON.stringify(structure.pos) !== JSON.stringify(creep.pos)) { // 走到container上面
             creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
         } else {
+            if(source.energy>0){
                 creep.harvest(source);
+            }else if(structure.store[RESOURCE_ENERGY] != 0){
+                creep.withdraw(structure, RESOURCE_ENERGY);
+            }
         }
     },
     target: creep => {
         const link = Game.getObjectById(link2Id);
 
-        if(link.cooldown===0&&link.energy>=700){
+        if(link.cooldown===0&&link.energy>=600){
             link.transferEnergy(Game.getObjectById(linkCenter), link.energy);
         }
-        if (link && link.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        if (link && link.store.getFreeCapacity(RESOURCE_ENERGY) > 50) {
             if (creep.transfer(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(link, { visualizePathStyle: { stroke: '#ffffff' } });
             }
