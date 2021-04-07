@@ -8,8 +8,13 @@ import {
 
 const roleTransfer2= () => ({
     source: creep => {
-        find_container_trans(creep,source_2,container_2)
-
+        const source = Game.getObjectById(source_2);
+        const structure = Game.getObjectById(container_2);
+        if (JSON.stringify(structure.pos) !== JSON.stringify(creep.pos)) { // 走到container上面
+            creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
+        } else {
+                creep.harvest(source)
+        }
     },
     target: creep => {
         const link = Game.getObjectById(link2Id)

@@ -89,7 +89,9 @@ export const find_container_trans = function (creep, sourceId, structureId) {
     if (JSON.stringify(structure.pos) !== JSON.stringify(creep.pos)) { // 走到container上面
         creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
     } else {
+        if (structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
             creep.harvest(source)
+        }
     }
 }
 
