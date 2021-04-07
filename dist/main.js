@@ -235,7 +235,7 @@ const roleTransfer2= () => ({
         const structure = Game.getObjectById(container_2);
         if (JSON.stringify(structure.pos) !== JSON.stringify(creep.pos)) { // 走到container上面
             creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
-        } else {
+        } else if(creep.store[RESOURCE_ENERGY] < creep.store.getCapacity()){
             if(source.energy>0){
                 creep.harvest(source);
             }else if(structure.store[RESOURCE_ENERGY] != 0){
@@ -254,8 +254,8 @@ const roleTransfer2= () => ({
                 creep.moveTo(link, { visualizePathStyle: { stroke: '#ffffff' } });
             }
         }else {
-            if (creep.transfer(container_2, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(container_2, { visualizePathStyle: { stroke: '#ffffff' } });
+            if (Game.getObjectById(container_2).store.getFreeCapacity(RESOURCE_ENERGY) > 50) {
+                creep.transfer(container_2, RESOURCE_ENERGY);
             }
         }
     },
