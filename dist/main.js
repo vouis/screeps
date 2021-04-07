@@ -265,7 +265,7 @@ const roleTransfer2= () => ({
 const roleTranstorage = () => ({
     source: creep => {
         const target = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
-        if (target) {
+        if (target&&target.energy>250) {
             if (creep.pickup(target) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(target);
             }
