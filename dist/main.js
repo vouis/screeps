@@ -479,19 +479,19 @@ Creep.prototype.avoid = function(roomString,fn){
     const room = Game.rooms[roomString];
     if (!Memory.invader) {
         Memory.invader = {};
-        Memory.invader.northRoom = 0;
+        Memory.invader[roomString] = 0;
     }
     if (room && room.find(FIND_HOSTILE_CREEPS).length) { // 遇到invader计时，往出生点跑
-        if (Memory.invader.northRoom + decayTime < Game.time) { //不在侵略时间段，记录开始时间
-            Memory.invader.northRoom = Game.time;
+        if (Memory.invader[roomString] + decayTime < Game.time) { //不在侵略时间段，记录开始时间
+            Memory.invader[roomString] = Game.time;
         }
         this.moveTo(new RoomPosition(9, 2, 'E2S35'));
-    } else if (Memory.invader.northRoom + decayTime > Game.time) { //在侵略时间段
+    } else if (Memory.invader[roomString] + decayTime > Game.time) { //在侵略时间段
         this.moveTo(new RoomPosition(9, 2, 'E2S35'));
     }
-    else if (!room && Memory.invader.northRoom + decayTime < Game.time) { //没视野，不被侵略
+    else if (!room && Memory.invader[roomString] + decayTime < Game.time) { //没视野，不被侵略
         this.moveTo(new RoomPosition(20, 36, roomString));
-    } else if (Memory.invader.northRoom + decayTime < Game.time) { //当前不在侵略时间段
+    } else if (Memory.invader[roomString] + decayTime < Game.time) { //当前不在侵略时间段
         fn(this);
     }
 
@@ -576,11 +576,6 @@ function stateScanner () {
 
     if (Game.cpu.bucket > 6000) {
         Game.cpu.generatePixel();
-    }
-
-    if (!Memory.invader) {
-        Memory.invader = {};
-        Memory.invader.northRoom = 0;
     }
 
 }

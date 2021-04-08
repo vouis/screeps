@@ -19,9 +19,4 @@ export default function () {
         Game.cpu.generatePixel();
     }
 
-    if (!Memory.invader) {
-        Memory.invader = {};
-        Memory.invader.northRoom = 0
-    }
-
 }
