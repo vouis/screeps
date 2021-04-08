@@ -13,7 +13,7 @@ const roleAttacker = () => ({
 
         if(flag&&creep.pos.roomName === flag.pos.roomName){
             const controller = Game.getObjectById('5bbcad009099fc012e636734');
-            if (creep.reserveController(controller) == ERR_NOT_IN_RANGE) {
+            if (creep.attackController(controller) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(controller);
             }
         }else {
