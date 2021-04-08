@@ -11,6 +11,11 @@ const roleAttacker = () => ({
         //     creep.moveTo(flag)
         // }
 
+        // sign
+        // const controller = Game.getObjectById('5bbcad009099fc012e636734');
+        // if(creep.signController(controller, '（¯﹃¯）') == ERR_NOT_IN_RANGE) {
+        //     creep.moveTo(creep.room.controller);
+
         if(flag&&creep.pos.roomName === flag.pos.roomName){
             //Game.creeps['C_1234'].claimController(Game.rooms.controller);
             const controller = Game.getObjectById('5bbcad009099fc012e636734');
@@ -21,6 +26,7 @@ const roleAttacker = () => ({
             creep.moveTo(flag)
         }
     },
+    otherRoom:'E1S34',
 })
 
 export default roleAttacker;

@@ -33,7 +33,7 @@ export default {
     transferN: transferN(),
 
     // attack
-    attacker:attacker()
+    // attacker:attacker()
 
 }
 
