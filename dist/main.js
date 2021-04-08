@@ -353,13 +353,25 @@ const roleTransferN = () => ({
 const roleAttacker = () => ({
     target: creep => {
         let flag = Game.flags.attackFlag;
+        // spawn
+        // if(flag&&creep.pos.roomName === flag.pos.roomName){
+        //     let spawn = creep.room.find(FIND_HOSTILE_SPAWNS)[0];
+        //     if (creep.attack(spawn) === ERR_NOT_IN_RANGE) creep.moveTo(spawn)
+        // }else {
+        //     creep.moveTo(flag)
+        // }
+
         if(flag&&creep.pos.roomName === flag.pos.roomName){
-            let spawn = creep.room.find(FIND_HOSTILE_SPAWNS)[0];
-            if (creep.attack(spawn) === ERR_NOT_IN_RANGE) creep.moveTo(spawn);
+            const controller = Game.getObjectById('5bbcad009099fc012e636734');
+            if (creep.reserveController(controller) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(controller);
+            }
         }else {
             creep.moveTo(flag);
         }
-    }
+    },
+
+    otherRoom:'E1S34',
 });
 
 const roleLink2storage = () => ({
@@ -431,7 +443,7 @@ var creepList = {
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomCarry2', { memory: { role: 'northRoomCarry2' } })
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomRepair', { memory: { role: 'northRoomRepairs' } })
 
-//Game.spawns.Spawn1.spawnCreep([MOVE, ATTACK, MOVE,ATTACK], 'attacker', { memory: { role: 'attacker' } })
+//Game.spawns.Spawn1.spawnCreep([MOVE, CLAIM, MOVE,CLAIM], 'attacker', { memory: { role: 'attacker' } })
 
 // 引入 creep 配置项
 
@@ -533,7 +545,7 @@ Spawn.prototype.mainSpawn = function (taskName) {
     else if (taskName.includes('transfer')) {
         newBody = body.trans;
     }
-    else if (taskName.includes('claimer')) {
+    else if (taskName.includes('claimer')||taskName.includes('attacker')) {
         newBody = body.claim;
     }
     else if(taskName.includes('link2Storage')){
@@ -595,7 +607,7 @@ module.exports.loop = function () {
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
             for (let key in creepList) {
-                if (name === key&& name!=='attacker') {
+                if (name === key) {
                     Game.spawns[spawnName].addTask(name);
                 }
             }

@@ -62,5 +62,5 @@ export default {
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomCarry2', { memory: { role: 'northRoomCarry2' } })
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomRepair', { memory: { role: 'northRoomRepairs' } })
 
-//Game.spawns.Spawn1.spawnCreep([MOVE, ATTACK, MOVE,ATTACK], 'attacker', { memory: { role: 'attacker' } })
+//Game.spawns.Spawn1.spawnCreep([MOVE, CLAIM, MOVE,CLAIM], 'attacker', { memory: { role: 'attacker' } })
 

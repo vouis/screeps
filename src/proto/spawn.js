@@ -34,7 +34,7 @@ Spawn.prototype.mainSpawn = function (taskName) {
     else if (taskName.includes('transfer')) {
         newBody = body.trans
     }
-    else if (taskName.includes('claimer')) {
+    else if (taskName.includes('claimer')||taskName.includes('attacker')) {
         newBody = body.claim
     }
     else if(taskName.includes('link2Storage')){
