@@ -45,7 +45,7 @@ Creep.prototype.avoid = function(roomString,fn){
         this.moveTo(new RoomPosition(9, 2, 'E2S35'))
     }
     else if (!room && Memory.invader.northRoom + decayTime < Game.time) { //没视野，不被侵略
-        this.moveTo(new RoomPosition(20, 36, 'E2S34'))
+        this.moveTo(new RoomPosition(20, 36, roomString))
     } else if (Memory.invader.northRoom + decayTime < Game.time) { //当前不在侵略时间段
         fn(this)
     }

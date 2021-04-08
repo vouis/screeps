@@ -318,21 +318,7 @@ const northRoomRepair = () => ({
 
 const northRoomCarry = () => ({
     source: creep => {
-        const room = Game.rooms['E2S34'];
-        if (room && room.find(FIND_HOSTILE_CREEPS).length) { // 遇到invader计时，往出生点跑
-            if (Memory.invader.northRoom + decayTime < Game.time) { //不在侵略时间段，记录开始时间
-                Memory.invader.northRoom = Game.time;
-            }
-            creep.moveTo(new RoomPosition(9, 2, 'E2S35'));
-        } else if (Memory.invader.northRoom + decayTime > Game.time) { //在侵略时间段
-            creep.moveTo(new RoomPosition(9, 2, 'E2S35'));
-        }
-        else if (!room && Memory.invader.northRoom + decayTime < Game.time) { //没视野，不被侵略
-            creep.moveTo(new RoomPosition(20, 36, 'E2S34'));
-        }
-        else if (Memory.invader.northRoom + decayTime < Game.time) { //当前不在侵略时间段
             find_structure_or_source(creep, source_North, container_North);
-        }
     },
     target: creep => {
         if (find_building(creep, false)) { return; }        const storage = Game.getObjectById(storageId);
@@ -342,50 +328,25 @@ const northRoomCarry = () => ({
             }
         }
     },
-    switch: creep => creep.updateState()
+    switch: creep => creep.updateState(),
+    otherRoom:'E2S34'
 });
 
 const roleClaimer = () => ({
     target: creep => {
-        const room = Game.rooms['E2S34'];
-        if (room && room.find(FIND_HOSTILE_CREEPS).length) { // 遇到invader计时，往出生点跑
-            if (Memory.invader.northRoom + decayTime < Game.time) { //不在侵略时间段，记录开始时间
-                Memory.invader.northRoom = Game.time;
-            }
-            creep.moveTo(new RoomPosition(9, 2, 'E2S35'));
-        } else if (Memory.invader.northRoom + decayTime > Game.time) { //在侵略时间段
-            creep.moveTo(new RoomPosition(9, 2, 'E2S35'));
-        }
-        else if (!room && Memory.invader.northRoom + decayTime < Game.time) { //没视野，不被侵略
-            creep.moveTo(new RoomPosition(20, 36, 'E2S34'));
-        }
-        else if (Memory.invader.northRoom + decayTime < Game.time) { //当前不在侵略时间段
             if (creep.reserveController(controller_North) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(controller_North);
             }
-        }
-    }
+
+    },
+    otherRoom:'E2S34',
 });
 
 const roleTransferN = () => ({
     target: creep => {
-        const room = Game.rooms['E2S34'];
-        if (room && room.find(FIND_HOSTILE_CREEPS).length) { // 遇到invader计时，往出生点跑
-            if (Memory.invader.northRoom + decayTime < Game.time) { //不在侵略时间段，记录开始时间
-                Memory.invader.northRoom = Game.time;
-            }
-            creep.moveTo(new RoomPosition(9, 2, 'E2S35'));
-        } else if (Memory.invader.northRoom + decayTime > Game.time) { //在侵略时间段
-            creep.moveTo(new RoomPosition(9, 2, 'E2S35'));
-        }
-        else if (!room && Memory.invader.northRoom + decayTime < Game.time) { //没视野，不被侵略
-            creep.moveTo(new RoomPosition(20, 36, 'E2S34'));
-        }
-        else if (Memory.invader.northRoom + decayTime < Game.time) { //当前不在侵略时间段
             find_container_trans(creep, source_North, container_North);
-        }
-
     },
+    otherRoom:'E2S34'
 
 });
 
@@ -500,7 +461,7 @@ Creep.prototype.avoid = function(roomString,fn){
         this.moveTo(new RoomPosition(9, 2, 'E2S35'));
     }
     else if (!room && Memory.invader.northRoom + decayTime < Game.time) { //没视野，不被侵略
-        this.moveTo(new RoomPosition(20, 36, 'E2S34'));
+        this.moveTo(new RoomPosition(20, 36, roomString));
     } else if (Memory.invader.northRoom + decayTime < Game.time) { //当前不在侵略时间段
         fn(this);
     }
