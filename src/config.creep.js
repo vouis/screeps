@@ -18,7 +18,7 @@ export default {
     upgrader3: upgrader(),
     upgrader4: upgrader(),
     builder1: builder(),
-    // builder2: builder(),
+    builder2: builder(),
     transfer1_1: transfer(),
     transfer2_1: transfer2(),
     transtorage1_1: transtorage(),

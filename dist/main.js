@@ -420,7 +420,7 @@ var creepList = {
     upgrader3: roleUpgrader(),
     upgrader4: roleUpgrader(),
     builder1: roleBuilder(),
-    // builder2: builder(),
+    builder2: roleBuilder(),
     transfer1_1: roleTransfer(),
     transfer2_1: roleTransfer2(),
     transtorage1_1: roleTranstorage(),
