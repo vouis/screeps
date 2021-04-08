@@ -22,7 +22,7 @@ const northRoomRepair = () => ({
             creep.moveTo(new RoomPosition(20, 36, 'E2S34'))
         } else if (Memory.invader.northRoom + decayTime < Game.time) { //当前不在侵略时间段
             const target = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
-            if (target&&target.energy>50) {
+            if (target&&target.energy) {
                 if (creep.pickup(target) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(target);
                 }
