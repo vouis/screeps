@@ -9,6 +9,7 @@ import northRoomRepair from './role/role.NorthRoomRepair'
 import northRoomCarry from './role/northRoomCarry'
 import claimer from './role/role.claimer'
 import transferN from './role/role.northRoomTransfer'
+import attacker from './role/attack/role.attack'
 import roleLink2storage from './role/role.link2storage'
 export default {
     harvester1: harvester(),
@@ -29,7 +30,10 @@ export default {
     northRoomCarry1: northRoomCarry(),
     northRoomCarry2: northRoomCarry(),
     claimerN: claimer(),
-    transferN: transferN()
+    transferN: transferN(),
+
+    // attack
+    attacker:attacker()
 
 }
 
@@ -57,4 +61,6 @@ export default {
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomCarry1', { memory: { role: 'northRoomCarry1' } })
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomCarry2', { memory: { role: 'northRoomCarry2' } })
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomRepair', { memory: { role: 'northRoomRepairs' } })
+
+//Game.spawns.Spawn1.spawnCreep([MOVE, ATTACK, MOVE,ATTACK], 'attacker', { memory: { role: 'attacker' } })
 

@@ -350,6 +350,18 @@ const roleTransferN = () => ({
 
 });
 
+const roleAttacker = () => ({
+    target: creep => {
+        let flag = Game.flags.attackFlag;
+        if(flag&&creep.pos.roomName === flag.pos.roomName){
+            let spawn = creep.room.find(FIND_HOSTILE_SPAWNS)[0];
+            if (creep.attack(spawn) === ERR_NOT_IN_RANGE) creep.moveTo(spawn);
+        }else {
+            creep.moveTo(flag);
+        }
+    }
+});
+
 const roleLink2storage = () => ({
     source: creep => {
         const link = Game.getObjectById(linkCenter);
@@ -387,7 +399,10 @@ var creepList = {
     northRoomCarry1: northRoomCarry(),
     northRoomCarry2: northRoomCarry(),
     claimerN: roleClaimer(),
-    transferN: roleTransferN()
+    transferN: roleTransferN(),
+
+    // attack
+    attacker:roleAttacker()
 
 };
 
@@ -415,6 +430,8 @@ var creepList = {
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomCarry1', { memory: { role: 'northRoomCarry1' } })
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomCarry2', { memory: { role: 'northRoomCarry2' } })
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomRepair', { memory: { role: 'northRoomRepairs' } })
+
+//Game.spawns.Spawn1.spawnCreep([MOVE, ATTACK, MOVE,ATTACK], 'attacker', { memory: { role: 'attacker' } })
 
 // 引入 creep 配置项
 
@@ -578,7 +595,7 @@ module.exports.loop = function () {
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
             for (let key in creepList) {
-                if (name === key) {
+                if (name === key&& name!=='attacker') {
                     Game.spawns[spawnName].addTask(name);
                 }
             }

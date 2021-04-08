@@ -31,7 +31,7 @@ module.exports.loop = function () {
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
             for (let key in creepList) {
-                if (name === key) {
+                if (name === key&& name!=='attacker') {
                     Game.spawns[spawnName].addTask(name);
                 }
             }
