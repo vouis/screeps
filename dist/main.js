@@ -57,6 +57,7 @@ const body = {
 };
 
 // construct
+//Game.spawns['Spawn1']
 const spawnName = 'Spawn1';
 const towerId = '606496df680e4ac68b2d8ccd';
 const towerId2 = '606a07304d24f06a9f242bee';
@@ -362,6 +363,7 @@ const roleAttacker = () => ({
         // }
 
         if(flag&&creep.pos.roomName === flag.pos.roomName){
+            //Game.creeps['C_1234'].claimController(Game.rooms.controller);
             const controller = Game.getObjectById('5bbcad009099fc012e636734');
             if (creep.attackController(controller) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(controller);
@@ -370,8 +372,6 @@ const roleAttacker = () => ({
             creep.moveTo(flag);
         }
     },
-
-    otherRoom:'E1S34',
 });
 
 const roleLink2storage = () => ({
@@ -616,6 +616,10 @@ module.exports.loop = function () {
     }
 
     Game.spawns[spawnName].work();
+
+    if(Game.spawns[spawnName].hits<2500){
+        Game.rooms['E2S35'].controller.activateSafeMode();
+    }
 
     if (role.harvester.length < 1) {
         console.log('Spawning new harvester: ');

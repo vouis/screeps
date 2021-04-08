@@ -55,6 +55,7 @@ export const body = {
 }
 
 // construct
+//Game.spawns['Spawn1']
 export const spawnName = 'Spawn1'
 export const towerId = '606496df680e4ac68b2d8ccd'
 export const towerId2 = '606a07304d24f06a9f242bee'

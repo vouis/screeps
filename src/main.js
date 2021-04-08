@@ -41,6 +41,10 @@ module.exports.loop = function () {
 
     Game.spawns[spawnName].work();
 
+    if(Game.spawns[spawnName].hits<2500){
+        Game.rooms['E2S35'].controller.activateSafeMode();
+    }
+
     if (role.harvester.length < 1) {
         console.log('Spawning new harvester: ');
         createCreeps('harvester1', 'base')
