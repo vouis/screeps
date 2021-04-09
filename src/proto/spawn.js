@@ -1,4 +1,4 @@
-import { body } from '../global';
+import { body,controller_North } from '../global';
 
 Spawn.prototype.work = function () {
     // 自己已经在生成了 / 内存里没有生成队列 / 生产队列为空 就啥都不干
@@ -18,13 +18,35 @@ Spawn.prototype.addTask = function (taskName) {
 
     // 去重
     for(let existName in Memory.creeps){
-        console.log(existName)
         if(taskName===existName){
             return this.memory.spawnList.length
         }
     }
 
+    // 额外自动添加creep
 
+
+    // 外矿claimer生成时间控制,每个CLAIM大概500次,5000为上限，时间够了不生成
+    if(taskName.includes('claimer')){
+        if(controller_North.reservation.ticksToEnd > 3000){
+            return;
+        }
+    }else{
+        let hasClaimer = false
+        // 没有claimer时，生成
+        for(let existName in Memory.creeps){
+            if('claimerN'===existName){
+                hasClaimer=true
+            }
+        }
+        if(this.memory.spawnList.find(e=>e==='claimerN')){
+            hasClaimer=true
+        }
+
+        if(!hasClaimer&&(!controller_North.reservation||controller_North.reservation.ticksToEnd < 1000)){
+            this.memory.spawnList.push('claimerN')
+        }
+    }
 
     // 优先级处理
     if(taskName.includes('harvester')){
@@ -51,6 +73,8 @@ Spawn.prototype.mainSpawn = function (taskName) {
     }
     else if(taskName.includes('link2Storage')){
         newBody = body.carry
+    }else if(taskName.includes('upgrader')){
+        newBody = body.up
     }
     // upgrader,builder
     const value = Game.spawns.Spawn1.spawnCreep(newBody, taskName, { memory: { role: taskName } })

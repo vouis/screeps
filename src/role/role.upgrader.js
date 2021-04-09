@@ -6,7 +6,8 @@ const roleUpgrader = () => ({
         if(linkUpgrader&&linkUpgrader.energy>0){
             find_source(creep,linkUpgraderId);
         }else{
-            find_structure_or_source(creep, source_2, container_2, storageId)
+            creep.say('等待能量传输!');
+            //find_structure_or_source(creep, source_2, container_2, storageId)
         }
     },
     target: creep => {

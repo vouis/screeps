@@ -16,7 +16,7 @@ import transferMiner from './role/miner/role.transferMiner'
 export default {
     harvester1: harvester(),
     harvester2: harvester(),
-    // upgrader1: upgrader(),
+    upgrader1: upgrader(),
     // upgrader2: upgrader(),
     // upgrader3: upgrader(),
     // upgrader4: upgrader(),

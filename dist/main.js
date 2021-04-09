@@ -54,6 +54,7 @@ const body = {
     upBu1300: getBody({ WORK: 5, CARRY: 9, MOVE: 7 }),//1300
     walking: getBody({ WORK: 1, CARRY: 19, MOVE: 5 }),//1300
     claim: getBody({ CLAIM: 2, MOVE: 2 }),// 650
+    up:getBody({ WORK: 2, CARRY: 1, MOVE: 2 }),
 };
 
 // construct
@@ -222,6 +223,23 @@ const harvester = () => ({
     switch: creep => creep.updateState()
 });
 
+const roleUpgrader = () => ({
+    source: creep => {
+        const linkUpgrader = Game.getObjectById(linkUpgraderId);
+        if(linkUpgrader&&linkUpgrader.energy>0){
+            find_source(creep,linkUpgraderId);
+        }else {
+            creep.say('等待能量传输!');
+            //find_structure_or_source(creep, source_2, container_2, storageId)
+        }
+    },
+    target: creep => {
+        const controller = creep.room.controller;
+        if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) creep.moveTo(controller);
+    },
+    switch: creep => creep.updateState()
+});
+
 const roleBuilder = () => ({
 
     source: creep => {
@@ -375,7 +393,7 @@ const roleLink2storage = () => ({
 var creepList = {
     harvester1: harvester(),
     harvester2: harvester(),
-    // upgrader1: upgrader(),
+    upgrader1: roleUpgrader(),
     // upgrader2: upgrader(),
     // upgrader3: upgrader(),
     // upgrader4: upgrader(),
@@ -514,13 +532,35 @@ Spawn.prototype.addTask = function (taskName) {
 
     // 去重
     for(let existName in Memory.creeps){
-        console.log(existName);
         if(taskName===existName){
             return this.memory.spawnList.length
         }
     }
 
+    // 额外自动添加creep
 
+
+    // 外矿claimer生成时间控制,每个CLAIM大概500次,5000为上限，时间够了不生成
+    if(taskName.includes('claimer')){
+        if(controller_North.reservation.ticksToEnd > 3000){
+            return;
+        }
+    }else {
+        let hasClaimer = false;
+        // 没有claimer时，生成
+        for(let existName in Memory.creeps){
+            if('claimerN'===existName){
+                hasClaimer=true;
+            }
+        }
+        if(this.memory.spawnList.find(e=>e==='claimerN')){
+            hasClaimer=true;
+        }
+
+        if(!hasClaimer&&(!controller_North.reservation||controller_North.reservation.ticksToEnd < 1000)){
+            this.memory.spawnList.push('claimerN');
+        }
+    }
 
     // 优先级处理
     if(taskName.includes('harvester')){
@@ -547,6 +587,8 @@ Spawn.prototype.mainSpawn = function (taskName) {
     }
     else if(taskName.includes('link2Storage')){
         newBody = body.carry;
+    }else if(taskName.includes('upgrader')){
+        newBody = body.up;
     }
     // upgrader,builder
     const value = Game.spawns.Spawn1.spawnCreep(newBody, taskName, { memory: { role: taskName } });
@@ -558,7 +600,7 @@ StructureLink.prototype.work = function(){
 
     if (this.cooldown != 0) return
 
-    if (this.store.getUsedCapacity(RESOURCE_ENERGY) < 600) return
+    if (this.store.getUsedCapacity(RESOURCE_ENERGY) < 700) return
     if(!this.room.memory.sourceLink2Id){
         this.room.memory.sourceLink2Id='606bce9496af2a2cda7c90cf';
     }
@@ -570,7 +612,7 @@ StructureLink.prototype.work = function(){
         const linkUpgrader = Game.getObjectById(linkUpgraderId);
         if(link.cooldown===0) {
             if (storageEnough() && linkUpgrader.energy <100) {
-                link.transferEnergy(linkUpgrader, link.energy);
+                link.transferEnergy(linkUpgrader, 700);
 
             } else {
                 link.transferEnergy(Game.getObjectById(linkCenter), link.energy);
