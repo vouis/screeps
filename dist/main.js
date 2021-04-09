@@ -89,10 +89,10 @@ const find_source = function (creep, sourceId) {
 const find_container_trans = function (creep, sourceId, structureId) {
     const source = Game.getObjectById(sourceId);
     const structure = Game.getObjectById(structureId);
-    if (JSON.stringify(structure.pos) !== JSON.stringify(creep.pos)) { // 走到container上面
+    if (structure&&JSON.stringify(structure.pos) !== JSON.stringify(creep.pos)) { // 走到container上面
         creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
     } else {
-        if (structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        if (structure&&structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
             creep.harvest(source);
         }
     }
