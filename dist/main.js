@@ -597,10 +597,11 @@ module.exports.loop = function () {
         if (!Game.creeps[name]) {
             for (let key in creepList) {
                 if (name === key) {
+                    delete Memory.creeps[name];
                     Game.spawns[spawnName].addTask(name);
                 }
             }
-            delete Memory.creeps[name];
+                delete Memory.creeps[name];
         }
     }
 
