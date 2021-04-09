@@ -62,7 +62,6 @@ const spawnName = 'Spawn1';
 const towerId = '606496df680e4ac68b2d8ccd';
 const towerId2 = '606a07304d24f06a9f242bee';
 const storageId = '6067b156cea495591213b0ea';
-const link2Id = '606bce9496af2a2cda7c90cf';
 const linkCenter = '606bd2642bb56187e6ba3e6a';
 
 const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd');
@@ -258,11 +257,11 @@ const roleTransfer2= () => ({
         }
     },
     target: creep => {
-        const link = Game.getObjectById(link2Id);
-
-        if(link.cooldown===0&&link.energy>=600){
-            link.transferEnergy(Game.getObjectById(linkCenter), link.energy);
-        }
+        // const link = Game.getObjectById(link2Id)
+        //
+        // if(link.cooldown===0&&link.energy>=600){
+        //     link.transferEnergy(Game.getObjectById(linkCenter), link.energy);
+        // }
         if (link && link.store.getFreeCapacity(RESOURCE_ENERGY) > 50) {
             if (creep.transfer(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(link, { visualizePathStyle: { stroke: '#ffffff' } });
@@ -345,7 +344,7 @@ const roleClaimer = () => ({
 
 const roleTransferN = () => ({
     target: creep => {
-        if (find_building(creep, false)) { return; }            find_container_trans(creep, source_North, container_North);
+            find_container_trans(creep, source_North, container_North);
     },
     otherRoom:'E2S34'
 
@@ -416,14 +415,14 @@ var creepList = {
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'builder2', { memory: { role: 'builder2' } })
 
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'transtorage1_1', { memory: { role: 'transtorage1_1' } })
-//Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'transtorage2_1', { memory: { role: 'transtorage2_1' } })
+//Game.spawns.Spawn1.spawnCreep([MOVE, CARRY, CARRY], 'link2Storage', { memory: { role: 'link2Storage' } })
 
 //Game.spawns.Spawn1.spawnCreep([CLAIM, MOVE], 'claimerN', { memory: { role: 'claimerN' } })
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK], 'transferN', { memory: { role: 'transferN' } })
 
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomCarry1', { memory: { role: 'northRoomCarry1' } })
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomCarry2', { memory: { role: 'northRoomCarry2' } })
-//Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomRepair', { memory: { role: 'northRoomRepairs' } })
+//Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomRepair', { memory: { role: 'northRoomRepair' } })
 
 //Game.spawns.Spawn1.spawnCreep([MOVE, CLAIM, MOVE,CLAIM], 'attacker', { memory: { role: 'attacker' } })
 
@@ -551,6 +550,24 @@ Spawn.prototype.mainSpawn = function (taskName) {
     return false
 };
 
+StructureLink.prototype.work = function(){
+    if (this.cooldown != 0) return
+
+    if (this.store.getUsedCapacity(RESOURCE_ENERGY) < 700) return
+    if(!this.room.memory.sourceLink2Id){
+        this.room.memory.Link2Id='606bce9496af2a2cda7c90cf';
+    }
+
+    // 发送给 upgrader 和center
+    if (this.room.memory.sourceLink2Id&& this.room.memory.sourceLink2Id === this.id) {
+        const link = Game.getObjectById(this.room.memory.Link2Id);
+        if(link.cooldown===0){
+            link.transferEnergy(Game.getObjectById(linkCenter), link.energy);
+        }
+    }
+
+};
+
 function stateScanner () {
     // 每 20 tick 运行一次
     if (Game.time % 20) return
@@ -606,6 +623,22 @@ module.exports.loop = function () {
     }
 
     Game.spawns[spawnName].work();
+
+    reep.room.find(FIND_STRUCTURES, {
+        filter: (structure) => {
+            return (structure.structureType == STRUCTURE_EXTENSION ||
+                structure.structureType == STRUCTURE_SPAWN) &&
+                structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
+        }
+    });
+
+    JSON.stringify(Game.structures.structureType[StructureLink]);
+    for (const name in Game.structures) {
+        const structures = Game.structures[name];
+        if(structures.structureType ==STRUCTURE_LINK){
+            structures.work();
+        }
+    }
 
     if(Game.spawns[spawnName].hits<2500){
         Game.rooms['E2S35'].controller.activateSafeMode();

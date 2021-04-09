@@ -1,4 +1,4 @@
-import {storageId, linkCenter} from "../global";
+import {storageId, linkCenter} from "../../global";
 
 const roleLink2storage = () => ({
     source: creep => {

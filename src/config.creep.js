@@ -2,7 +2,7 @@ import harvester from './role/role.harvester'
 import upgrader from './role/role.upgrader'
 import builder from './role/role.builder'
 import transfer from './role/role.transfer'
-import transfer2 from './role/role.transfer2'
+import transfer2 from './role/link/role.transfer2'
 import transtorage from './role/role.transtorage'
 import transtorage2 from './role/role.transtorage2'
 import northRoomRepair from './role/role.NorthRoomRepair'
@@ -10,7 +10,7 @@ import northRoomCarry from './role/northRoomCarry'
 import claimer from './role/role.claimer'
 import transferN from './role/role.northRoomTransfer'
 import attacker from './role/attack/role.attack'
-import roleLink2storage from './role/role.link2storage'
+import roleLink2storage from './role/link/role.link2storage'
 import miner from './role/miner/role.miner'
 import transferMiner from './role/miner/role.transferMiner'
 export default {
@@ -60,14 +60,14 @@ export default {
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'builder2', { memory: { role: 'builder2' } })
 
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'transtorage1_1', { memory: { role: 'transtorage1_1' } })
-//Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'transtorage2_1', { memory: { role: 'transtorage2_1' } })
+//Game.spawns.Spawn1.spawnCreep([MOVE, CARRY, CARRY], 'link2Storage', { memory: { role: 'link2Storage' } })
 
 //Game.spawns.Spawn1.spawnCreep([CLAIM, MOVE], 'claimerN', { memory: { role: 'claimerN' } })
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK], 'transferN', { memory: { role: 'transferN' } })
 
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomCarry1', { memory: { role: 'northRoomCarry1' } })
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomCarry2', { memory: { role: 'northRoomCarry2' } })
-//Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomRepair', { memory: { role: 'northRoomRepairs' } })
+//Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomRepair', { memory: { role: 'northRoomRepair' } })
 
 //Game.spawns.Spawn1.spawnCreep([MOVE, CLAIM, MOVE,CLAIM], 'attacker', { memory: { role: 'attacker' } })
 

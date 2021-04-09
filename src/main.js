@@ -1,6 +1,7 @@
 import { spawnName, tower_action, roles, body } from './global'
 import './proto/creep'
 import './proto/spawn'
+import './proto/structures/link'
 import creepList from './config.creep'
 import stateScanner from './stateScanner/index'
 
@@ -41,6 +42,22 @@ module.exports.loop = function () {
     }
 
     Game.spawns[spawnName].work();
+
+    reep.room.find(FIND_STRUCTURES, {
+        filter: (structure) => {
+            return (structure.structureType == STRUCTURE_EXTENSION ||
+                structure.structureType == STRUCTURE_SPAWN) &&
+                structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
+        }
+    });
+
+    JSON.stringify(Game.structures.structureType[StructureLink]);
+    for (const name in Game.structures) {
+        const structures = Game.structures[name];
+        if(structures.structureType ==STRUCTURE_LINK){
+            structures.work();
+        }
+    }
 
     if(Game.spawns[spawnName].hits<2500){
         Game.rooms['E2S35'].controller.activateSafeMode();
