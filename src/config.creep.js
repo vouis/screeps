@@ -11,6 +11,8 @@ import claimer from './role/role.claimer'
 import transferN from './role/role.northRoomTransfer'
 import attacker from './role/attack/role.attack'
 import roleLink2storage from './role/role.link2storage'
+import miner from './role/miner/role.miner'
+import transferMiner from './role/miner/role.transferMiner'
 export default {
     harvester1: harvester(),
     harvester2: harvester(),
@@ -24,6 +26,11 @@ export default {
     transfer2_1: transfer2(),
     transtorage1_1: transtorage(),
     link2Storage: roleLink2storage(),
+
+    // miner
+    // miner1:miner(),
+    // transferMiner:transferMiner(),
+
     // north room
 
     northRoomRepair: northRoomRepair(),

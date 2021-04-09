@@ -69,11 +69,14 @@ export const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd')
 
 export const container_1 = '606545e6a4e2a38c708728ed'
 export const container_2 = '60653e74e6f7f835e1474818'
-export const container_North = '606aca90d769cc43e593751d'
+export const container_North = '606fcba3c084396e28cc61a4'
 
 export const source_North = '5bbcad0e9099fc012e6368bc'
 export const source_1 = '5bbcad0e9099fc012e6368bf'
 export const source_2 = '5bbcad0e9099fc012e6368c0'
+
+export const mineral = '5bbcb2e440062e4259e93ea4'
+export const container_mineral = null
 
 export const decayTime = 1500
 

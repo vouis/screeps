@@ -71,7 +71,7 @@ const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd');
 
 const container_1 = '606545e6a4e2a38c708728ed';
 const container_2 = '60653e74e6f7f835e1474818';
-const container_North = '606aca90d769cc43e593751d';
+const container_North = '606fcba3c084396e28cc61a4';
 
 const source_North = '5bbcad0e9099fc012e6368bc';
 const source_1 = '5bbcad0e9099fc012e6368bf';
@@ -382,6 +382,11 @@ var creepList = {
     transfer2_1: roleTransfer2(),
     transtorage1_1: roleTranstorage(),
     link2Storage: roleLink2storage(),
+
+    // miner
+    // miner1:miner(),
+    // transferMiner:transferMiner(),
+
     // north room
 
     northRoomRepair: northRoomRepair(),
