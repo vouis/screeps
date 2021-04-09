@@ -53,7 +53,7 @@ export default {
 
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK,CARRY,WORK], 'transfer2_1', { memory: { role: 'transfer2_1' } })
 
-// Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'upgrader1', { memory: { role: 'upgrader1' } })
+// Game.spawns.Spawn1.spawnCreep([MOVE,MOVE, WORK, WORK,CARRY], 'upgrader1', { memory: { role: 'upgrader1' } })
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'upgrader2', { memory: { role: 'upgrader2' } })
 
 // Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'builder1', { memory: { role: 'builder1' } })
