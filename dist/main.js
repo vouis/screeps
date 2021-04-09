@@ -624,15 +624,6 @@ module.exports.loop = function () {
 
     Game.spawns[spawnName].work();
 
-    reep.room.find(FIND_STRUCTURES, {
-        filter: (structure) => {
-            return (structure.structureType == STRUCTURE_EXTENSION ||
-                structure.structureType == STRUCTURE_SPAWN) &&
-                structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
-        }
-    });
-
-    JSON.stringify(Game.structures.structureType[StructureLink]);
     for (const name in Game.structures) {
         const structures = Game.structures[name];
         if(structures.structureType ==STRUCTURE_LINK){
