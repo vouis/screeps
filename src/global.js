@@ -82,8 +82,6 @@ export const container_mineral = null
 
 export const decayTime = 1500
 
-export let taskList = []
-
 export const find_source = function (creep, sourceId) {
     const source = Game.getObjectById(sourceId);
     if (creep.harvest(source) == ERR_NOT_IN_RANGE) {

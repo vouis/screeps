@@ -2,6 +2,7 @@ import {storageId, linkCenter} from "../../global";
 
 const roleLink2storage = () => ({
     source: creep => {
+        // if(Memory.taskList.length)
         const link = Game.getObjectById(linkCenter)
         if (creep.withdraw(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
             creep.moveTo(link, { visualizePathStyle: { stroke: '#ffaa00' } });

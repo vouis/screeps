@@ -19,4 +19,6 @@ export default function () {
         Game.cpu.generatePixel();
     }
 
+    if (!Memory.taskList) Memory.taskList = []
+
 }

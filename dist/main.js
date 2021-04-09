@@ -609,13 +609,11 @@ StructureLink.prototype.work = function(){
 
     // 发送给 upgrader 和center
     if (this.room.memory.sourceLink2Id&& this.room.memory.sourceLink2Id === this.id) {
-        Game.getObjectById(storageId);
         const link = Game.getObjectById(this.room.memory.sourceLink2Id);
         const linkUpgrader = Game.getObjectById(linkUpgraderId);
         if(link.cooldown===0) {
             if (storageEnough() && linkUpgrader.energy <100) {
                 link.transferEnergy(linkUpgrader, 700);
-
             } else {
                 link.transferEnergy(Game.getObjectById(linkCenter), link.energy);
             }
@@ -645,6 +643,8 @@ function stateScanner () {
     if (Game.cpu.bucket > 6000) {
         Game.cpu.generatePixel();
     }
+
+    if (!Memory.taskList) Memory.taskList = [];
 
 }
 
