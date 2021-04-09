@@ -92,7 +92,7 @@ export const find_source = function (creep, sourceId) {
 }
 export const storageEnough = () =>{
     const storage = Game.getObjectById(storageId)
-    if (storage && storage.store[RESOURCE_ENERGY] < 10000){
+    if (storage && storage.store[RESOURCE_ENERGY] > 10000){
         return true
     }
     return false;
