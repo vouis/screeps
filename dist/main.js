@@ -64,6 +64,7 @@ const towerId2 = '606a07304d24f06a9f242bee';
 const storageId = '6067b156cea495591213b0ea';
 const link2Id = '606bce9496af2a2cda7c90cf';
 const linkCenter = '606bd2642bb56187e6ba3e6a';
+const linkUpgraderId = '606ff0d769a76c41fb47d1d6';
 
 const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd');
 
@@ -209,17 +210,6 @@ const harvester = () => ({
     },
     target: creep => {
         moveto_Target(creep);
-    },
-    switch: creep => creep.updateState()
-});
-
-const roleUpgrader = () => ({
-    source: creep => {
-        find_structure_or_source(creep, source_2, container_2, storageId);
-    },
-    target: creep => {
-        const controller = creep.room.controller;
-        if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) creep.moveTo(controller);
     },
     switch: creep => creep.updateState()
 });
@@ -372,10 +362,10 @@ const roleLink2storage = () => ({
 var creepList = {
     harvester1: harvester(),
     harvester2: harvester(),
-    upgrader1: roleUpgrader(),
-    upgrader2: roleUpgrader(),
-    upgrader3: roleUpgrader(),
-    upgrader4: roleUpgrader(),
+    // upgrader1: upgrader(),
+    // upgrader2: upgrader(),
+    // upgrader3: upgrader(),
+    // upgrader4: upgrader(),
     builder1: roleBuilder(),
     builder2: roleBuilder(),
     transfer1_1: roleTransfer(),
@@ -552,6 +542,7 @@ Spawn.prototype.mainSpawn = function (taskName) {
 };
 
 StructureLink.prototype.work = function(){
+
     if (this.cooldown != 0) return
 
     if (this.store.getUsedCapacity(RESOURCE_ENERGY) < 700) return
@@ -561,10 +552,18 @@ StructureLink.prototype.work = function(){
 
     // 发送给 upgrader 和center
     if (this.room.memory.sourceLink2Id&& this.room.memory.sourceLink2Id === this.id) {
+        const storage = Game.getObjectById(storageId);
         const link = Game.getObjectById(this.room.memory.sourceLink2Id);
-        if(link.cooldown===0){
-            link.transferEnergy(Game.getObjectById(linkCenter), link.energy);
+        const linkUpgrader = Game.getObjectById(linkUpgraderId);
+        if(link.cooldown===0) {
+            if (storage && storage.energy < 10000 || linkUpgrader.energy > 100) {
+                    link.transferEnergy(Game.getObjectById(linkCenter), link.energy);
+
+            } else {
+                    link.transferEnergy(linkUpgrader, link.energy);
+            }
         }
+
     }
 
 };

@@ -62,6 +62,7 @@ export const towerId2 = '606a07304d24f06a9f242bee'
 export const storageId = '6067b156cea495591213b0ea'
 export const link2Id = '606bce9496af2a2cda7c90cf'
 export const linkCenter = '606bd2642bb56187e6ba3e6a'
+export const linkUpgraderId = '606ff0d769a76c41fb47d1d6'
 
 export const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd')
 
