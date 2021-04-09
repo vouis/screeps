@@ -12,7 +12,7 @@ const northRoomCarry = () => ({
             find_structure_or_source(creep, source_North, container_North)
     },
     target: creep => {
-        if (find_building(creep, false)) { return; };
+        // if (find_building(creep, false)) { return; };
         const storage = Game.getObjectById(storageId)
         if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
             if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
