@@ -86,6 +86,14 @@ const find_source = function (creep, sourceId) {
         creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
     }
 };
+const storageEnough = (creep) =>{
+    const storage = Game.getObjectById(storageId);
+    if (storage && storage.energy < 10000){
+        return true
+    }
+    return false;
+
+};
 
 const find_container_trans = function (creep, sourceId, structureId) {
     const source = Game.getObjectById(sourceId);
@@ -217,7 +225,11 @@ const harvester = () => ({
 const roleBuilder = () => ({
 
     source: creep => {
-        find_structure_or_source(creep, source_2, container_2, storageId);
+        if(storageEnough()){
+            find_structure_or_source(creep, source_2, container_2, storageId);
+        }else {
+            creep.say('能量不太够!😨');
+        }
     },
 
     target: creep => {

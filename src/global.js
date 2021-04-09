@@ -87,6 +87,14 @@ export const find_source = function (creep, sourceId) {
         creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
     }
 }
+export const storageEnough = (creep) =>{
+    const storage = Game.getObjectById(storageId)
+    if (storage && storage.energy < 10000){
+        return true
+    }
+    return false;
+
+}
 
 export const find_container_trans = function (creep, sourceId, structureId) {
     const source = Game.getObjectById(sourceId);
