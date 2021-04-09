@@ -15,6 +15,18 @@ Spawn.prototype.addTask = function (taskName) {
     if (this.memory.spawnList === undefined) {
         this.memory.spawnList = []
     }
+
+    // 去重
+    for(let existName in Memory.creeps){
+        console.log(existName)
+        if(taskName===existName){
+            return this.memory.spawnList.length
+        }
+    }
+
+
+
+    // 优先级处理
     if(taskName.includes('harvester')){
         this.memory.spawnList.splice(0, 0, taskName)
     }else{
