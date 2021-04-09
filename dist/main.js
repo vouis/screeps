@@ -62,6 +62,7 @@ const spawnName = 'Spawn1';
 const towerId = '606496df680e4ac68b2d8ccd';
 const towerId2 = '606a07304d24f06a9f242bee';
 const storageId = '6067b156cea495591213b0ea';
+const link2Id = '606bce9496af2a2cda7c90cf';
 const linkCenter = '606bd2642bb56187e6ba3e6a';
 
 const controller_North = Game.getObjectById('5bbcad0e9099fc012e6368bd');
@@ -257,8 +258,8 @@ const roleTransfer2= () => ({
         }
     },
     target: creep => {
-        // const link = Game.getObjectById(link2Id)
-        //
+        const link = Game.getObjectById(link2Id);
+
         // if(link.cooldown===0&&link.energy>=600){
         //     link.transferEnergy(Game.getObjectById(linkCenter), link.energy);
         // }

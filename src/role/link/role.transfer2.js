@@ -21,8 +21,8 @@ const roleTransfer2= () => ({
         }
     },
     target: creep => {
-        // const link = Game.getObjectById(link2Id)
-        //
+        const link = Game.getObjectById(link2Id)
+
         // if(link.cooldown===0&&link.energy>=600){
         //     link.transferEnergy(Game.getObjectById(linkCenter), link.energy);
         // }
