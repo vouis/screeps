@@ -345,7 +345,7 @@ const roleClaimer = () => ({
 
 const roleTransferN = () => ({
     target: creep => {
-            find_container_trans(creep, source_North, container_North);
+        if (find_building(creep, false)) { return; }            find_container_trans(creep, source_North, container_North);
     },
     otherRoom:'E2S34'
 
