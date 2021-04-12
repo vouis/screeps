@@ -22,6 +22,7 @@ StructureLink.prototype.work = function(){
                     from:linkCenter,
                     to:storageId,
                     resourceType:RESOURCE_ENERGY,
+                    amount:Math.min(link.energy,Game.getObjectById(linkCenter).store.getFreeCapacity(RESOURCE_ENERGY)),
                 }
                 Memory.taskList.Spawn1.push(linkTask)
                 link.transferEnergy(Game.getObjectById(linkCenter), link.energy);

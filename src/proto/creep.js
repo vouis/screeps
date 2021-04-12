@@ -15,49 +15,53 @@ Creep.prototype.work = function() {
     const working = creepConfig.switch ? creepConfig.switch(this) : true
 
     if(this.memory.role==='link2Storage'){
-        let myTask = null;
-        if(!myTask&&Memory.taskList.Spawn1.length){
-            myTask = Memory.taskList.Spawn1.shift()
+        if(!this.memory.myTask&&Memory.taskList.Spawn1.length){// 接受任务
+            this.memory.myTask = Memory.taskList.Spawn1.shift()
+            this.memory.amount = 0;
         }
-        console.log('myTask',myTask)
+        console.log('myTask',this.memory.myTask,this.memory.amount)
 
         // let linkTask = {
         //     from:linkCenter,
         //     to:storageId,
         //     resourceType:RESOURCE_ENERGY,
         // }
-        if(myTask){
+        if(this.memory.myTask){
             // 执行对应操作
-            if (working) {
-                if (creepConfig.target&&creepConfig.otherRoom){
-                    this.avoid(creepConfig.otherRoom,creepConfig.target)
-                }
-                else {creepConfig.target(this,myTask.to,myTask.resourceType)}
-            }
-            else {
+            if (!working) {
                 if (creepConfig.source&&creepConfig.otherRoom){
                     this.avoid(creepConfig.otherRoom,creepConfig.source)
                 }else{
-                    creepConfig.source(this,myTask.from,myTask.resourceType)
+                    creepConfig.source(this)
                 }
+            }
+            else {
+                if (creepConfig.target&&creepConfig.otherRoom){
+                    this.avoid(creepConfig.otherRoom,creepConfig.target)
+                }
+                else {creepConfig.target(this)
+                }
+            }
+            if(this.memory.amount>=this.memory.myTask.amount){ //任务完成
+                this.memory.myTask=null;
             }
         }
 
 
     }else{
         // 执行对应操作
-        if (working) {
-            if (creepConfig.target&&creepConfig.otherRoom){
-                this.avoid(creepConfig.otherRoom,creepConfig.target)
-            }
-            else {creepConfig.target(this)}
-        }
-        else {
+        if (!working) {
             if (creepConfig.source&&creepConfig.otherRoom){
                 this.avoid(creepConfig.otherRoom,creepConfig.source)
             }else{
                 creepConfig.source(this)
             }
+        }
+        else {
+            if (creepConfig.target&&creepConfig.otherRoom){
+                this.avoid(creepConfig.otherRoom,creepConfig.target)
+            }
+            else {creepConfig.target(this)}
         }
     }
 }
@@ -88,6 +92,7 @@ Creep.prototype.updateState = function(resourceType=RESOURCE_ENERGY)
 {
     // creep 身上没有能量 && creep 之前的状态为“工作”
     if(this.store[resourceType] <= 0 && this.memory.working) {
+        if(this.memory.myTask)this.memory.amount+=this.store.getUsedCapacity(this.memory.myTask.resourceType) //一次运输完成，计算数量
         this.memory.working = false
     }
     // creep 身上能量满了 && creep 之前的状态为“不工作”

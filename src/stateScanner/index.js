@@ -1,5 +1,12 @@
 export default function () {
     // 每 20 tick 运行一次
+    if (!Memory.taskList) {
+        Memory.taskList = {}
+        Memory.taskList.Spawn1=[]
+    }
+    if(!Memory.taskList.Spawn1){
+        Memory.taskList.Spawn1=[]
+    }
     if (Game.time % 20) return
 
     if (!Memory.stats) Memory.stats = {}
@@ -17,14 +24,6 @@ export default function () {
 
     if (Game.cpu.bucket > 6000) {
         Game.cpu.generatePixel();
-    }
-
-    if (!Memory.taskList) {
-        Memory.taskList = {}
-        Memory.taskList.Spawn1=[]
-    }
-    if(!Memory.taskList.Spawn1){
-        Memory.taskList.Spawn1=[]
     }
 
 }
