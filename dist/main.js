@@ -402,8 +402,8 @@ const miner = () => ({
     },
     target: creep => {
         const storage = Game.getObjectById(storageId);
-        if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
-            if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+        if (storage && storage.store.getFreeCapacity(RESOURCE_OXYGEN) > 0) {
+            if (creep.transfer(storage, RESOURCE_OXYGEN) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });
             }
         }
@@ -449,7 +449,7 @@ var creepList = {
 };
 
 // Memory.spawns.Spawn1.spawnList.splice(0,0,'transferMiner')
-// Memory.spawns.Spawn1.spawnList.push('harvester2')
+// Memory.spawns.Spawn1.spawnList.push('transfer2_1')
 
 // 注意修改其中的 spawn 名称 work550:getBody({WORK:4,CARRY:1,MOVE:1}),
 // Game.spawns.Spawn1.spawnCreep([MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY], 'northRoom2', { memory: { role: 'northRoom2' }})
