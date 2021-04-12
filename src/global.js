@@ -52,7 +52,7 @@ export const body = {
     upBu1300: getBody({ WORK: 5, CARRY: 9, MOVE: 7 }),//1300
     walking: getBody({ WORK: 1, CARRY: 19, MOVE: 5 }),//1300
     claim: getBody({ CLAIM: 2, MOVE: 2 }),// 650
-    up:getBody({ WORK: 2, CARRY: 1, MOVE: 2 }),
+    up:getBody({ WORK: 6, CARRY: 7, MOVE: 3 }),//1100
 }
 
 // construct

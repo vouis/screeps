@@ -17,8 +17,8 @@ export default {
     harvester1: harvester(),
     harvester2: harvester(),
     upgrader1: upgrader(),
-    // upgrader2: upgrader(),
-    // upgrader3: upgrader(),
+    upgrader2: upgrader(),
+    upgrader3: upgrader(),
     // upgrader4: upgrader(),
     builder1: builder(),
     builder2: builder(),
@@ -45,7 +45,7 @@ export default {
 }
 
 // Memory.spawns.Spawn1.spawnList.splice(0,0,'transferMiner')
-// Memory.spawns.Spawn1.spawnList.push('transfer2_1')
+// Memory.spawns.Spawn1.spawnList.push('transfer1_1')
 
 // 注意修改其中的 spawn 名称 work550:getBody({WORK:4,CARRY:1,MOVE:1}),
 // Game.spawns.Spawn1.spawnCreep([MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY], 'northRoom2', { memory: { role: 'northRoom2' }})
