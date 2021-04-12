@@ -79,6 +79,9 @@ const source_North = '5bbcad0e9099fc012e6368bc';
 const source_1 = '5bbcad0e9099fc012e6368bf';
 const source_2 = '5bbcad0e9099fc012e6368c0';
 
+const mineral = '5bbcb2e440062e4259e93ea4';
+const container_mineral = null;
+
 const decayTime = 1500;
 
 const find_source = function (creep, sourceId) {
@@ -213,7 +216,7 @@ const tower_action = function () {
     }
 };
 
-const harvester = () => ({
+const harvester$1 = () => ({
     source: creep => {
         find_structure_or_source(creep, source_1, container_1, storageId);
     },
@@ -259,7 +262,7 @@ const roleBuilder = () => ({
     switch: creep => creep.updateState()
 });
 
-const roleTransfer= () => ({
+const roleTransfer$1= () => ({
     target: creep => {
         find_container_trans(creep,source_1,container_1);
     },
@@ -376,6 +379,7 @@ const roleTransferN = () => ({
 
 const roleLink2storage = () => ({
     source: creep => {
+        // if(Memory.taskList.length)
         const link = Game.getObjectById(linkCenter);
         if (creep.withdraw(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
             creep.moveTo(link, { visualizePathStyle: { stroke: '#ffaa00' } });
@@ -392,23 +396,44 @@ const roleLink2storage = () => ({
     switch: creep => creep.updateState()
 });
 
+const harvester = () => ({
+    source: creep => {
+        find_structure_or_source(creep, mineral, container_mineral);
+    },
+    target: creep => {
+        const storage = Game.getObjectById(storageId);
+        if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+            if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });
+            }
+        }
+    },
+    switch: creep => creep.updateState()
+});
+
+const roleTransfer= () => ({
+    target: creep => {
+        find_container_trans(creep,mineral,container_mineral);
+    },
+});
+
 var creepList = {
-    harvester1: harvester(),
-    harvester2: harvester(),
+    harvester1: harvester$1(),
+    harvester2: harvester$1(),
     upgrader1: roleUpgrader(),
     // upgrader2: upgrader(),
     // upgrader3: upgrader(),
     // upgrader4: upgrader(),
     builder1: roleBuilder(),
     builder2: roleBuilder(),
-    transfer1_1: roleTransfer(),
+    transfer1_1: roleTransfer$1(),
     transfer2_1: roleTransfer2(),
     transtorage1_1: roleTranstorage(),
     link2Storage: roleLink2storage(),
 
     // miner
-    // miner1:miner(),
-    // transferMiner:transferMiner(),
+    minerToStorage1:harvester(),
+    transferMiner:roleTransfer(),
 
     // north room
 
@@ -578,7 +603,7 @@ Spawn.prototype.mainSpawn = function (taskName) {
     if (taskName.includes('transtorage') || taskName.includes('northRoomCarry')) {
         newBody = body.walking;
     }
-    if (taskName.includes('harvester')) {
+    if (taskName.includes('harvester')||taskName.includes('minerToStorage')) {
         newBody = body.carry800;
     }
     else if (taskName.includes('transfer')) {

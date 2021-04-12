@@ -28,8 +28,8 @@ export default {
     link2Storage: roleLink2storage(),
 
     // miner
-    // miner1:miner(),
-    // transferMiner:transferMiner(),
+    minerToStorage1:miner(),
+    transferMiner:transferMiner(),
 
     // north room
 

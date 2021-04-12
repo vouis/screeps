@@ -62,7 +62,7 @@ Spawn.prototype.mainSpawn = function (taskName) {
     if (taskName.includes('transtorage') || taskName.includes('northRoomCarry')) {
         newBody = body.walking
     }
-    if (taskName.includes('harvester')) {
+    if (taskName.includes('harvester')||taskName.includes('minerToStorage')) {
         newBody = body.carry800
     }
     else if (taskName.includes('transfer')) {
