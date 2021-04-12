@@ -14,7 +14,7 @@ const miner = () => ({
             }
         }
     },
-    switch: creep => creep.updateState()
+    switch: creep => creep.updateState(RESOURCE_OXYGEN)
 })
 
 export default miner;

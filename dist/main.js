@@ -408,7 +408,7 @@ const miner = () => ({
             }
         }
     },
-    switch: creep => creep.updateState()
+    switch: creep => creep.updateState(RESOURCE_OXYGEN)
 });
 
 const transferMiner= () => ({
@@ -534,14 +534,14 @@ Creep.prototype.avoid = function(roomString,fn){
 
 };
 
-Creep.prototype.updateState = function()
+Creep.prototype.updateState = function(resourceType=RESOURCE_ENERGY)
 {
     // creep 身上没有能量 && creep 之前的状态为“工作”
-    if(this.store[RESOURCE_ENERGY] <= 0 && this.memory.working) {
+    if(this.store[resourceType] <= 0 && this.memory.working) {
         this.memory.working = false;
     }
     // creep 身上能量满了 && creep 之前的状态为“不工作”
-    if(this.store[RESOURCE_ENERGY] >= this.store.getCapacity() && !this.memory.working) {
+    if(this.store[resourceType] >= this.store.getCapacity() && !this.memory.working) {
         this.memory.working = true;
     }
 
