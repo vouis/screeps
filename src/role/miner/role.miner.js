@@ -4,7 +4,7 @@ import {container_mineral, find_structure_or_source, mineral, storageId} from ".
 
 const miner = () => ({
     source: creep => {
-        find_structure_or_source(creep, mineral, container_mineral)
+        find_structure_or_source(creep, mineral, container_mineral,null,RESOURCE_OXYGEN)
     },
     target: creep => {
         const storage = Game.getObjectById(storageId)

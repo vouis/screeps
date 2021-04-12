@@ -6,7 +6,7 @@ import {
 
 const transferMiner= () => ({
     target: creep => {
-        find_container_trans(creep,mineral,container_mineral)
+        find_container_trans(creep,mineral,container_mineral,RESOURCE_OXYGEN)
     },
 })
 

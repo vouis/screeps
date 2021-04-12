@@ -99,29 +99,29 @@ const storageEnough = () =>{
 
 };
 
-const find_container_trans = function (creep, sourceId, structureId) {
+const find_container_trans = function (creep, sourceId, structureId,resourceType=RESOURCE_ENERGY) {
     const source = Game.getObjectById(sourceId);
     const structure = Game.getObjectById(structureId);
     if (structure&&JSON.stringify(structure.pos) !== JSON.stringify(creep.pos)) { // 走到container上面
         creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffffff' } });
     } else {
-        if (structure&&structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+        if (structure&&structure.store.getFreeCapacity(resourceType) > 0) {
             creep.harvest(source);
         }
     }
 };
 
-const find_structure_or_source = function (creep, sourceId, structureId, storageId) {
+const find_structure_or_source = function (creep, sourceId, structureId, storageId,resourceType=RESOURCE_ENERGY) {
     const structure = Game.getObjectById(structureId);
     const storage = Game.getObjectById(storageId);
     const source = Game.getObjectById(sourceId);
-    if (storage && creep.withdraw(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && storage.store[RESOURCE_ENERGY] != 0) {
+    if (storage && creep.withdraw(storage, resourceType) == ERR_NOT_IN_RANGE && storage.store[resourceType] != 0) {
         creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffaa00' } });
     }
-    else if (creep.withdraw(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && structure.store[RESOURCE_ENERGY] != 0) {
+    else if (creep.withdraw(structure, resourceType) == ERR_NOT_IN_RANGE && structure.store[resourceType] != 0) {
 
         creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
-    } else if (source.energy) {
+    } else if (source.energy||source.mineralAmount) {
         find_source(creep, sourceId);
     }
 };
@@ -398,7 +398,7 @@ const roleLink2storage = () => ({
 
 const miner = () => ({
     source: creep => {
-        find_structure_or_source(creep, mineral, container_mineral);
+        find_structure_or_source(creep, mineral, container_mineral,null,RESOURCE_OXYGEN);
     },
     target: creep => {
         const storage = Game.getObjectById(storageId);
@@ -413,7 +413,7 @@ const miner = () => ({
 
 const transferMiner= () => ({
     target: creep => {
-        find_container_trans(creep,mineral,container_mineral);
+        find_container_trans(creep,mineral,container_mineral,RESOURCE_OXYGEN);
     },
 });
 
