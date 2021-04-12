@@ -724,6 +724,9 @@ function stateScanner () {
         Memory.taskList = {};
         Memory.taskList.Spawn1=[];
     }
+    if(!Memory.taskList.Spawn1){
+        Memory.taskList.Spawn1=[];
+    }
 
 }
 
