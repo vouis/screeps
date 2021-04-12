@@ -449,7 +449,7 @@ var creepList = {
 };
 
 // Memory.spawns.Spawn1.spawnList.splice(0,0,'transferMiner')
-// Memory.spawns.Spawn1.spawnList.push('transfer1_1')
+// Memory.spawns.Spawn1.spawnList.push('upgrader2')
 
 // 注意修改其中的 spawn 名称 work550:getBody({WORK:4,CARRY:1,MOVE:1}),
 // Game.spawns.Spawn1.spawnCreep([MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY], 'northRoom2', { memory: { role: 'northRoom2' }})
@@ -618,8 +618,11 @@ Spawn.prototype.mainSpawn = function (taskName) {
     if (taskName.includes('harvester')||taskName.includes('minerToStorage')) {
         newBody = body.carry800;
     }
-    else if (taskName.includes('transfer')) {
+    else if (taskName.includes('transfer2_1')) {
         newBody = body.trans;
+    }
+    else if (taskName.includes('transfer1_1')||taskName.includes('transferMiner')) {
+        newBody = body.trans800;
     }
     else if (taskName.includes('claimer')||taskName.includes('attacker')) {
         newBody = body.claim;

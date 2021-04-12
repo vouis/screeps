@@ -70,8 +70,11 @@ Spawn.prototype.mainSpawn = function (taskName) {
     if (taskName.includes('harvester')||taskName.includes('minerToStorage')) {
         newBody = body.carry800
     }
-    else if (taskName.includes('transfer')) {
+    else if (taskName.includes('transfer2_1')) {
         newBody = body.trans
+    }
+    else if (taskName.includes('transfer1_1')||taskName.includes('transferMiner')) {
+        newBody = body.trans800
     }
     else if (taskName.includes('claimer')||taskName.includes('attacker')) {
         newBody = body.claim
