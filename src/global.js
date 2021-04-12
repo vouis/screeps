@@ -78,7 +78,7 @@ export const source_1 = '5bbcad0e9099fc012e6368bf'
 export const source_2 = '5bbcad0e9099fc012e6368c0'
 
 export const mineral = '5bbcb2e440062e4259e93ea4'
-export const container_mineral = null
+export const container_mineral = '6070e8a9a77d0a04a85ff2d2'
 
 export const decayTime = 1500
 

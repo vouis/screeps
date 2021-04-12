@@ -80,7 +80,7 @@ const source_1 = '5bbcad0e9099fc012e6368bf';
 const source_2 = '5bbcad0e9099fc012e6368c0';
 
 const mineral = '5bbcb2e440062e4259e93ea4';
-const container_mineral = null;
+const container_mineral = '6070e8a9a77d0a04a85ff2d2';
 
 const decayTime = 1500;
 
@@ -262,7 +262,7 @@ const roleBuilder = () => ({
     switch: creep => creep.updateState()
 });
 
-const roleTransfer$1= () => ({
+const roleTransfer= () => ({
     target: creep => {
         find_container_trans(creep,source_1,container_1);
     },
@@ -411,7 +411,7 @@ const harvester = () => ({
     switch: creep => creep.updateState()
 });
 
-const roleTransfer= () => ({
+const transferMiner= () => ({
     target: creep => {
         find_container_trans(creep,mineral,container_mineral);
     },
@@ -426,14 +426,14 @@ var creepList = {
     // upgrader4: upgrader(),
     builder1: roleBuilder(),
     builder2: roleBuilder(),
-    transfer1_1: roleTransfer$1(),
+    transfer1_1: roleTransfer(),
     transfer2_1: roleTransfer2(),
     transtorage1_1: roleTranstorage(),
     link2Storage: roleLink2storage(),
 
     // miner
     minerToStorage1:harvester(),
-    transferMiner:roleTransfer(),
+    transferMiner:transferMiner(),
 
     // north room
 

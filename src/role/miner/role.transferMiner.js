@@ -4,10 +4,10 @@ import {
     mineral,
 } from "../../global";
 
-const roleTransfer= () => ({
+const transferMiner= () => ({
     target: creep => {
         find_container_trans(creep,mineral,container_mineral)
     },
 })
 
-export default roleTransfer;
+export default transferMiner;
