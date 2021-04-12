@@ -19,6 +19,9 @@ export default function () {
         Game.cpu.generatePixel();
     }
 
-    if (!Memory.taskList) Memory.taskList = []
+    if (!Memory.taskList) {
+        Memory.taskList = {}
+        Memory.taskList.Spawn1=[]
+    }
 
 }

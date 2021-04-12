@@ -1,6 +1,6 @@
 // 引入 creep 配置项
 import creepConfigs from '../config.creep.js'
-import {decayTime} from "../global";
+import {decayTime, linkCenter, storageId} from "../global";
 
 Creep.prototype.work = function() {
     // 检查 creep 内存中的角色是否存在
@@ -14,18 +14,50 @@ Creep.prototype.work = function() {
     // 获取是否工作
     const working = creepConfig.switch ? creepConfig.switch(this) : true
 
-    // 执行对应操作
-    if (working) {
-        if (creepConfig.target&&creepConfig.otherRoom){
-            this.avoid(creepConfig.otherRoom,creepConfig.target)
+    if(this.memory.role==='link2Storage'){
+        let myTask = null;
+        if(!myTask&&Memory.taskList.Spawn1.length){
+            myTask = Memory.taskList.Spawn1.shift()
         }
-        else {creepConfig.target(this)}
-    }
-    else {
-        if (creepConfig.source&&creepConfig.otherRoom){
-            this.avoid(creepConfig.otherRoom,creepConfig.source)
-        }else{
-            creepConfig.source(this)
+        console.log('myTask',myTask)
+
+        // let linkTask = {
+        //     from:linkCenter,
+        //     to:storageId,
+        //     resourceType:RESOURCE_ENERGY,
+        // }
+        if(myTask){
+            // 执行对应操作
+            if (working) {
+                if (creepConfig.target&&creepConfig.otherRoom){
+                    this.avoid(creepConfig.otherRoom,creepConfig.target)
+                }
+                else {creepConfig.target(this,myTask.to,myTask.resourceType)}
+            }
+            else {
+                if (creepConfig.source&&creepConfig.otherRoom){
+                    this.avoid(creepConfig.otherRoom,creepConfig.source)
+                }else{
+                    creepConfig.source(this,myTask.from,myTask.resourceType)
+                }
+            }
+        }
+
+
+    }else{
+        // 执行对应操作
+        if (working) {
+            if (creepConfig.target&&creepConfig.otherRoom){
+                this.avoid(creepConfig.otherRoom,creepConfig.target)
+            }
+            else {creepConfig.target(this)}
+        }
+        else {
+            if (creepConfig.source&&creepConfig.otherRoom){
+                this.avoid(creepConfig.otherRoom,creepConfig.source)
+            }else{
+                creepConfig.source(this)
+            }
         }
     }
 }

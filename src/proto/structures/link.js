@@ -14,9 +14,16 @@ StructureLink.prototype.work = function(){
         const link = Game.getObjectById(this.room.memory.sourceLink2Id)
         const linkUpgrader = Game.getObjectById(linkUpgraderId)
         if(link.cooldown===0) {
-            if (storageEnough() && linkUpgrader.energy <100) {
+            // if (storageEnough() && linkUpgrader.energy <100) {
+                if (0) {
                 link.transferEnergy(linkUpgrader, 700);
             } else {
+                let linkTask = {
+                    from:linkCenter,
+                    to:storageId,
+                    resourceType:RESOURCE_ENERGY,
+                }
+                Memory.taskList.Spawn1.push(linkTask)
                 link.transferEnergy(Game.getObjectById(linkCenter), link.energy);
             }
         }

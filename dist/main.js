@@ -378,15 +378,14 @@ const roleTransferN = () => ({
 });
 
 const roleLink2storage = () => ({
-    source: creep => {
-        // if(Memory.taskList.length)
-        const link = Game.getObjectById(linkCenter);
+    source: (creep,from) => {
+        const link = Game.getObjectById(from);
         if (creep.withdraw(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
             creep.moveTo(link, { visualizePathStyle: { stroke: '#ffaa00' } });
         }
     },
-    target: creep => {
-        const storage = Game.getObjectById(storageId);
+    target: (creep,to) => {
+        const storage = Game.getObjectById(to);
         if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
             if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });
@@ -496,18 +495,50 @@ Creep.prototype.work = function() {
     // 获取是否工作
     const working = creepConfig.switch ? creepConfig.switch(this) : true;
 
-    // 执行对应操作
-    if (working) {
-        if (creepConfig.target&&creepConfig.otherRoom){
-            this.avoid(creepConfig.otherRoom,creepConfig.target);
+    if(this.memory.role==='link2Storage'){
+        let myTask = null;
+        if(!myTask&&Memory.taskList.Spawn1.length){
+            myTask = Memory.taskList.Spawn1.shift();
         }
-        else {creepConfig.target(this);}
-    }
-    else {
-        if (creepConfig.source&&creepConfig.otherRoom){
-            this.avoid(creepConfig.otherRoom,creepConfig.source);
-        }else {
-            creepConfig.source(this);
+        console.log('myTask',myTask);
+
+        // let linkTask = {
+        //     from:linkCenter,
+        //     to:storageId,
+        //     resourceType:RESOURCE_ENERGY,
+        // }
+        if(myTask){
+            // 执行对应操作
+            if (working) {
+                if (creepConfig.target&&creepConfig.otherRoom){
+                    this.avoid(creepConfig.otherRoom,creepConfig.target);
+                }
+                else {creepConfig.target(this,myTask.to,myTask.resourceType);}
+            }
+            else {
+                if (creepConfig.source&&creepConfig.otherRoom){
+                    this.avoid(creepConfig.otherRoom,creepConfig.source);
+                }else {
+                    creepConfig.source(this,myTask.from,myTask.resourceType);
+                }
+            }
+        }
+
+
+    }else {
+        // 执行对应操作
+        if (working) {
+            if (creepConfig.target&&creepConfig.otherRoom){
+                this.avoid(creepConfig.otherRoom,creepConfig.target);
+            }
+            else {creepConfig.target(this);}
+        }
+        else {
+            if (creepConfig.source&&creepConfig.otherRoom){
+                this.avoid(creepConfig.otherRoom,creepConfig.source);
+            }else {
+                creepConfig.source(this);
+            }
         }
     }
 };
@@ -650,11 +681,16 @@ StructureLink.prototype.work = function(){
     // 发送给 upgrader 和center
     if (this.room.memory.sourceLink2Id&& this.room.memory.sourceLink2Id === this.id) {
         const link = Game.getObjectById(this.room.memory.sourceLink2Id);
-        const linkUpgrader = Game.getObjectById(linkUpgraderId);
+        Game.getObjectById(linkUpgraderId);
         if(link.cooldown===0) {
-            if (storageEnough() && linkUpgrader.energy <100) {
-                link.transferEnergy(linkUpgrader, 700);
-            } else {
+            // if (storageEnough() && linkUpgrader.energy <100) {
+                {
+                let linkTask = {
+                    from:linkCenter,
+                    to:storageId,
+                    resourceType:RESOURCE_ENERGY,
+                };
+                Memory.taskList.Spawn1.push(linkTask);
                 link.transferEnergy(Game.getObjectById(linkCenter), link.energy);
             }
         }
@@ -684,7 +720,10 @@ function stateScanner () {
         Game.cpu.generatePixel();
     }
 
-    if (!Memory.taskList) Memory.taskList = [];
+    if (!Memory.taskList) {
+        Memory.taskList = {};
+        Memory.taskList.Spawn1=[];
+    }
 
 }
 
