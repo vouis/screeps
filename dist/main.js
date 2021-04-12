@@ -216,7 +216,7 @@ const tower_action = function () {
     }
 };
 
-const harvester$1 = () => ({
+const harvester = () => ({
     source: creep => {
         find_structure_or_source(creep, source_1, container_1, storageId);
     },
@@ -396,7 +396,7 @@ const roleLink2storage = () => ({
     switch: creep => creep.updateState()
 });
 
-const harvester = () => ({
+const miner = () => ({
     source: creep => {
         find_structure_or_source(creep, mineral, container_mineral);
     },
@@ -418,8 +418,8 @@ const transferMiner= () => ({
 });
 
 var creepList = {
-    harvester1: harvester$1(),
-    harvester2: harvester$1(),
+    harvester1: harvester(),
+    harvester2: harvester(),
     upgrader1: roleUpgrader(),
     // upgrader2: upgrader(),
     // upgrader3: upgrader(),
@@ -432,7 +432,7 @@ var creepList = {
     link2Storage: roleLink2storage(),
 
     // miner
-    minerToStorage1:harvester(),
+    minerToStorage1:miner(),
     transferMiner:transferMiner(),
 
     // north room
@@ -449,6 +449,7 @@ var creepList = {
 };
 
 // Memory.spawns.Spawn1.spawnList.splice(0,0,'transferMiner')
+// Memory.spawns.Spawn1.spawnList.push('harvester2')
 
 // 注意修改其中的 spawn 名称 work550:getBody({WORK:4,CARRY:1,MOVE:1}),
 // Game.spawns.Spawn1.spawnCreep([MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY], 'northRoom2', { memory: { role: 'northRoom2' }})
@@ -574,7 +575,7 @@ Spawn.prototype.addTask = function (taskName) {
 
 
     // 外矿claimer生成时间控制,每个CLAIM大概500次,5000为上限，时间够了不生成
-    if(taskName.includes('claimer')){
+    if(taskName.includes('claimer')&&controller_North.reservation){
         //Game.getObjectById('5bbcad0e9099fc012e6368bd').reservation.ticksToEnd
         if(controller_North.reservation.ticksToEnd > 3000){
             return;

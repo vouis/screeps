@@ -2,7 +2,7 @@ import {container_mineral, find_structure_or_source, mineral, storageId} from ".
 
 
 
-const harvester = () => ({
+const miner = () => ({
     source: creep => {
         find_structure_or_source(creep, mineral, container_mineral)
     },
@@ -17,4 +17,4 @@ const harvester = () => ({
     switch: creep => creep.updateState()
 })
 
-export default harvester;
+export default miner;
