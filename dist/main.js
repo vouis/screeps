@@ -448,6 +448,8 @@ var creepList = {
 
 };
 
+// Memory.spawns.Spawn1.spawnList.splice(0,0,'transferMiner')
+
 // 注意修改其中的 spawn 名称 work550:getBody({WORK:4,CARRY:1,MOVE:1}),
 // Game.spawns.Spawn1.spawnCreep([MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY], 'northRoom2', { memory: { role: 'northRoom2' }})
 
@@ -474,6 +476,10 @@ var creepList = {
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomRepair', { memory: { role: 'northRoomRepair' } })
 
 //Game.spawns.Spawn1.spawnCreep([MOVE, CLAIM, MOVE,CLAIM], 'attacker', { memory: { role: 'attacker' } })
+
+// Game.spawns.Spawn1.spawnCreep([MOVE, WORK], 'minerToStorage1', { memory: { role: 'minerToStorage1' } })
+
+// Game.spawns.Spawn1.spawnCreep([MOVE, WORK], 'transferMiner', { memory: { role: 'transferMiner' } })
 
 // 引入 creep 配置项
 
@@ -569,6 +575,7 @@ Spawn.prototype.addTask = function (taskName) {
 
     // 外矿claimer生成时间控制,每个CLAIM大概500次,5000为上限，时间够了不生成
     if(taskName.includes('claimer')){
+        //Game.getObjectById('5bbcad0e9099fc012e6368bd').reservation.ticksToEnd
         if(controller_North.reservation.ticksToEnd > 3000){
             return;
         }
@@ -591,7 +598,11 @@ Spawn.prototype.addTask = function (taskName) {
 
     // 优先级处理
     if(taskName.includes('harvester')){
-        this.memory.spawnList.splice(0, 0, taskName);
+        if (this.spawning){
+            this.memory.spawnList.splice(1, 0, taskName);
+        }else {
+            this.memory.spawnList.splice(0, 0, taskName);
+        }
     }else {
         this.memory.spawnList.push(taskName);
     }

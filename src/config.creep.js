@@ -44,6 +44,8 @@ export default {
 
 }
 
+// Memory.spawns.Spawn1.spawnList.splice(0,0,'transferMiner')
+
 // 注意修改其中的 spawn 名称 work550:getBody({WORK:4,CARRY:1,MOVE:1}),
 // Game.spawns.Spawn1.spawnCreep([MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY], 'northRoom2', { memory: { role: 'northRoom2' }})
 
@@ -70,4 +72,8 @@ export default {
 //Game.spawns.Spawn1.spawnCreep([MOVE, WORK, CARRY], 'northRoomRepair', { memory: { role: 'northRoomRepair' } })
 
 //Game.spawns.Spawn1.spawnCreep([MOVE, CLAIM, MOVE,CLAIM], 'attacker', { memory: { role: 'attacker' } })
+
+// Game.spawns.Spawn1.spawnCreep([MOVE, WORK], 'minerToStorage1', { memory: { role: 'minerToStorage1' } })
+
+// Game.spawns.Spawn1.spawnCreep([MOVE, WORK], 'transferMiner', { memory: { role: 'transferMiner' } })
 

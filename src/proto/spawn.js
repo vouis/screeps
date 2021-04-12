@@ -28,6 +28,7 @@ Spawn.prototype.addTask = function (taskName) {
 
     // 外矿claimer生成时间控制,每个CLAIM大概500次,5000为上限，时间够了不生成
     if(taskName.includes('claimer')){
+        //Game.getObjectById('5bbcad0e9099fc012e6368bd').reservation.ticksToEnd
         if(controller_North.reservation.ticksToEnd > 3000){
             return;
         }
@@ -50,7 +51,11 @@ Spawn.prototype.addTask = function (taskName) {
 
     // 优先级处理
     if(taskName.includes('harvester')){
-        this.memory.spawnList.splice(0, 0, taskName)
+        if (this.spawning){
+            this.memory.spawnList.splice(1, 0, taskName)
+        }else{
+            this.memory.spawnList.splice(0, 0, taskName)
+        }
     }else{
         this.memory.spawnList.push(taskName)
     }
