@@ -378,13 +378,13 @@ const roleTransferN = () => ({
 });
 
 const roleLink2storage = () => ({
-    source: (creep,from) => {
+    source: (creep,from=linkCenter) => {
         const link = Game.getObjectById(from);
         if (creep.withdraw(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
             creep.moveTo(link, { visualizePathStyle: { stroke: '#ffaa00' } });
         }
     },
-    target: (creep,to) => {
+    target: (creep,to=storageId) => {
         const storage = Game.getObjectById(to);
         if (storage && storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
             if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
@@ -495,41 +495,8 @@ Creep.prototype.work = function() {
     // 获取是否工作
     const working = creepConfig.switch ? creepConfig.switch(this) : true;
 
-    if(this.memory.role==='link2Storage'){
-        if(!this.memory.myTask&&Memory.taskList.Spawn1.length){// 接受任务
-            this.memory.myTask = Memory.taskList.Spawn1.shift();
-            this.memory.amount = 0;
-        }
-        console.log('myTask',this.memory.myTask,this.memory.amount);
-
-        // let linkTask = {
-        //     from:linkCenter,
-        //     to:storageId,
-        //     resourceType:RESOURCE_ENERGY,
-        // }
-        if(this.memory.myTask){
-            // 执行对应操作
-            if (!working) {
-                if (creepConfig.source&&creepConfig.otherRoom){
-                    this.avoid(creepConfig.otherRoom,creepConfig.source);
-                }else {
-                    creepConfig.source(this);
-                }
-            }
-            else {
-                if (creepConfig.target&&creepConfig.otherRoom){
-                    this.avoid(creepConfig.otherRoom,creepConfig.target);
-                }
-                else {creepConfig.target(this);
-                }
-            }
-            if(this.memory.amount>=this.memory.myTask.amount){ //任务完成
-                this.memory.myTask=null;
-            }
-        }
-
-
-    }else {
+    // if(this.memory.role==='link2Storage'){
+    {
         // 执行对应操作
         if (!working) {
             if (creepConfig.source&&creepConfig.otherRoom){
@@ -573,7 +540,7 @@ Creep.prototype.updateState = function(resourceType=RESOURCE_ENERGY)
 {
     // creep 身上没有能量 && creep 之前的状态为“工作”
     if(this.store[resourceType] <= 0 && this.memory.working) {
-        if(this.memory.myTask)this.memory.amount+=this.store.getUsedCapacity(this.memory.myTask.resourceType); //一次运输完成，计算数量
+        if(this.memory.myTask) this.memory.amount+=this.store.getUsedCapacity(this.memory.myTask.resourceType); //一次运输完成，计算数量
         this.memory.working = false;
     }
     // creep 身上能量满了 && creep 之前的状态为“不工作”
@@ -686,10 +653,12 @@ StructureLink.prototype.work = function(){
     // 发送给 upgrader 和center
     if (this.room.memory.sourceLink2Id&& this.room.memory.sourceLink2Id === this.id) {
         const link = Game.getObjectById(this.room.memory.sourceLink2Id);
-        Game.getObjectById(linkUpgraderId);
+        const linkUpgrader = Game.getObjectById(linkUpgraderId);
         if(link.cooldown===0) {
-            // if (storageEnough() && linkUpgrader.energy <100) {
-                {
+            if (storageEnough() && linkUpgrader.energy <100) {
+            //     if (0) {
+                link.transferEnergy(linkUpgrader, 700);
+            } else {
                 let linkTask = {
                     from:linkCenter,
                     to:storageId,

@@ -14,7 +14,8 @@ Creep.prototype.work = function() {
     // 获取是否工作
     const working = creepConfig.switch ? creepConfig.switch(this) : true
 
-    if(this.memory.role==='link2Storage'){
+    // if(this.memory.role==='link2Storage'){
+    if(0){
         if(!this.memory.myTask&&Memory.taskList.Spawn1.length){// 接受任务
             this.memory.myTask = Memory.taskList.Spawn1.shift()
             this.memory.amount = 0;
@@ -32,15 +33,14 @@ Creep.prototype.work = function() {
                 if (creepConfig.source&&creepConfig.otherRoom){
                     this.avoid(creepConfig.otherRoom,creepConfig.source)
                 }else{
-                    creepConfig.source(this)
+                    creepConfig.source(this,this.memory.myTask.from,this.memory.myTask.resourceType)
                 }
             }
             else {
                 if (creepConfig.target&&creepConfig.otherRoom){
                     this.avoid(creepConfig.otherRoom,creepConfig.target)
                 }
-                else {creepConfig.target(this)
-                }
+                else {creepConfig.target(this,this.memory.myTask.to,this.memory.myTask.resourceType)}
             }
             if(this.memory.amount>=this.memory.myTask.amount){ //任务完成
                 this.memory.myTask=null;
@@ -92,7 +92,7 @@ Creep.prototype.updateState = function(resourceType=RESOURCE_ENERGY)
 {
     // creep 身上没有能量 && creep 之前的状态为“工作”
     if(this.store[resourceType] <= 0 && this.memory.working) {
-        if(this.memory.myTask)this.memory.amount+=this.store.getUsedCapacity(this.memory.myTask.resourceType) //一次运输完成，计算数量
+        if(this.memory.myTask) this.memory.amount+=this.store.getUsedCapacity(this.memory.myTask.resourceType) //一次运输完成，计算数量
         this.memory.working = false
     }
     // creep 身上能量满了 && creep 之前的状态为“不工作”
